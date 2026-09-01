@@ -4,12 +4,12 @@ module.exports = {
       nodeIntegration: true,
       customFileProtocol: './',
       builderOptions: {
-        appId: "weektodo-app.netlify.app",
-        productName: "WeekToDo",
+        appId: "io.github.andrerenatomenezes.weektodo-journal",
+        productName: "WeekToDo Journal",
         publish: ["github"],
         linux: {
           category: "Utility",
-          description: "Free and Open Source Minimalist Weekly Planner and To Do list App focused on privacy.",
+          description: "Planejador semanal minimalista com diario, focado em privacidade. Fork de WeekToDo (GPL-3.0).",
           target: ["deb", "rpm", "pacman","AppImage"],
           icon: "build/icon.icns",
         },

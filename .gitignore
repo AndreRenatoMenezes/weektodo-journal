@@ -20,3 +20,6 @@ pnpm-debug.log*
 /dist_electron
 
 .env
+
+# Claude Code — configuracao local (nao versionada)
+.claude/settings.local.json

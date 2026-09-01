@@ -168,6 +168,7 @@ import tipsModal from "./views/tipsModal";
 import { Modal, Toast } from "bootstrap";
 import migrations from "./migrations/migrations";
 import version_json from "../public/version.json";
+import appConfig from "./appConfig";
 import isElectron from "is-electron";
 import taskHelper from "./helpers/tasksHelper";
 import notifications from "./helpers/notifications";
@@ -508,10 +509,11 @@ export default {
       }
     },
     checkForUpdates: function () {
+      if (!appConfig.updateManifestUrl) return;
       if (this.isElectron() && this.$store.getters.config.checkUpdates) {
         const axios = require("axios").default;
         axios
-          .get("https://app.weektodo.me/version.json")
+          .get(appConfig.updateManifestUrl)
           .then((response) => this.showNewVersionToast(response))
           .catch((error) => console.log(error.message));
       }
@@ -535,13 +537,13 @@ export default {
     downloadNewVersion: function () {
       let isElectron = require("is-electron");
       if (isElectron()) {
-        require("electron").shell.openExternal("https://weektodo.me", "_blank");
+        require("electron").shell.openExternal(appConfig.siteUrl, "_blank");
       } else {
-        window.open("https://weektodo.me", "_blank");
+        window.open(appConfig.siteUrl, "_blank");
       }
     },
     seeChangeLog: function () {
-      window.open("https://weektodo.me/changelog", "_blank");
+      window.open(appConfig.changelogUrl, "_blank");
     },
     syncElectronConfig: function () {
       const { ipcRenderer } = require("electron");

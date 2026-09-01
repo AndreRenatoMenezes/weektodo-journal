@@ -26,7 +26,7 @@
             <span class="mt-3" style="font-size: 0.75rem"
               >{{ $t("about.version") }} {{ version }} •
               <a
-                href="https://weektodo.me/changelog"
+                :href="appConfig.changelogUrl"
                 target="_blank"
                 style="font-size: 0.75rem; cursor: pointer; opacity: 0.7; text-decoration: none"
               >
@@ -35,16 +35,21 @@
             </span>
             <span>
               <div class="visit-site mt-2 mb-3" style="font-size: 0.75rem">
-                <a href="https://weektodo.me" target="_blank">{{ $t("about.site") }}</a>
+                <a :href="appConfig.siteUrl" target="_blank">{{ $t("about.site") }}</a>
               </div>
             </span>
             <div class="d-flex align-self-center">
-              <a href="https://weektodo.me/blog/1" target="_blank" title="Blog"> <i class="bi-rss mx-2"></i></a>
-              <!-- <a href="https://twitter.com/weektodo" target="_blank" title="Twitter"> <i class="bi-twitter mx-2"></i></a> -->
-              <a href="https://github.com/manuelernestog/weektodo" target="_blank" title="Github">
+              <a :href="appConfig.repoUrl" target="_blank" title="Github">
                 <i class="bi-github mx-2"></i
               ></a>
-              <a href="mailto:contact@weektodo.me"> <i class="bi-envelope mx-2" :title="$t('about.email')"></i></a>
+              <a :href="appConfig.repoUrl + '/issues'" target="_blank" :title="$t('about.email')">
+                <i class="bi-envelope mx-2"></i
+              ></a>
+            </div>
+            <div class="mt-3" style="font-size: 0.7rem; opacity: 0.7; line-height: 1.4">
+              Fork of
+              <a :href="appConfig.upstream.repoUrl" target="_blank">{{ appConfig.upstream.name }}</a>
+              by {{ appConfig.upstream.author }} &middot; GPL-3.0
             </div>
           </div>
           <div class="horizontal-divider mt-3 mb-3"></div>
@@ -104,12 +109,14 @@
 
 <script>
 import version_json from "../../public/version.json";
+import appConfig from "../appConfig";
 
 export default {
   name: "aboutModal",
   data() {
     return {
       version: version_json.version,
+      appConfig: appConfig,
     };
   },
 };

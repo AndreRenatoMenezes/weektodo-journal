@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import appConfig from "../appConfig";
+
 export default {
   name: "splashScreen",
   data() {
@@ -51,9 +53,10 @@ export default {
     };
   },
   mounted() {
+    if (!appConfig.sponsorsApiUrl) return;
     const axios = require("axios").default;
     axios
-      .get("https://weektodo.me/api/sponsors")
+      .get(appConfig.sponsorsApiUrl)
       .then((response) => this.renderSponsor(response))
       .catch((error) => console.log(error.message));
   },

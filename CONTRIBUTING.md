@@ -1,56 +1,53 @@
-# Contributing to WeekToDo
+# Contribuindo com o WeekToDo Journal
 
-Thanks for checking out WeekToDo! We'd love for you to contribute. Whether you're a first-time open source contributor or an experienced developer, there are ways you can help make WeekToDo great!
+Este projeto é um fork de [WeekToDo](https://github.com/manuelernestog/weektodo),
+licenciado sob GPL-3.0. Contribuições são bem-vindas.
 
-## Contributing Code
+## Antes de abrir um PR
 
-One of the best ways is to grab a [bug report](https://github.com/manuelernestog/weektodo/issues?q=is%3Aopen+is%3Aissue+label%3Abug) or [feature suggestion](https://github.com/manuelernestog/weektodo/issues?q=is%3Aissue+is%3Aopen+label%3Afeature) that has been marked `accepted` and dig in.
+Correções que também façam sentido no projeto original devem, de preferência,
+ser enviadas **também** para o [upstream](https://github.com/manuelernestog/weektodo/issues).
+Isso mantém os dois projetos saudáveis e reduz divergência.
 
-Please be wary of working on issues *not* marked as `accepted`. Just because someone has created an issue doesn't mean we'll accept a pull request for it. See [Where to Contribute](#where-to-contribute) below for more information.
+## Licença das contribuições
 
-### Pull requests
+Ao enviar um pull request, você concorda em licenciar sua contribuição sob a
+**GNU General Public License v3.0**, a mesma licença deste projeto. Não são
+aceitas contribuições sob licenças incompatíveis com a GPL-3.0, nem código
+copiado de projetos proprietários.
 
-When you create a pull request you waive any patent or copyright claims you might have to the code you're contributing. (For example, you can't submit a PR and then sue WeekToDo for using your code.)
+## Reportando problemas
 
-## Filing Issues
+Use a [página de issues](https://github.com/AndreRenatoMenezes/weektodo-journal/issues)
+deste fork. Descreva o sistema operacional, se está usando a versão web ou
+desktop, e os passos para reproduzir.
 
-If you have a bug to report or a feature to suggest, you may do so on our [issues page](https://github.com/manuelernestog/weektodo/issues). Please carefully follow all instructions in the template for the given type of issue you're reporting.
+Problemas que existem também no WeekToDo original devem ser reportados lá.
 
-We also ask that you search for existing issues, *including closed ones!* We're in the process of migrating. If someone has already reported a bug or
-requested the feature you have in mind,  **vote for it** at the top.
+## Rodando a partir do código-fonte
 
-For bugs, please verify that you're running the latest version of WeekToDo. If you file an issue without providing detail, we may close it without comment.
+Pré-requisitos: git, [Node.js](https://nodejs.org/en/) (v16 recomendado),
+[Yarn](https://yarnpkg.com/).
 
-# Build and Run From Source
-
-If you want to understand how WeekToDo works or want to debug an issue, you'll want to get the source, build it, and run it locally.
-
-## Installing Prerequisites
-
-You'll need git, a recent version of [Node.JS](https://nodejs.org/en/) (currently v16.X is recommended), [Yarn](https://yarnpkg.com/) and [Electron](https://www.electronjs.org/).
-
-```
-git clone https://github.com/manuelernestog/weektodo
-cd weektodo
+```bash
+git clone https://github.com/AndreRenatoMenezes/weektodo-journal
+cd weektodo-journal
 yarn install
-yarn run serve // to run web version
-yarn run electron:serve // to run native version
+yarn run serve            # versão web
+yarn run electron:serve   # versão desktop
 ```
 
-# Where to Contribute
+## Padrões de código
 
-Check out our [issues page](https://github.com/manuelernestog/weektodo/issues) for all potential areas for contributions. Note that just because a topic exists does not mean we will accept a contribution to the app. There are several reasons we may not accepts a pull requests, like:
+- Vue 3 Options API (o projeto não usa `<script setup>`)
+- Estado global em Vuex 4, módulos com `namespaced: false`
+- Toda persistência passa pela camada `src/repositories/`
+- Nenhuma string visível ao usuário fica hard-coded: use i18n (`$t`) e adicione
+  a chave em **todos** os arquivos de `src/assets/languages/`
+- Rode `yarn run lint` antes de abrir o PR
 
-- **Maintainability** - We're _extremely_ wary of adding options and preferences for niche behaviors. Our general rule is that the code complexity of adding a preference isn't worth it unless the user base is fairly evenly divided about the desired behavior.
+Detalhes de arquitetura em [`CLAUDE.md`](CLAUDE.md) e `.claude/docs/`.
 
-- **User experience** - We want to deliver a lightweight and smooth app, so UX and performance matter a lot. Please try to keep the design lines that are used in the application.
+## Código de conduta
 
-In short, if the issue you want to work on is not labelled with `accepted`, you can start a conversation about whether an external contribution will be considered.
-
-# Code of Conduct
-
-In order to keep the conversation clear and transparent, please limit discussion to English and keep things on topic with the issue. Be considerate to others and try to be courteous and professional at all times.
-
-Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms.
-
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
+Seja objetivo, cordial e mantenha a discussão no tema da issue.

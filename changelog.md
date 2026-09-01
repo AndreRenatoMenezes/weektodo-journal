@@ -1,3 +1,34 @@
+# Changelog — WeekToDo Journal
+
+Este projeto e um fork de [WeekToDo](https://github.com/manuelernestog/weektodo)
+(GPL-3.0). As entradas sob "Fork" registram as modificacoes feitas em relacao a
+obra original, conforme exige a secao 5a da GPL-3.0. As entradas abaixo de
+"Historico do WeekToDo original" sao do projeto de origem.
+
+## Fork — nao publicado
+Set 1, 2026
+
+- Fork criado a partir do WeekToDo v2.2.0
+- Identidade do fork nos metadados: `package.json` (nome, autor, repositorio,
+  `license: GPL-3.0-only`), `vue.config.js` (appId e productName),
+  `public/index.html`, `public/manifest.json`, `docker-compose.yml`
+- Adicionado `NOTICE` com atribuicao a obra original e registro de modificacoes
+- README, CONTRIBUTING e SECURITY reescritos para o fork, mantendo os creditos
+  ao autor original
+- `.github/FUNDING.yml` limpo (apontava para o financiamento do projeto original)
+- `.github/workflows/release.yml` passa a publicar releases neste repositorio,
+  e nao no repositorio do projeto original
+- Removido do `netlify.toml` o redirect para o dominio do projeto original
+- Novo `src/appConfig.js` centralizando identidade e endpoints externos
+- Desativadas as chamadas automaticas aos servidores do projeto original:
+  verificacao de atualizacao (`App.vue`) e API de patrocinadores
+  (`splashScreen.vue`) agora dependem de endpoints proprios em `appConfig`
+- Modal Sobre exibe a atribuicao "Fork of WeekToDo by Manuel Ernesto Garcia -
+  GPL-3.0" e aponta para o repositorio deste fork
+- Adicionados `CLAUDE.md` e a pasta `.claude/` com a documentacao do projeto
+
+## Historico do WeekToDo original
+
 ## v2.2.0
 Feb 14, 2024
 
