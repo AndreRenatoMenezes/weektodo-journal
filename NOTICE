@@ -1,0 +1,49 @@
+WeekToDo Journal
+================
+
+Este projeto e um fork ("trabalho derivado") de WeekToDo.
+
+Obra original
+-------------
+  Nome:       WeekToDo — Minimalist Weekly Planner
+  Autor:      Manuel Ernesto Garcia
+  Site:       https://weektodo.me
+  Repositorio: https://github.com/manuelernestog/weektodo
+  Copyright (C) 2021-2024 Manuel Ernesto Garcia e colaboradores do WeekToDo
+  Licenca:    GNU General Public License v3.0 (ver arquivo LICENSE)
+
+Trabalho derivado
+-----------------
+  Nome:       WeekToDo Journal
+  Mantenedor: Andre Renato Menezes
+  Repositorio: https://github.com/AndreRenatoMenezes/weektodo-journal
+  Copyright (C) 2026 Andre Renato Menezes
+  Licenca:    GNU General Public License v3.0 (mesma da obra original)
+
+Este programa e software livre: voce pode redistribui-lo e/ou modifica-lo sob
+os termos da GNU General Public License, versao 3, conforme publicada pela
+Free Software Foundation.
+
+Este programa e distribuido na esperanca de que seja util, mas SEM NENHUMA
+GARANTIA; sem sequer a garantia implicita de COMERCIALIZACAO ou ADEQUACAO A
+UMA FINALIDADE ESPECIFICA. Veja a GNU General Public License para mais
+detalhes. Voce deve ter recebido uma copia da GNU General Public License junto
+com este programa (arquivo LICENSE); se nao, veja <https://www.gnu.org/licenses/>.
+
+Marcas
+------
+O nome "WeekToDo", o logotipo e a identidade visual do projeto original
+pertencem aos seus respectivos donos e NAO sao concedidos pela GPL. Este fork
+nao e afiliado, patrocinado nem endossado pelo projeto WeekToDo original.
+Antes de distribuir publicamente builds deste fork, substitua nome, logotipo e
+icones (ver `.claude/docs/licenca-e-fork.md`).
+
+Registro de modificacoes (GPL-3.0, secao 5a)
+--------------------------------------------
+As modificacoes feitas neste fork em relacao a obra original estao registradas
+em `changelog.md` e no historico de commits do repositorio deste fork.
+
+  2026-09-01  Fork criado a partir de WeekToDo v2.2.0.
+              Ajustes de identidade do fork (metadados, README, atribuicao),
+              remocao das chamadas automaticas de rede aos servidores do
+              projeto original e adicao da estrutura de documentacao `.claude/`.

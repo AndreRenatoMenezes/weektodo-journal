@@ -1,165 +1,89 @@
-# WeekToDo | FOSS Minimalist Weekly Planner
----
-![GitHub all releases](https://img.shields.io/github/downloads/zuntek/weektodoweb/total) 
-[![vue3](https://img.shields.io/badge/vue-3.x-brightgreen.svg)](https://vuejs.org/)
+# WeekToDo Journal
 
-WeekToDo is a free minimalist weekly planner app focused on privacy. Schedule your tasks and projects with to do lists and a calendar. Available for Windows, Mac, Linux or online.
+> **Fork não oficial de [WeekToDo](https://github.com/manuelernestog/weektodo)**, criado por Manuel Ernesto Garcia.
+> Este projeto **não é afiliado, patrocinado nem endossado** pelo WeekToDo original.
+> Licenciado sob **GPL-3.0**, a mesma licença da obra original.
 
-![Logo](https://weektodo.me/weektodo-preview.webp)
+Planejador semanal minimalista com foco em privacidade: todos os dados ficam no
+seu dispositivo (localStorage + IndexedDB), sem conta, sem servidor. Este fork
+parte do WeekToDo v2.2.0 e evolui em direção a um planejador com recursos de
+diário/journal.
 
-## Features
+## Recursos herdados do WeekToDo
 
-- Cross platform
-- Light/dark mode toggle
-- Custom To-do Lists
-- Drag and Drop
-- Multi-language
-- Sub-tasks
-- Markdown Support
-- Customizable user interface
-- Local Storage
-- Task Colors
-- Task Time
-- Recurring Tasks
-- Notifications and reminders
+- Multiplataforma (Windows, macOS, Linux e web)
+- Tema claro/escuro
+- Listas personalizadas além do calendário semanal
+- Arrastar e soltar entre listas e dias
+- Multi-idioma (19 idiomas)
+- Subtarefas
+- Suporte a Markdown nas descrições
+- Interface customizável (zoom, colunas, painéis redimensionáveis)
+- Armazenamento local
+- Cores e horários por tarefa
+- Tarefas recorrentes (RRULE)
+- Notificações e lembretes
 
-## Roadmap
+## Recursos planejados neste fork
 
-- Touch mode
-- Mobile Version
-- Sync across devices
-- Workspaces
-- Themes
+Ver [`.claude/docs/roadmap-fork.md`](.claude/docs/roadmap-fork.md).
 
-## Sponsors
+## Rodando a partir do código-fonte
 
-WeekToDo is an GPL-licensed open source project with its ongoing development made possible entirely by users support and sponsors. If you'd like to join them, please consider [ sponsoring WeekToDo's development](https://weektodo.me/sponsor-us/) or [make the donation](https://weektodo.me/support-us/) you can.
-
-<p align="center">
-  <h3 align="center">Diamond Sponsors</h3>
-</p>
-
-<p align="center">
-  <a target="_blank" href="https://password.link">
-  <img alt="Password.link - Securely share sensitive information with one-time links. Send and receive passwords and confidential documents." src="https://weektodo.me/img/sponsors/passwordlink/wide.webp" width="350">
-  </a>
-</p>
-
-<p align="center">
-  <h3 align="center">Silver Sponsors</h3>
-</p>
-
-<p align="center">
-  <a target="_blank" href="https://www.snapclear.app/">
-    <img alt="Snapclear - Remove image backgrounds with a single click for free." src="https://weektodo.me/img/sponsors/snapclear/wide.webp" width="150">
-  </a>
-  <a target="_blank" href="https://chrome.google.com/webstore/detail/easyfiller-automatic-form/oaphggcbnpminjffkjgldfepehcdjndp?hl=es&authuser=0">
-    <img alt="Easyfiller - Fill your forms with a single click for free" src="https://weektodo.me/img/sponsors/easyfiller/wide.webp" width="150">
-  </a>
-</p>
-
-  
-## Installation
-
-### Download installer 
-
-[Windows / Linux / macOS](https://github.com/zuntek/weektodoweb/releases/latest
-) 
-
-### External Stores
-
-#### Windows 
-
-[Uptodown](https://weektodo.uptodown.com/windows)
-
-#### macOS 
-
-[Macupdate](https://www.macupdate.com/app/mac/63506/weektodo)
-
-#### Linux 
-
-Snapd can be installed from the command line:
+Pré-requisitos: git, [Node.js](https://nodejs.org/en/) (v16 é o recomendado
+pelo projeto original; versões mais novas podem exigir
+`NODE_OPTIONS=--openssl-legacy-provider`) e [Yarn](https://yarnpkg.com/).
 
 ```bash
-sudo apt update
-sudo apt install snapd
-```
-To install WeekToDo, simply use the following command:
-```bash
-sudo snap install weektodo
-```    
-
-## Build and Run From Source
-
-If you want to understand how WeekToDo works or want to debug an issue, you'll want to get the source, build it, and run it locally.
-
-### Installing Prerequisites
-
-You'll need git, a recent version of [Node.JS](https://nodejs.org/en/) (currently v16.X is recommended), [Yarn](https://yarnpkg.com/) and [Electron](https://www.electronjs.org/).
-
-```
-git clone https://github.com/manuelernestog/weektodo
-cd weektodo
+git clone https://github.com/AndreRenatoMenezes/weektodo-journal
+cd weektodo-journal
 yarn install
-yarn run serve // to run web version
-yarn run electron:serve // to run native version
+yarn run serve            # versão web em http://localhost:8080
+yarn run electron:serve   # versão desktop (Electron)
+yarn run lint             # ESLint
+yarn run build            # build web de produção
+yarn run electron:build   # instaladores desktop
 ```
 
 ### Docker
 
- To run the development web version use `docker-compose up`
+Para rodar a versão web de desenvolvimento: `docker-compose up`
 
-## Contributing
+## Traduções
 
-You can support this project in several ways:
+O arquivo base com todos os termos em inglês está em
+[`src/assets/languages/en.json`](src/assets/languages/en.json). Para adicionar
+um idioma, crie um novo arquivo JSON nomeado pelo
+[código do idioma](https://gist.github.com/Josantonius/b455e315bc7f790d14b136d61d9ae469)
+e registre-o em `src/assets/languages/languages.js`.
 
-### Donate
+## Licença e atribuição
 
-https://weektodo.me/support-us
+Este programa é software livre, distribuído sob a
+[GNU General Public License v3.0](LICENSE).
 
-### Share
+- Obra original: **WeekToDo**, Copyright (C) Manuel Ernesto Garcia e
+  colaboradores — <https://github.com/manuelernestog/weektodo>
+- Trabalho derivado: **WeekToDo Journal**, Copyright (C) 2026 Andre Renato Menezes
 
-- [Facebook](https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fweektodo.me%2F)
-- [Twitter](https://twitter.com/intent/tweet?url=https%3A%2F%2Fweektodo.me%2F&text=)
-- [Linkedin](https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fweektodo.me%2F&title=)
+O detalhamento da atribuição e o registro de modificações exigido pela seção 5a
+da GPL-3.0 estão em [`NOTICE`](NOTICE) e em [`changelog.md`](changelog.md).
 
-### Rate the app
+Como a GPL exige, qualquer redistribuição deste programa — incluindo a
+publicação da versão web, que entrega o bundle JavaScript ao navegador do
+usuário — deve manter a licença GPL-3.0 e disponibilizar o código-fonte
+correspondente.
 
-- [ProductHunt](https://www.producthunt.com/posts/weektodo)
-- [AlternativeTo](https://alternativeto.net/software/weektodo/about/)
-- [SassHub](https://www.saashub.com/weektodo-reviews/new)
+**Marcas:** o nome "WeekToDo", o logotipo e a identidade visual do projeto
+original não são cobertos pela licença do software. Antes de distribuir builds
+públicas deste fork, substitua nome, logotipo e ícones — ver
+[`.claude/docs/licenca-e-fork.md`](.claude/docs/licenca-e-fork.md).
 
-### Translations
+## Créditos
 
-Currently the system is developed in multiple languages, you can send me a correction of any error or you can add your language if it's not available.
+- Autor original: [Manuel Ernesto Garcia](https://manuelernestogr.bio.link/)
+- Rebranding do logotipo original por [hallgraph](https://twitter.com/hallgraph)
+- [Contribuidores do WeekToDo](https://github.com/manuelernestog/weektodo/graphs/contributors)
 
-You can find the base file with all the used words in english [here](src/assets/languages/en.json/)
-
-For add a new language Fork the repo and create a Pull Request creating a new file of the `translations/en.json` and name he file acording the [language code](https://gist.github.com/Josantonius/b455e315bc7f790d14b136d61d9ae469). 
-
-If this is to dificult, you can donwload this [file](src/assets/languages/en.json/), translate it and send the file to the email contact@weektodo.me
- 
-## Contributing
-
-Weektodo is open-source. Pull requests and contributions are welcome! There are three ways to contribute: grab a [bug report](https://github.com/manuelernestog/issues?q=is%3Aopen+is%3Aissue+label%3Abug) or [feature suggestion](https://github.com/manuelernestog/issues?q=is%3Aissue+is%3Aopen+label%3Afeature) that has been marked `accepted` and dig in.
-
-Read [Contributing.md](/CONTRIBUTING.md) for more information.
-
-## Author
-
-- [Manuel Ernesto Garcia](https://manuelernestogr.bio.link/)
-
-## Contributors
-
-- Logo Rebranding by [hallgraph](https://twitter.com/hallgraph)
-- [Translators](https://weektodo.me/about/)
-
-<a href="https://github.com/manuelernestog/weektodo/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=manuelernestog/weektodo" />
-</a>
-
-
-
-Made with [contrib.rocks](https://contrib.rocks).
-
-  
+Se este fork lhe é útil, considere também
+[apoiar o projeto original](https://weektodo.me/support-us/).

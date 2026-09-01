@@ -1,16 +1,31 @@
-# Security
+# Segurança e privacidade
 
-We value your privacy by giving you complete control over your data.
+Todos os dados deste aplicativo são gravados **localmente no seu dispositivo**
+(`localStorage` e `IndexedDB` do navegador ou do Electron). Não existe conta de
+usuário, não existe servidor deste projeto e nenhum dado de tarefas sai da sua
+máquina.
 
-If you use WeekToDo all data is saved on your device locally and is never sent to our server. We do not collect any personal data either.
+## Conexões de rede
 
-WeekToDo only connects to the internet for the next reasons:
+Este fork **removeu as chamadas automáticas de rede** que a versão original
+fazia aos servidores do WeekToDo (verificação de atualização e busca de
+patrocinadores). Ver `src/appConfig.js`: os endpoints correspondentes estão
+definidos como `null` e as funções que os usam não fazem nada enquanto assim
+permanecerem.
 
-- Get the sponsor data that show up when the app is loading
-- Send a request to a public counter for sponsor impressions
-- Periodically check for new updates
-- Send error report in case of error
+O que ainda pode gerar tráfego:
 
-You can disable this features in Settings -> General.
+- **Sentry** (`@sentry/vue`, inicializado em `src/main.js`): só envia dados se a
+  variável de ambiente `VUE_APP_SENTRY_DNS` estiver definida no build. Sem essa
+  variável, nada é enviado.
+- **Links clicados pelo usuário** (modal Sobre, modal de doação): abrem o
+  navegador no site do projeto original. Nada é enviado automaticamente.
 
-If you request a sponsorship of WeekToDo, you will need to provide your email address. We do not share your email address with anybody, and we will only send information related with the sponsorship.
+## Reportando uma vulnerabilidade
+
+Abra uma issue em
+<https://github.com/AndreRenatoMenezes/weektodo-journal/issues>. Se a falha for
+sensível, descreva o impacto sem publicar o exploit e peça um canal privado.
+
+Vulnerabilidades herdadas do projeto original devem ser reportadas também ao
+[WeekToDo](https://github.com/manuelernestog/weektodo).

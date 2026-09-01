@@ -1,12 +1,14 @@
-# These are supported funding model platforms
-
-github: # github: USERNAME or github: [USERNAME, USERNAME, USERNAME, USERNAME]
-patreon: # Replace with a single Patreon username
-open_collective: # Replace with a single Open Collective username
-ko_fi: weektodo
-tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
-community_bridge: # Replace with a single Community Bridge project-name e.g., cloud-foundry
-liberapay: # Replace with a single Liberapay username
-issuehunt: # Replace with a single IssueHunt username
-otechie: # Replace with a single Otechie username
-custom: ["weektodo.me/sponsor-us/"]
+# Plataformas de financiamento deste fork.
+# Os campos abaixo estavam apontando para o projeto original (WeekToDo) e foram
+# limpos: doacoes ao projeto original devem sair do site dele, nao deste fork.
+# Preencha com seus proprios usuarios se quiser aceitar apoio neste repositorio.
+github: # github: USERNAME
+patreon: # usuario do Patreon
+open_collective: # projeto no Open Collective
+ko_fi: # usuario do Ko-fi
+tidelift: # plataforma/pacote, ex: npm/babel
+community_bridge: # nome do projeto
+liberapay: # usuario do Liberapay
+issuehunt: # usuario do IssueHunt
+otechie: # usuario do Otechie
+custom: # ["https://exemplo.com/apoie"]

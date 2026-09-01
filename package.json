@@ -1,13 +1,15 @@
 {
-  "name": "WeekToDo",
+  "name": "weektodo-journal",
   "version": "2.2.0",
+  "license": "GPL-3.0-only",
   "private": true,
-  "description": "Free and Open Source Minimalist Weekly Planner focused on privacy.",
-  "author": "Manuel Ernesto Garcia <contact@weektodo.me> (https://weektodo.me/)",
-  "homepage": "https://weektodo.me",
+  "description": "Planejador semanal minimalista com diario/journal. Fork de WeekToDo, focado em privacidade e dados locais.",
+  "author": "Andre Renato Menezes (https://github.com/AndreRenatoMenezes)",
+  "homepage": "https://github.com/AndreRenatoMenezes/weektodo-journal",
   "keywords": [
     "ToDo",
     "Weekly Planner",
+    "Journal",
     "to-do",
     "Productivity",
     "Minimalist"
@@ -24,7 +26,7 @@
     "test": "echo success"
   },
   "main": "background.js",
-  "repository": "https://github.com/manuelernestog/weektodo",
+  "repository": "https://github.com/AndreRenatoMenezes/weektodo-journal",
   "dependencies": {
     "@achrinza/node-ipc": "^10.1.10",
     "@manuelernestog/click-handler": "^1.4.0",
