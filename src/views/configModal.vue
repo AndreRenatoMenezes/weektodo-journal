@@ -50,6 +50,12 @@
                 Behavior
               </button>
             </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="config-sync-tab" data-bs-toggle="tab" data-bs-target="#config-sync"
+                role="tab">
+                Sync
+              </button>
+            </li>
           </ul>
 
           <div id="config-links-menu" class="tab-pane fade show" style="width: 340px;">
@@ -323,6 +329,9 @@
                 </select>
               </div>
             </div>
+            <div class="tab-pane fade" id="config-sync">
+              <sync-settings></sync-settings>
+            </div>
           </div>
         </div>
       </div>
@@ -340,11 +349,12 @@ import exportTool from "../helpers/exportTool";
 import linkList from "../components/linkList";
 import configList from "./configList";
 import notifications from "../helpers/notifications";
+import syncSettings from "../components/config/syncSettings.vue";
 import { Modal } from "bootstrap";
 
 export default {
   name: "configModal",
-  components: { toastMessage, linkList },
+  components: { toastMessage, linkList, syncSettings },
   props: {
     configProp: { required: true },
   },

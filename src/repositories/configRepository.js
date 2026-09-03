@@ -1,6 +1,7 @@
 import storageRepository from "./storageRepository";
 import version_json from "../../public/version.json";
 import moment from "moment";
+import { newTaskId } from "../migrations/dataMigrations";
 
 export default {
   load() {
@@ -38,7 +39,14 @@ export default {
         moveCompletedSubTaskToBottom: true,
         fullscreenToDoModal: false,
         weekStartOnMonday: true,
-        lastDayOpened: moment().format("YYYY-MM-DD")
+        lastDayOpened: moment().format("YYYY-MM-DD"),
+        // Sincronizacao: nunca entram em documento sincronizado.
+        syncUrl: null,
+        syncUser: null,
+        syncToken: null,
+        deviceId: newTaskId(),
+        lastSyncAt: null,
+        lastSyncRevision: 0
       };
       storageRepository.set("config", default_config);
       return default_config;

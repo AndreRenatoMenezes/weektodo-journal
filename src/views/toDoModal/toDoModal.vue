@@ -169,6 +169,7 @@ import linkifyStr from 'linkify-string';
 import ClickHandler from "@manuelernestog/click-handler";
 import tasksHelper from "../../helpers/tasksHelper";
 import descriptionTextArea from './descriptionTextArea.vue'
+import { newTaskId, ensureTaskId } from "../../migrations/dataMigrations";
 
 export default {
   name: "toDoModal",
@@ -179,6 +180,7 @@ export default {
       pickedCListName: "",
       cListOptions: [],
       todo: {
+        id: null,
         text: "",
         checked: false,
         desc: "",
@@ -402,6 +404,7 @@ export default {
     },
     duplicateTodo: function () {
       var newTodo = {
+        id: newTaskId(),
         text: this.todo.text,
         checked: this.todo.checked,
         listId: this.todo.listId,
@@ -494,7 +497,7 @@ export default {
     selectedTodo: function (newVal) {
       this.todoList = this.$store.getters.todoLists[newVal.toDo.listId];
       this.index = newVal.index;
-      this.todo = this.todoList[this.index];
+      this.todo = ensureTaskId(this.todoList[this.index]);
       if (this.todo["desc"] == undefined) {
         this.todo["desc"] = "";
         this.todo["subTaskList"] = [];

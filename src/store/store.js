@@ -7,6 +7,7 @@ import repeatingEvents from "./modules/repeatingEvent.store";
 import repeatingEventsDataCache from "./modules/repeatingEventDateCache.store";
 import activeTodo from "./modules/activeTodo.store";
 import mainStore from './modules/main.store';
+import sync from './modules/sync.store';
 
 
 export const store = createStore({
@@ -18,7 +19,8 @@ export const store = createStore({
         repeatingEvents: repeatingEvents,
         repeatingEventsDataCache: repeatingEventsDataCache,
         mainStore: mainStore,
-        activeTodo: activeTodo
+        activeTodo: activeTodo,
+        sync: sync
     },
     state: {},
     getters: {},

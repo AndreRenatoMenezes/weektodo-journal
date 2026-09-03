@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import { store } from "./store/store";
+import { registerServiceWorker, requestPersistentStorage } from "./registerServiceWorker";
 import * as Sentry from "@sentry/vue";
 
 import { createI18n } from "vue-i18n";
@@ -45,6 +46,9 @@ Sentry.init({
   //   return event;
   // },
 });
+
+registerServiceWorker();
+requestPersistentStorage();
 
 const app = createApp(App);
 

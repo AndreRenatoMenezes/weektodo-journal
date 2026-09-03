@@ -2,6 +2,7 @@ import toDoListRepository from "../repositories/toDoListRepository";
 import repeatingEventByDateRepository from "../repositories/repeatingEventByDateRepository";
 import moment from "moment";
 import tasksHelper from "./tasksHelper";
+import { newTaskId } from "../migrations/dataMigrations";
 
 export default {
   generateRepeatingEventsIntances(listId, vue) {
@@ -11,6 +12,8 @@ export default {
       var re_by_date = vue.$store.getters.repeatingEventByDate[listId];
       if (!re_by_date[re_id]) {
         var new_instanced_event = JSON.parse(JSON.stringify(re.data));
+        // Cada materializacao e uma tarefa nova, nunca a mesma do molde.
+        new_instanced_event.id = newTaskId();
         new_instanced_event.listId = listId;
         vue.$store.commit("addTodo", new_instanced_event);
 

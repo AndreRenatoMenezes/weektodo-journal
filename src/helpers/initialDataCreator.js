@@ -1,6 +1,7 @@
 import toDoListRepository from "../repositories/toDoListRepository";
 import customToDoListIdsRepository from "../repositories/customToDoListIdsRepository";
 import moment from "moment";
+import { newTaskId } from "../migrations/dataMigrations";
 
 export default {
     create(vue) {
@@ -34,6 +35,7 @@ export default {
 
 function create_todo(vue, list_id, text, checked, desc = "", subTaskList = [], color = "none", time = null) {
     var newTodo = {
+        id: newTaskId(),
         text: text,
         checked: checked,
         listId: list_id,

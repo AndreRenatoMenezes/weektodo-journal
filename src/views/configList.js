@@ -37,6 +37,12 @@ export default {
               linktype: "tagId",
               link: "config-language-tab",
             },
+            {
+              name: vue.$t('settings.sync'),
+              ico: "bi-arrow-repeat",
+              linktype: "tagId",
+              link: "config-sync-tab",
+            },
           ]
     }
 }

@@ -37,6 +37,7 @@ import listHeader from "./listHeader";
 import notifications from "../helpers/notifications";
 import repeatingEventHelper from "../helpers/repeatingEvents.js";
 import tasksHelper from "../helpers/tasksHelper";
+import { newTaskId, ensureTaskId } from "../migrations/dataMigrations";
 
 export default {
   components: {
@@ -82,6 +83,7 @@ export default {
     addToDo: function () {
       if (this.newToDo.text != "") {
         var newTodo = {
+          id: newTaskId(),
           text: this.newToDo.text,
           checked: false,
           listId: this.id,
@@ -106,7 +108,7 @@ export default {
       return moment(date);
     },
     onDrop: function (event, list, new_index) {
-      let toDo = JSON.parse(event.dataTransfer.getData("item"));
+      let toDo = ensureTaskId(JSON.parse(event.dataTransfer.getData("item")));
       let index = event.dataTransfer.getData("index");
       this.$store.commit("removeTodo", {
         toDoListId: toDo.listId,
@@ -127,7 +129,7 @@ export default {
       }
     },
     onDropAtEnd: function (event, list) {
-      let toDo = JSON.parse(event.dataTransfer.getData("item"));
+      let toDo = ensureTaskId(JSON.parse(event.dataTransfer.getData("item")));
       let index = event.dataTransfer.getData("index");
       this.$store.commit("removeTodo", { toDoListId: toDo.listId, index: index, });
       this.updateTodoList(toDo.listId, this.$store.getters.todoLists[toDo.listId]);

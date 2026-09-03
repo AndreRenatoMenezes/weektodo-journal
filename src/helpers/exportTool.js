@@ -3,6 +3,7 @@ import dbRepository from "../repositories/dbRepository";
 import { Toast, Modal } from "bootstrap";
 import migrations from "../migrations/migrations";
 import isElectron from "is-electron";
+import { ensureTaskId } from "../migrations/dataMigrations";
 
 export default {
   export() {
@@ -152,6 +153,10 @@ function importDbRecords(db, data_a, table) {
   if (table == "todo_lists") {
     keys = Object.keys(data_a.todoLists);
     data = data_a.todoLists;
+    // Backup gerado antes da WP03 nao tem id nas tarefas.
+    keys.forEach((key) => {
+      if (Array.isArray(data[key])) data[key].forEach(ensureTaskId);
+    });
   } else if (table == "repeating_events") {
     if (!('repeating_events' in data_a)) location.reload(); // if not exist is an old data, finish the import and reload
     keys = Object.keys(data_a.repeating_events);

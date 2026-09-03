@@ -1,4 +1,5 @@
 import configRepository from "../repositories/configRepository";
+import dataMigrations, { newTaskId } from "./dataMigrations";
 import moment from "moment";
 
 export default {
@@ -12,6 +13,12 @@ export default {
     telemetric();
     v2_1_0();
     v2_2_0();
+    sync();
+  },
+  // Migracao de dados do IndexedDB. Separada de migrate() porque e assincrona:
+  // quem chama precisa esperar antes de montar payload de sincronizacao.
+  migrateData() {
+    return dataMigrations.migrateTaskIds();
   },
 };
 
@@ -100,6 +107,19 @@ function v2_2_0() {
   let config = configRepository.load();
   if (!("lastDayOpened" in config)) {
     config["lastDayOpened"] = moment().format("YYYY-MM-DD");
+    configRepository.update(config);
+  }
+}
+
+function sync() {
+  let config = configRepository.load();
+  if (!("deviceId" in config)) {
+    config["syncUrl"] = null;
+    config["syncUser"] = null;
+    config["syncToken"] = null;
+    config["deviceId"] = newTaskId();
+    config["lastSyncAt"] = null;
+    config["lastSyncRevision"] = 0;
     configRepository.update(config);
   }
 }
