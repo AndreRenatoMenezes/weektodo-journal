@@ -43,7 +43,8 @@
     "clear": "Löschen",
     "fullscreenToDoModal": "Aufgabendetails im Vollbildmodus",
     "moveCompletedSubTaskToBottom": "Abgeschlossene Unteraufgaben nach unten verschieben",
-    "weekStartOnMonday": "Die Woche beginnt am Montag"
+    "weekStartOnMonday": "Die Woche beginnt am Montag",
+    "sync": "Synchronisation"
   },
   "donate": {
     "contribute": "Beitragen",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "Sie haben gestern {0} ausstehende Aufgaben.",
     "pendingTasksToday": "Sie haben heute {0} geplante Aufgaben.",
     "pendingTasksYesterdayAndToday": "Sie haben gestern {0} ausstehende Aufgaben und heute {1} geplante Aufgaben."
+  },
+  "sync": {
+    "description": "Synchronisiere deine Aufgaben zwischen Geräten über deinen eigenen Server. Deine Daten laufen nie über Dritte.",
+    "serverUrl": "Serveradresse",
+    "user": "Benutzer",
+    "password": "Passwort",
+    "passwordNotStored": "Das Passwort wird nicht gespeichert: es dient nur dazu, ein Zugriffstoken zu erhalten.",
+    "connect": "Verbinden",
+    "disconnect": "Trennen",
+    "syncNow": "Jetzt synchronisieren",
+    "status": "Status",
+    "lastSync": "Letzte Synchronisation",
+    "never": "Nie",
+    "statusNotConfigured": "Nicht eingerichtet",
+    "statusConnected": "Verbunden",
+    "statusSyncing": "Synchronisiere…",
+    "statusOffline": "Offline",
+    "statusCredentialError": "Ungültige Zugangsdaten",
+    "credentialErrorHelp": "Benutzer oder Passwort vom Server abgelehnt. Prüfe die Daten und verbinde dich erneut.",
+    "offlineHelp": "Server nicht erreichbar. Die App läuft weiter und synchronisiert beim nächsten Versuch."
   }
 }

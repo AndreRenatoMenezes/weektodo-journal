@@ -43,7 +43,8 @@
     "moveCompletedTaskToBottom": "نقل المهام المكتملة إلى الأسفل",
     "moveCompletedSubTaskToBottom": "نقل المهام الفرعية المكتملة إلى الأسفل",
     "fullscreenToDoModal": "تفاصيل المهمة بشاشة كاملة",
-    "weekStartOnMonday": "بداية الأسبوع يوم الاثنين"
+    "weekStartOnMonday": "بداية الأسبوع يوم الاثنين",
+    "sync": "المزامنة"
   },
   "donate": {
     "contribute": "المساهمة",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "لديك {0} مهام معلقة أمس.",
     "pendingTasksToday": "لديك {0} مهام مجدولة اليوم.",
     "pendingTasksYesterdayAndToday": "لديك {0} مهام معلقة أمس و {1} مهام مجدولة اليوم."
+  },
+  "sync": {
+    "description": "زامن مهامك بين الأجهزة عبر خادمك الخاص. بياناتك لا تمر أبدًا عبر أطراف ثالثة.",
+    "serverUrl": "عنوان الخادم",
+    "user": "المستخدم",
+    "password": "كلمة المرور",
+    "passwordNotStored": "لا يتم تخزين كلمة المرور: تُستخدم فقط للحصول على رمز وصول.",
+    "connect": "اتصال",
+    "disconnect": "قطع الاتصال",
+    "syncNow": "زامن الآن",
+    "status": "الحالة",
+    "lastSync": "آخر مزامنة",
+    "never": "أبدًا",
+    "statusNotConfigured": "غير مُهيأ",
+    "statusConnected": "متصل",
+    "statusSyncing": "جارٍ المزامنة…",
+    "statusOffline": "غير متصل",
+    "statusCredentialError": "بيانات اعتماد غير صالحة",
+    "credentialErrorHelp": "رفض الخادم اسم المستخدم أو كلمة المرور. تحقق من البيانات وأعد الاتصال.",
+    "offlineHelp": "تعذر الوصول إلى الخادم. يواصل التطبيق العمل وسيزامن في المحاولة التالية."
   }
 }

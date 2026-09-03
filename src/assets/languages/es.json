@@ -43,7 +43,8 @@
     "clear": "Eliminar",
     "fullscreenToDoModal": "Detalles de tareas en pantalla completa",
     "moveCompletedSubTaskToBottom": "Mover las subtareas completadas al final",
-    "weekStartOnMonday": "La semana comienza el lunes."
+    "weekStartOnMonday": "La semana comienza el lunes.",
+    "sync": "Sincronización"
   },
   "donate": {
     "contribute": "Contribuir",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "Tienes {0} tareas pendientes ayer.",
     "pendingTasksToday": "Tienes {0} tareas programadas hoy.",
     "pendingTasksYesterdayAndToday": "Tienes {0} tareas pendientes ayer y {1} tareas programadas hoy."
+  },
+  "sync": {
+    "description": "Sincroniza tus tareas entre dispositivos usando tu propio servidor. Tus datos nunca pasan por terceros.",
+    "serverUrl": "Dirección del servidor",
+    "user": "Usuario",
+    "password": "Contraseña",
+    "passwordNotStored": "La contraseña no se guarda: solo se usa para obtener un token de acceso.",
+    "connect": "Conectar",
+    "disconnect": "Desconectar",
+    "syncNow": "Sincronizar ahora",
+    "status": "Estado",
+    "lastSync": "Última sincronización",
+    "never": "Nunca",
+    "statusNotConfigured": "Sin configurar",
+    "statusConnected": "Conectado",
+    "statusSyncing": "Sincronizando…",
+    "statusOffline": "Sin conexión",
+    "statusCredentialError": "Credenciales inválidas",
+    "credentialErrorHelp": "Usuario o contraseña rechazados por el servidor. Revisa los datos y vuelve a conectar.",
+    "offlineHelp": "No se puede alcanzar el servidor. La aplicación sigue funcionando y sincronizará en el próximo intento."
   }
 }

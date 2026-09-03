@@ -43,7 +43,8 @@
     "moveCompletedTaskToBottom": "הזז משימות שהושלמו לתחתית",
     "moveCompletedSubTaskToBottom": "הזז תתי משימות שהושלמו לתחתית",
     "fullscreenToDoModal": "פרטי משימה במסך מלא",
-    "weekStartOnMonday": "השבוע מתחיל ביום שני"
+    "weekStartOnMonday": "השבוע מתחיל ביום שני",
+    "sync": "סנכרון"
   },
   "donate": {
     "contribute": "תרום",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "יש לך {0} משימות ממתינות מאתמול.",
     "pendingTasksToday": "יש לך {0} משימות מתוזמנות היום.",
     "pendingTasksYesterdayAndToday": "יש לך {0} משימות ממתינות מאתמול ו-{1} משימות מתוזמנות היום."
+  },
+  "sync": {
+    "description": "סנכרנו את המשימות בין המכשירים דרך שרת משלכם. הנתונים שלכם לא עוברים דרך צד שלישי.",
+    "serverUrl": "כתובת השרת",
+    "user": "משתמש",
+    "password": "סיסמה",
+    "passwordNotStored": "הסיסמה אינה נשמרת: היא משמשת רק לקבלת אסימון גישה.",
+    "connect": "התחברות",
+    "disconnect": "ניתוק",
+    "syncNow": "סנכרן עכשיו",
+    "status": "מצב",
+    "lastSync": "סנכרון אחרון",
+    "never": "מעולם לא",
+    "statusNotConfigured": "לא מוגדר",
+    "statusConnected": "מחובר",
+    "statusSyncing": "מסנכרן…",
+    "statusOffline": "לא מקוון",
+    "statusCredentialError": "פרטי גישה שגויים",
+    "credentialErrorHelp": "השרת דחה את שם המשתמש או הסיסמה. בדקו את הפרטים והתחברו שוב.",
+    "offlineHelp": "השרת אינו זמין. היישום ממשיך לעבוד ויסתנכרן בניסיון הבא."
   }
 }

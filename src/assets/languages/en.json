@@ -43,7 +43,8 @@
     "moveCompletedTaskToBottom": "Move completed tasks to bottom",
     "moveCompletedSubTaskToBottom": "Move completed sub-tasks to bottom",
     "fullscreenToDoModal": "To-do Details in full screen",
-    "weekStartOnMonday": "The Week start on Monday"
+    "weekStartOnMonday": "The Week start on Monday",
+    "sync": "Sync"
   },
   "donate": {
     "contribute": "Contribute",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "You have {0} pending tasks yesterday.",
     "pendingTasksToday": "You have {0} scheduled tasks today.",
     "pendingTasksYesterdayAndToday": "You have {0} pending tasks yesterday and {1} scheduled tasks today."
+  },
+  "sync": {
+    "description": "Sync your tasks between devices using your own server. Your data never passes through third parties.",
+    "serverUrl": "Server address",
+    "user": "User",
+    "password": "Password",
+    "passwordNotStored": "The password is not stored: it is only used to obtain an access token.",
+    "connect": "Connect",
+    "disconnect": "Disconnect",
+    "syncNow": "Sync now",
+    "status": "Status",
+    "lastSync": "Last sync",
+    "never": "Never",
+    "statusNotConfigured": "Not configured",
+    "statusConnected": "Connected",
+    "statusSyncing": "Syncing…",
+    "statusOffline": "Offline",
+    "statusCredentialError": "Invalid credentials",
+    "credentialErrorHelp": "User or password rejected by the server. Check the data and connect again.",
+    "offlineHelp": "Server unreachable. The app keeps working and will sync on the next attempt."
   }
 }

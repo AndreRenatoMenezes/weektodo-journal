@@ -43,7 +43,8 @@
     "clear": "刪除",
     "fullscreenToDoModal": "全屏待辦事項詳細信息",
     "moveCompletedSubTaskToBottom": "將完成的子任務移至底部",
-    "weekStartOnMonday": "一周從星期一開始"
+    "weekStartOnMonday": "一周從星期一開始",
+    "sync": "同步"
   },
   "donate": {
     "contribute": "貢獻",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "您昨天有 {0} 個待處理任務。",
     "pendingTasksToday": "您今天有 {0} 個計劃任務。",
     "pendingTasksYesterdayAndToday": "您昨天有 {0} 個待處理任務，今天有 {1} 個計劃任務。"
+  },
+  "sync": {
+    "description": "透過你自己的伺服器在裝置之間同步工作。資料不會經過任何第三方。",
+    "serverUrl": "伺服器位址",
+    "user": "使用者",
+    "password": "密碼",
+    "passwordNotStored": "密碼不會被儲存，只用於取得存取權杖。",
+    "connect": "連線",
+    "disconnect": "中斷連線",
+    "syncNow": "立即同步",
+    "status": "狀態",
+    "lastSync": "上次同步",
+    "never": "從未",
+    "statusNotConfigured": "未設定",
+    "statusConnected": "已連線",
+    "statusSyncing": "同步中…",
+    "statusOffline": "離線",
+    "statusCredentialError": "憑證無效",
+    "credentialErrorHelp": "伺服器拒絕了使用者或密碼。請核對後重新連線。",
+    "offlineHelp": "無法連線伺服器。應用程式照常運作，下次嘗試時會同步。"
   }
 }

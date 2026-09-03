@@ -43,7 +43,8 @@
     "moveCompletedTaskToBottom": "Di chuyển công việc đã hoàn thành xuống dưới cùng",
     "moveCompletedSubTaskToBottom": "Di chuyển công việc con đã hoàn thành xuống dưới cùng",
     "fullscreenToDoModal": "Chi tiết Công việc ở chế độ toàn màn hình",
-    "weekStartOnMonday": "Tuần bắt đầu vào Thứ Hai"
+    "weekStartOnMonday": "Tuần bắt đầu vào Thứ Hai",
+    "sync": "Đồng bộ"
   },
   "donate": {
     "contribute": "Đóng góp",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "Bạn có {0} công việc đang chờ hôm qua.",
     "pendingTasksToday": "Bạn có {0} công việc được lên lịch hôm nay.",
     "pendingTasksYesterdayAndToday": "Bạn có {0} công việc đang chờ hôm qua và {1} công việc được lên lịch hôm nay."
+  },
+  "sync": {
+    "description": "Đồng bộ công việc giữa các thiết bị bằng máy chủ của riêng bạn. Dữ liệu không bao giờ đi qua bên thứ ba.",
+    "serverUrl": "Địa chỉ máy chủ",
+    "user": "Người dùng",
+    "password": "Mật khẩu",
+    "passwordNotStored": "Mật khẩu không được lưu: chỉ dùng để lấy mã truy cập.",
+    "connect": "Kết nối",
+    "disconnect": "Ngắt kết nối",
+    "syncNow": "Đồng bộ ngay",
+    "status": "Trạng thái",
+    "lastSync": "Lần đồng bộ cuối",
+    "never": "Chưa bao giờ",
+    "statusNotConfigured": "Chưa cấu hình",
+    "statusConnected": "Đã kết nối",
+    "statusSyncing": "Đang đồng bộ…",
+    "statusOffline": "Ngoại tuyến",
+    "statusCredentialError": "Thông tin đăng nhập không hợp lệ",
+    "credentialErrorHelp": "Máy chủ từ chối người dùng hoặc mật khẩu. Kiểm tra lại và kết nối lần nữa.",
+    "offlineHelp": "Không liên lạc được máy chủ. Ứng dụng vẫn chạy và sẽ đồng bộ ở lần thử tiếp theo."
   }
 }

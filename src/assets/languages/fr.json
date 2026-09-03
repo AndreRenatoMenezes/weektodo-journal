@@ -43,7 +43,8 @@
     "clear": "Supprimer",
     "fullscreenToDoModal": "Détails de la tâche en plein écran",
     "moveCompletedSubTaskToBottom": "Déplacer les sous-tâches terminées vers le bas",
-    "weekStartOnMonday": "La semaine commence le lundi"
+    "weekStartOnMonday": "La semaine commence le lundi",
+    "sync": "Synchronisation"
   },
   "donate": {
     "contribute": "Contribuer",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "Vous avez {0} tâches en attente hier.",
     "pendingTasksToday": "Vous avez {0} tâches planifiées aujourd'hui.",
     "pendingTasksYesterdayAndToday": "Vous avez {0} tâches en attente hier et {1} tâches planifiées aujourd'hui."
+  },
+  "sync": {
+    "description": "Synchronisez vos tâches entre appareils avec votre propre serveur. Vos données ne passent jamais par des tiers.",
+    "serverUrl": "Adresse du serveur",
+    "user": "Utilisateur",
+    "password": "Mot de passe",
+    "passwordNotStored": "Le mot de passe n'est pas conservé : il sert uniquement à obtenir un jeton d'accès.",
+    "connect": "Connecter",
+    "disconnect": "Déconnecter",
+    "syncNow": "Synchroniser maintenant",
+    "status": "État",
+    "lastSync": "Dernière synchronisation",
+    "never": "Jamais",
+    "statusNotConfigured": "Non configuré",
+    "statusConnected": "Connecté",
+    "statusSyncing": "Synchronisation…",
+    "statusOffline": "Hors ligne",
+    "statusCredentialError": "Identifiants invalides",
+    "credentialErrorHelp": "Utilisateur ou mot de passe refusé par le serveur. Vérifiez les données et reconnectez-vous.",
+    "offlineHelp": "Serveur injoignable. L'application continue de fonctionner et se synchronisera au prochain essai."
   }
 }

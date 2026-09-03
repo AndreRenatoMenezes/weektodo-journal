@@ -43,7 +43,8 @@
     "clear": "Eliminare",
     "fullscreenToDoModal": "Dettagli attività a schermo intero",
     "moveCompletedSubTaskToBottom": "Sposta le attività secondarie completate in basso",
-    "weekStartOnMonday": "La settimana inizia lunedì"
+    "weekStartOnMonday": "La settimana inizia lunedì",
+    "sync": "Sincronizzazione"
   },
   "donate": {
     "contribute": "Contribuisci",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "Hai {0} attività in sospeso ieri.",
     "pendingTasksToday": "Hai {0} attività pianificate oggi.",
     "pendingTasksYesterdayAndToday": "Hai {0} attività in sospeso ieri e {1} attività pianificate oggi."
+  },
+  "sync": {
+    "description": "Sincronizza le tue attività tra i dispositivi usando il tuo server. I tuoi dati non passano mai da terze parti.",
+    "serverUrl": "Indirizzo del server",
+    "user": "Utente",
+    "password": "Password",
+    "passwordNotStored": "La password non viene salvata: serve solo a ottenere un token di accesso.",
+    "connect": "Connetti",
+    "disconnect": "Disconnetti",
+    "syncNow": "Sincronizza ora",
+    "status": "Stato",
+    "lastSync": "Ultima sincronizzazione",
+    "never": "Mai",
+    "statusNotConfigured": "Non configurato",
+    "statusConnected": "Connesso",
+    "statusSyncing": "Sincronizzazione…",
+    "statusOffline": "Offline",
+    "statusCredentialError": "Credenziali non valide",
+    "credentialErrorHelp": "Utente o password rifiutati dal server. Controlla i dati e riconnettiti.",
+    "offlineHelp": "Server irraggiungibile. L'app continua a funzionare e sincronizzerà al prossimo tentativo."
   }
 }

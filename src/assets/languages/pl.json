@@ -107,7 +107,8 @@
     "clear": "Usuwać",
     "fullscreenToDoModal": "Szczegóły zadań na pełnym ekranie",
     "moveCompletedSubTaskToBottom": "Przenieś ukończone zadania podrzędne na dół",
-    "weekStartOnMonday": "Tydzień zaczyna się w poniedziałek"
+    "weekStartOnMonday": "Tydzień zaczyna się w poniedziałek",
+    "sync": "Synchronizacja"
   },
   "tips": {
     "back": "Poprzednia wskazówka",
@@ -219,5 +220,25 @@
     "themeText": "Możesz wybrać jasny lub ciemny motyw zgodnie z własnymi preferencjami.",
     "welcome": "Witamy w WeekToDo",
     "welcomeText": "Minimalistyczny Tygodniowy Menedżer Zadań skoncentrowany na prywatności. \nAby rozpocząć, wybierz swój język."
+  },
+  "sync": {
+    "description": "Synchronizuj zadania między urządzeniami przez własny serwer. Twoje dane nigdy nie przechodzą przez osoby trzecie.",
+    "serverUrl": "Adres serwera",
+    "user": "Użytkownik",
+    "password": "Hasło",
+    "passwordNotStored": "Hasło nie jest zapisywane: służy tylko do uzyskania tokenu dostępu.",
+    "connect": "Połącz",
+    "disconnect": "Rozłącz",
+    "syncNow": "Synchronizuj teraz",
+    "status": "Stan",
+    "lastSync": "Ostatnia synchronizacja",
+    "never": "Nigdy",
+    "statusNotConfigured": "Nieskonfigurowane",
+    "statusConnected": "Połączono",
+    "statusSyncing": "Synchronizacja…",
+    "statusOffline": "Offline",
+    "statusCredentialError": "Nieprawidłowe dane logowania",
+    "credentialErrorHelp": "Serwer odrzucił użytkownika lub hasło. Sprawdź dane i połącz się ponownie.",
+    "offlineHelp": "Serwer nieosiągalny. Aplikacja działa dalej i zsynchronizuje się przy następnej próbie."
   }
 }

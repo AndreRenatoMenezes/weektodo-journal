@@ -43,7 +43,8 @@
     "clear": "Temizle",
     "fullscreenToDoModal": "Tam ekranda yapılacakların ayrıntıları",
     "moveCompletedSubTaskToBottom": "Tamamlanan görevleri en alta taşı",
-    "weekStartOnMonday": "Hafta Pazartesi ile başlar"
+    "weekStartOnMonday": "Hafta Pazartesi ile başlar",
+    "sync": "Eşitleme"
   },
   "donate": {
     "contribute": "Katkıda bulun",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "Dün bekleyen {0} görevin var.",
     "pendingTasksToday": "Bugün {0} planlanmış göreviniz var.",
     "pendingTasksYesterdayAndToday": "Dün bekleyen {0} göreviniz ve bugün {1} zamanlanmış göreviniz var."
+  },
+  "sync": {
+    "description": "Görevlerinizi kendi sunucunuzu kullanarak cihazlar arasında eşitleyin. Verileriniz asla üçüncü taraflardan geçmez.",
+    "serverUrl": "Sunucu adresi",
+    "user": "Kullanıcı",
+    "password": "Parola",
+    "passwordNotStored": "Parola saklanmaz: yalnızca erişim belirteci almak için kullanılır.",
+    "connect": "Bağlan",
+    "disconnect": "Bağlantıyı kes",
+    "syncNow": "Şimdi eşitle",
+    "status": "Durum",
+    "lastSync": "Son eşitleme",
+    "never": "Hiç",
+    "statusNotConfigured": "Yapılandırılmadı",
+    "statusConnected": "Bağlandı",
+    "statusSyncing": "Eşitleniyor…",
+    "statusOffline": "Çevrimdışı",
+    "statusCredentialError": "Geçersiz kimlik bilgileri",
+    "credentialErrorHelp": "Kullanıcı veya parola sunucu tarafından reddedildi. Bilgileri kontrol edip yeniden bağlanın.",
+    "offlineHelp": "Sunucuya ulaşılamıyor. Uygulama çalışmaya devam eder ve bir sonraki denemede eşitler."
   }
 }

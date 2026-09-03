@@ -43,7 +43,8 @@
     "weekStartOnMonday": "从星期一开始",
     "clear": "清除",
     "fullscreenToDoModal": "全屏显示“待办事项详情”",
-    "moveCompletedSubTaskToBottom": "将已完成的子任务移到底部"
+    "moveCompletedSubTaskToBottom": "将已完成的子任务移到底部",
+    "sync": "同步"
   },
   "donate": {
     "contribute": "贡献",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "昨天你有 {0} 个未完成任务。",
     "pendingTasksToday": "您今天有 {0} 个计划任务。",
     "pendingTasksYesterdayAndToday": "您昨天有 {0} 个待办任务和今天的计划任务。"
+  },
+  "sync": {
+    "description": "通过你自己的服务器在设备之间同步任务。数据不会经过任何第三方。",
+    "serverUrl": "服务器地址",
+    "user": "用户",
+    "password": "密码",
+    "passwordNotStored": "密码不会被保存，只用于获取访问令牌。",
+    "connect": "连接",
+    "disconnect": "断开连接",
+    "syncNow": "立即同步",
+    "status": "状态",
+    "lastSync": "上次同步",
+    "never": "从未",
+    "statusNotConfigured": "未配置",
+    "statusConnected": "已连接",
+    "statusSyncing": "正在同步…",
+    "statusOffline": "离线",
+    "statusCredentialError": "凭据无效",
+    "credentialErrorHelp": "服务器拒绝了用户名或密码。请核对后重新连接。",
+    "offlineHelp": "无法连接服务器。应用照常使用，下次尝试时会同步。"
   }
 }

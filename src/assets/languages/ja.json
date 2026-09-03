@@ -43,7 +43,8 @@
     "clear": "消去",
     "fullscreenToDoModal": "全画面でのToDo詳細",
     "moveCompletedSubTaskToBottom": "完了したサブタスクを一番下に移動します",
-    "weekStartOnMonday": "週は月曜日から始まります"
+    "weekStartOnMonday": "週は月曜日から始まります",
+    "sync": "同期"
   },
   "donate": {
     "contribute": "コントリビューション",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "昨日、{0}の保留中のタスクがあります。",
     "pendingTasksToday": "今日、{0}のスケジュールされたタスクがあります。",
     "pendingTasksYesterdayAndToday": "昨日は{0}の保留中のタスクがあり、今日は{1}のスケジュールされたタスクがあります。"
+  },
+  "sync": {
+    "description": "自分のサーバーを使って端末間でタスクを同期します。データが第三者を経由することはありません。",
+    "serverUrl": "サーバーのアドレス",
+    "user": "ユーザー",
+    "password": "パスワード",
+    "passwordNotStored": "パスワードは保存されません。アクセストークンの取得にのみ使われます。",
+    "connect": "接続",
+    "disconnect": "切断",
+    "syncNow": "今すぐ同期",
+    "status": "状態",
+    "lastSync": "最終同期",
+    "never": "未実行",
+    "statusNotConfigured": "未設定",
+    "statusConnected": "接続済み",
+    "statusSyncing": "同期中…",
+    "statusOffline": "オフライン",
+    "statusCredentialError": "認証情報が無効です",
+    "credentialErrorHelp": "ユーザーまたはパスワードがサーバーに拒否されました。内容を確認して再接続してください。",
+    "offlineHelp": "サーバーに接続できません。アプリはそのまま使え、次回の試行で同期します。"
   }
 }

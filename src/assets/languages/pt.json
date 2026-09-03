@@ -43,7 +43,8 @@
     "clear": "Excluir",
     "fullscreenToDoModal": "Detalhes da tarefa em tela cheia",
     "moveCompletedSubTaskToBottom": "Mover subtarefas concluídas para baixo",
-    "weekStartOnMonday": "A semana começa na segunda-feira"
+    "weekStartOnMonday": "A semana começa na segunda-feira",
+    "sync": "Sincronização"
   },
   "donate": {
     "contribute": "Contribuir",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "Você tem {0} tarefas pendentes ontem.",
     "pendingTasksToday": "Você tem {0} tarefas agendadas hoje.",
     "pendingTasksYesterdayAndToday": "Você tem {0} tarefas pendentes ontem e {1} tarefas agendadas hoje."
+  },
+  "sync": {
+    "description": "Sincronize suas tarefas entre dispositivos usando seu próprio servidor. Seus dados nunca passam por terceiros.",
+    "serverUrl": "Endereço do servidor",
+    "user": "Usuário",
+    "password": "Senha",
+    "passwordNotStored": "A senha não é guardada: serve apenas para obter um token de acesso.",
+    "connect": "Conectar",
+    "disconnect": "Desconectar",
+    "syncNow": "Sincronizar agora",
+    "status": "Estado",
+    "lastSync": "Última sincronização",
+    "never": "Nunca",
+    "statusNotConfigured": "Não configurado",
+    "statusConnected": "Conectado",
+    "statusSyncing": "Sincronizando…",
+    "statusOffline": "Sem conexão",
+    "statusCredentialError": "Credenciais inválidas",
+    "credentialErrorHelp": "Usuário ou senha recusados pelo servidor. Confira os dados e conecte novamente.",
+    "offlineHelp": "Servidor inalcançável. O aplicativo continua funcionando e sincroniza na próxima tentativa."
   }
 }

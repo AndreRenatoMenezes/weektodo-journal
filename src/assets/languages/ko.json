@@ -43,7 +43,8 @@
     "clear": "삭제",
     "fullscreenToDoModal": "전체 화면으로 할 일 세부 정보",
     "moveCompletedSubTaskToBottom": "완료된 하위 작업을 맨 아래로 이동",
-    "weekStartOnMonday": "주 시작 월요일"
+    "weekStartOnMonday": "주 시작 월요일",
+    "sync": "동기화"
   },
   "donate": {
     "contribute": "기여하다",
@@ -219,5 +220,25 @@
     "pendingTasksYesterday": "어제 보류 중인 작업이 {0}개 있습니다.",
     "pendingTasksToday": "오늘 예약된 작업이 {0}개 있습니다.",
     "pendingTasksYesterdayAndToday": "어제 보류 중인 작업이 {0}개 있고 오늘 예약된 작업이 {1}개 있습니다."
+  },
+  "sync": {
+    "description": "내 서버로 기기 간에 할 일을 동기화합니다. 데이터가 제3자를 거치지 않습니다.",
+    "serverUrl": "서버 주소",
+    "user": "사용자",
+    "password": "비밀번호",
+    "passwordNotStored": "비밀번호는 저장되지 않습니다. 접근 토큰을 받는 데만 사용됩니다.",
+    "connect": "연결",
+    "disconnect": "연결 해제",
+    "syncNow": "지금 동기화",
+    "status": "상태",
+    "lastSync": "마지막 동기화",
+    "never": "없음",
+    "statusNotConfigured": "설정되지 않음",
+    "statusConnected": "연결됨",
+    "statusSyncing": "동기화 중…",
+    "statusOffline": "오프라인",
+    "statusCredentialError": "잘못된 자격 증명",
+    "credentialErrorHelp": "서버가 사용자 또는 비밀번호를 거부했습니다. 정보를 확인하고 다시 연결하세요.",
+    "offlineHelp": "서버에 연결할 수 없습니다. 앱은 계속 작동하며 다음 시도에 동기화합니다."
   }
 }
