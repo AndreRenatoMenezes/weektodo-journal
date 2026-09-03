@@ -182,6 +182,7 @@ import ReorderCustomListsModal from "./views/ReorderCustomListsModal.vue";
 import toastMessage from "./components/toastMessage";
 import activeToDo from "./components/activeToDo.vue";
 import tasksHelper from "./helpers/tasksHelper";
+import syncEngine from "./helpers/syncEngine";
 
 export default {
   name: "App",
@@ -227,6 +228,17 @@ export default {
     this.$store.commit("loadCustomTodoListsIds", customToDoListIdsRepository.load());
     this.$store.commit("loadConfig", configRepository.load());
     this.$i18n.locale = this.$store.getters.config.language;
+
+    // Toda tarefa precisa de id antes do primeiro ciclo: sem id a fusao nao
+    // consegue casar as tarefas dos dois lados.
+    migrations
+      .migrateData()
+      .then(() => {
+        if (syncEngine.estaConfigurado(this.$store.getters.config)) {
+          return syncEngine.sync(this.$store);
+        }
+      })
+      .catch((error) => console.log("sync on startup failed", error));
 
     this.$store.dispatch("loadAllRepeatingEvent").then(
       function () {
@@ -626,6 +638,22 @@ export default {
       if (!this.$store.getters.config.customList || !this.$store.getters.config.calendar) return false;
 
       return this.$store.getters.config.mainDividerPosition == 0 ? true : false;
+    },
+    syncPendingReload: function () {
+      return this.$store.getters.syncPendingReload;
+    },
+  },
+  watch: {
+    // A fusao trouxe mudanca: recarrega as listas visiveis para a tela nao
+    // ficar desatualizada.
+    syncPendingReload: function (pending) {
+      if (!pending) return;
+      const listIds = [
+        ...(this.$store.getters.selectedDates || []),
+        ...(this.$store.getters.cTodoListIds || []).map((list) => list.listId),
+      ];
+      listIds.forEach((listId) => this.$store.dispatch("loadTodoLists", listId));
+      this.$store.commit("setSyncPendingReload", false);
     },
   },
 };
