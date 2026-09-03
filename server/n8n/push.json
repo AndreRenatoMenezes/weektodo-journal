@@ -1,0 +1,143 @@
+{
+  "name": "WeekToDo Journal — push",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "weektodo/push",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "https://todo.bragademenezes.com"
+        }
+      },
+      "id": "c1000000-0000-4000-8000-000000000001",
+      "name": "Webhook push",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-320, 0],
+      "webhookId": "c1000000-0000-4000-8000-0000000000f1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE sync_token\n   SET usado_em = now()\n WHERE token_hash = encode(digest($1, 'sha256'), 'hex')\nRETURNING username",
+        "options": {
+          "queryReplacement": "={{ ($json.headers.authorization || '').split(' ')[1] || '' }}"
+        }
+      },
+      "id": "c1000000-0000-4000-8000-000000000002",
+      "name": "Autenticar",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [-100, 0],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "SUBSTITUA_PELO_ID_DA_CREDENCIAL",
+          "name": "Postgres WeekToDo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c1000000-0000-4000-8000-0000000000c1",
+              "leftValue": "={{ $json.username }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "c1000000-0000-4000-8000-000000000003",
+      "name": "Token valido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [120, 0]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- Grava cada documento apenas se a revisao dele no servidor ainda for a que\n-- o cliente viu (baseRevision). Quem chegou depois e devolvido como rejeitado\n-- e o cliente refaz o ciclo.\nWITH entrada AS (\n  SELECT *\n    FROM json_to_recordset($1::json)\n      AS x(kind text, \"docId\" text, payload jsonb, \"baseRevision\" bigint, deleted boolean)\n), atual AS (\n  SELECT e.*, d.revision AS revisao_atual\n    FROM entrada e\n    LEFT JOIN sync_doc d ON d.kind = e.kind AND d.doc_id = e.\"docId\"\n), aceitos AS (\n  SELECT * FROM atual\n   WHERE COALESCE(revisao_atual, 0) = COALESCE(\"baseRevision\", 0)\n), gravados AS (\n  INSERT INTO sync_doc (kind, doc_id, payload, deleted, revision, updated_at)\n  SELECT kind, \"docId\", payload, COALESCE(deleted, false), nextval('sync_revision_seq'), now()\n    FROM aceitos\n  ON CONFLICT (kind, doc_id) DO UPDATE\n     SET payload    = EXCLUDED.payload,\n         deleted    = EXCLUDED.deleted,\n         revision   = EXCLUDED.revision,\n         updated_at = now()\n  RETURNING kind, doc_id, revision\n)\nSELECT GREATEST(\n         (SELECT COALESCE(MAX(revision), 0) FROM sync_doc),\n         COALESCE((SELECT MAX(revision) FROM gravados), 0)\n       ) AS revision,\n       COALESCE(\n         (SELECT json_agg(json_build_object('kind', kind, 'docId', doc_id, 'revision', revision))\n            FROM gravados),\n         '[]'::json\n       ) AS aceitos,\n       COALESCE(\n         (SELECT json_agg(json_build_object('kind', kind, 'docId', \"docId\", 'revision', revisao_atual))\n            FROM atual\n           WHERE COALESCE(revisao_atual, 0) <> COALESCE(\"baseRevision\", 0)),\n         '[]'::json\n       ) AS rejeitados",
+        "options": {
+          "queryReplacement": "={{ JSON.stringify($('Webhook push').item.json.body.docs || []) }}"
+        }
+      },
+      "id": "c1000000-0000-4000-8000-000000000004",
+      "name": "Gravar documentos",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [340, -100],
+      "credentials": {
+        "postgres": {
+          "id": "SUBSTITUA_PELO_ID_DA_CREDENCIAL",
+          "name": "Postgres WeekToDo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ revision: $json.revision, aceitos: $json.aceitos, rejeitados: $json.rejeitados }) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "c1000000-0000-4000-8000-000000000005",
+      "name": "Responder 200",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [560, -100]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ error: 'unauthorized' }) }}",
+        "options": {
+          "responseCode": 401
+        }
+      },
+      "id": "c1000000-0000-4000-8000-000000000006",
+      "name": "Responder 401",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [340, 120]
+    }
+  ],
+  "connections": {
+    "Webhook push": {
+      "main": [[{ "node": "Autenticar", "type": "main", "index": 0 }]]
+    },
+    "Autenticar": {
+      "main": [[{ "node": "Token valido?", "type": "main", "index": 0 }]]
+    },
+    "Token valido?": {
+      "main": [
+        [{ "node": "Gravar documentos", "type": "main", "index": 0 }],
+        [{ "node": "Responder 401", "type": "main", "index": 0 }]
+      ]
+    },
+    "Gravar documentos": {
+      "main": [[{ "node": "Responder 200", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

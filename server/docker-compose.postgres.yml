@@ -1,0 +1,40 @@
+# Trecho para acrescentar ao docker-compose do n8n.
+#
+# Sem `ports:` de propósito: o banco só é alcançável pela rede interna do
+# Docker, onde o n8n já está. Nenhuma porta nova é exposta na internet.
+#
+# A senha vem de variável de ambiente (arquivo .env ao lado do compose, fora do
+# Git). Nunca escreva a senha aqui.
+#
+#   POSTGRES_WEEKTODO_PASSWORD=<senha forte>
+#
+# Subir:   docker compose up -d postgres-weektodo
+# Schema:  docker compose exec -T postgres-weektodo \
+#            psql -U weektodo -d weektodo < server/schema.sql
+
+services:
+  postgres-weektodo:
+    image: postgres:16-alpine
+    container_name: postgres-weektodo
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: weektodo
+      POSTGRES_USER: weektodo
+      POSTGRES_PASSWORD: ${POSTGRES_WEEKTODO_PASSWORD}
+    volumes:
+      - postgres_weektodo_data:/var/lib/postgresql/data
+    networks:
+      # Mesma rede do n8n. Ajuste o nome se o seu compose usar outro.
+      - n8n
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U weektodo -d weektodo"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_weektodo_data:
+
+networks:
+  n8n:
+    external: true
