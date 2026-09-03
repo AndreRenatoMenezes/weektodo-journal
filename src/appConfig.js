@@ -6,7 +6,7 @@
 export default {
   name: "WeekToDo Journal",
   repoUrl: "https://github.com/AndreRenatoMenezes/weektodo-journal",
-  siteUrl: "https://github.com/AndreRenatoMenezes/weektodo-journal",
+  siteUrl: "https://todo.bragademenezes.com",
   changelogUrl: "https://github.com/AndreRenatoMenezes/weektodo-journal/blob/main/changelog.md",
 
   // JSON no formato { "version": "x.y.z" }. `null` desativa a checagem de
