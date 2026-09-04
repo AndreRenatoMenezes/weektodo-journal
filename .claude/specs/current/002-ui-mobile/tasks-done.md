@@ -321,3 +321,51 @@ O detalhe da tarefa como folha que sobe do rodapé, reaproveitando os componente
   6. Fechamento: validado fechamento pelo botão X, pelo toque no backdrop e por arrasto vertical > 90px (arrasto < 90px mantém aberta) (mobileTaskSheet.vue:205-214, 294-310).
   7. ESLint: 0 erros, 0 warnings.
 
+---
+
+## WP07 — Aba Listas
+
+```yaml
+lane: aprovado
+estimativa: 75min
+files:
+  - src/components/mobile/mobileListsView.vue
+  - src/components/mobile/mobileDayView.vue
+  - src/components/mobile/mobileApp.vue
+depende_de: [WP06]
+```
+
+### Objetivo
+Listas personalizadas como linhas de 52px e a abertura de uma lista reaproveitando a
+view de dia.
+
+### Definição de Pronto
+- [x] Cada linha traz o ponto de cor, o nome e o contador (ver desvio no Log)
+- [x] Tocar na linha abre a lista com suas tarefas; há como voltar para a relação de listas
+- [x] Criar tarefa dentro de uma lista personalizada funciona e sobrevive ao reload
+- [x] Criar lista nova pelo botão da barra superior funciona
+- [x] A ordem das listas é a mesma do desktop
+
+### Log
+- 2026-09-04: criada
+- 2026-09-04: implementada. `mobileListsView.vue` novo: linhas de 52px com ponto, nome, contador e
+  botão de renomear; criação de lista com o mesmo formato de id do desktop
+  (`moment().format("YYYYMMDDTHHmmssS")`, `sideBar.vue`), gravando por `newCustomTodoList` +
+  `customToDoListIdsRepository` + `toDoListRepository`, e já abrindo o campo de nome porque no
+  celular não há duplo clique. `mobileApp.vue` ganhou o botão "+" na barra superior da aba Listas,
+  o voltar, o título com o nome da lista aberta e o FAB dentro da lista; trocar de aba fecha a
+  lista aberta. `mobileDayView.vue` passou a pular a materialização de recorrência quando o
+  `listId` não é data, que é o caso das listas personalizadas.
+  Desvios registrados: (1) o contador usa a chave existente `mobile.tasksDone`
+  ("1 of 2 done" / "1 de 2 concluídas") em vez do texto "12 tasks · 3 done" da DoD, porque criar
+  chave nova exigiria editar `en.json`/`pt.json`, que são da WP08/WP10; (2) a lista não tem cor
+  própria no modelo de dados, então o ponto usa a primeira cor presente nas tarefas e cai em
+  `--wtd-text-subtle` quando não há nenhuma.
+  Validado a dedo em portal WebKit 390×845 sobre `yarn run serve` (porta 8082): criei "Compras" e
+  "Trabalho" pelo "+", linhas com 52px de altura; abri "Compras", criei "Leite" e "Pão" pelo
+  composer, concluí uma e o contador virou "1 of 2 done"; após reload as duas listas, as tarefas e
+  os contadores voltaram (`customTodoListIds` no localStorage com os dois ids). Voltar funciona;
+  detalhe da tarefa abre dentro da lista personalizada e esconde a repetição, como no desktop;
+  a cor da tarefa passou a pintar o ponto da lista. Invertendo `customTodoListIds` no localStorage
+  a ordem exibida acompanhou, confirmando que a ordem é a do desktop. Renomear pela caneta grava.
+  Tema escuro conferido. `eslint --ext .js,.vue src/` limpo.

@@ -2,33 +2,6 @@
 
 <!-- WPs vivas apenas. Ao aprovar, o Review Agent move o bloco inteiro para tasks-done.md. -->
 
-
-## WP07 — Aba Listas
-
-```yaml
-lane: planejado
-estimativa: 75min
-files:
-  - src/components/mobile/mobileListsView.vue
-  - src/components/mobile/mobileDayView.vue
-  - src/components/mobile/mobileApp.vue
-depende_de: [WP06]
-```
-
-### Objetivo
-Listas personalizadas como linhas de 52px e a abertura de uma lista reaproveitando a
-view de dia.
-
-### Definição de Pronto
-- [ ] Cada linha traz o ponto de cor, o nome e o contador no padrão "12 tasks · 3 done"
-- [ ] Tocar na linha abre a lista com suas tarefas; há como voltar para a relação de listas
-- [ ] Criar tarefa dentro de uma lista personalizada funciona e sobrevive ao reload
-- [ ] Criar lista nova pelo botão da barra superior funciona
-- [ ] A ordem das listas é a mesma do desktop
-
-### Log
-- 2026-09-04: criada
-
 ---
 
 ## WP08 — Aba Configurações
