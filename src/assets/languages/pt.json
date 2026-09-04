@@ -240,5 +240,24 @@
     "statusCredentialError": "Credenciais inválidas",
     "credentialErrorHelp": "Usuário ou senha recusados pelo servidor. Confira os dados e conecte novamente.",
     "offlineHelp": "Servidor inalcançável. O aplicativo continua funcionando e sincroniza na próxima tentativa."
+  },
+  "mobile": {
+    "weekTab": "Semana",
+    "listsTab": "Listas",
+    "journalTab": "Diário",
+    "settingsTab": "Configurações",
+    "taskTitlePlaceholder": "Título da tarefa",
+    "emptyStateTitle": "Nada planejado",
+    "emptyStateSubtitle": "Toque em + para adicionar uma tarefa.",
+    "journalTitle": "Diário",
+    "journalComingSoon": "Em breve",
+    "journalComingSoonDesc": "Recursos do diário estarão disponíveis em uma atualização futura.",
+    "appearance": "Aparência",
+    "data": "Dados",
+    "about": "Sobre",
+    "back": "Voltar",
+    "allLists": "Todas as listas",
+    "newList": "Nova lista",
+    "tasksDone": "{done} de {total} concluídas"
   }
 }

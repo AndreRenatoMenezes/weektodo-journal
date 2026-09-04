@@ -60,7 +60,7 @@ Trocar a decisão "é mobile?" de CSS para estado: módulo Vuex novo alimentado 
 ## WP02 — Base de estilo e vocabulário mobile
 
 ```yaml
-lane: revisão
+lane: aprovado
 estimativa: 60min
 files:
   - src/assets/style/mobile.scss
@@ -83,9 +83,14 @@ barra de abas) e a seção `mobile` de traduções em inglês e português.
 ### Log
 - 2026-09-04: criada
 - 2026-09-04: implementada por Antigravity
+- 2026-09-04: corrigida após revisão (OpenCode):
+  1. Sombras corrigidas para tokens `--wtd-shadow-pill` (FAB) e `--wtd-shadow-modal` (bottom sheet).
+  2. Tamanhos de tipo mapeados para `--wtd-fs-icon-task` (aba) e `--wtd-fs-icon-sidebar` (FAB).
+  3. Raio do handle atualizado para `--wtd-radius-pill`.
+  4. Transição do FAB ajustada para `--wtd-transition-ui`, removendo a transformação `scale()` no estado de pressão (press state).
 
 **O que mudou:**
-1. `src/assets/style/mobile.scss` — criado com tokens de estilo mobile, folha pautada de 52px, barra de abas, touch targets min 44px, FAB e bottom sheet, com suporte a tema claro e escuro.
+1. `src/assets/style/mobile.scss` — criado com tokens de estilo mobile rigorosamente mapeados do Design System, folha pautada de 52px, barra de abas, touch targets min 44px, FAB e bottom sheet, com suporte a tema claro e escuro.
 2. `src/assets/style/main.scss` — adicionado `@import "mobile";`.
 3. `src/assets/languages/en.json` — adicionada seção `"mobile"` com chaves para abas, composer, estado vazio, Diário e Configurações.
 4. `src/assets/languages/pt.json` — adicionada seção `"mobile"` em português.
