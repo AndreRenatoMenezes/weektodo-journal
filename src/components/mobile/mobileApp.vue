@@ -134,6 +134,12 @@ export default {
     };
   },
   watch: {
+    darkTheme: {
+      immediate: true,
+      handler(isDark) {
+        this.applyThemeColor(isDark);
+      },
+    },
     activeTab(newTab) {
       if (newTab !== "lists") this.openListId = null;
     },
@@ -141,6 +147,9 @@ export default {
   computed: {
     mobileSelectedDate() {
       return this.$store.getters.mobileSelectedDate;
+    },
+    darkTheme() {
+      return Boolean(this.$store.getters.config && this.$store.getters.config.darkTheme);
     },
     topBarTitle() {
       if (this.openListId) {
@@ -164,6 +173,14 @@ export default {
     },
   },
   methods: {
+    /**
+     * A barra do sistema no app instalado usa o `theme-color` da pagina; sem
+     * isso ela fica branca com o tema escuro ligado.
+     */
+    applyThemeColor(isDark) {
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute("content", isDark ? "#21262d" : "#ffffff");
+    },
     focusDayComposer() {
       if (this.$refs.dayView && typeof this.$refs.dayView.focusComposer === "function") {
         this.$refs.dayView.focusComposer();
