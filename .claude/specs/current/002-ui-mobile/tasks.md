@@ -4,35 +4,6 @@
 
 ---
 
-## WP08 — Aba Configurações
-
-```yaml
-lane: planejado
-estimativa: 90min
-files:
-  - src/components/mobile/mobileSettingsView.vue
-  - src/components/mobile/mobileApp.vue
-  - src/assets/languages/en.json
-  - src/assets/languages/pt.json
-depende_de: [WP03]
-```
-
-### Objetivo
-Tela de configurações do celular com Aparência, Dados e Sobre, em seções empilhadas de
-52px.
-
-### Definição de Pronto
-- [ ] Tema escuro e visão compacta com interruptor, gravando via `configRepository` e valendo na hora
-- [ ] Troca de idioma vale na hora e sobrevive ao reload
-- [ ] Exportar e importar backup funcionam pelo celular
-- [ ] Sincronização reaproveita `src/components/config/syncSettings.vue`, sem cópia da lógica
-- [ ] Rótulo que precede controle mantém os dois-pontos, como no resto do produto
-- [ ] Nenhuma preferência nova de `config` foi criada
-
-### Log
-- 2026-09-04: criada
-
----
 
 ## WP09 — Instalável e offline (PWA)
 

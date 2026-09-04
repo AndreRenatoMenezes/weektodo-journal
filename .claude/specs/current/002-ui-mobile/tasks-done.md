@@ -321,12 +321,13 @@ O detalhe da tarefa como folha que sobe do rodapé, reaproveitando os componente
   6. Fechamento: validado fechamento pelo botão X, pelo toque no backdrop e por arrasto vertical > 90px (arrasto < 90px mantém aberta) (mobileTaskSheet.vue:205-214, 294-310).
   7. ESLint: 0 erros, 0 warnings.
 
+
 ---
 
 ## WP07 — Aba Listas
 
 ```yaml
-lane: aprovado
+lane: concluída
 estimativa: 75min
 files:
   - src/components/mobile/mobileListsView.vue
@@ -369,3 +370,79 @@ view de dia.
   a cor da tarefa passou a pintar o ponto da lista. Invertendo `customTodoListIds` no localStorage
   a ordem exibida acompanhou, confirmando que a ordem é a do desktop. Renomear pela caneta grava.
   Tema escuro conferido. `eslint --ext .js,.vue src/` limpo.
+- 2026-09-04: aprovada pelo Review Agent (Yoda) — todos os 5 itens da DoD verificados no código real:
+  (1) ponto de cor em `mobileListsView.vue:18` via `listColor()`, nome em `:32`, contador em `:33`
+  usando `mobile.tasksDone` com placeholders `{done}`/`{total}` confirmados em `en.json:261` e
+  `pt.json:261`; desvios aceitos em `decisoes.md` (entradas 3 e 4);
+  (2) `openList()` emite `open-list` (:99-101), `mobileApp.vue` seta `openListId` e renderiza
+  `mobileDayView` com `:listId`; botão voltar `v-if="openListId"` + `closeList()` funcional;
+  (3) `mobileDayView.vue` guarda novo em `todo_lists` via `loadTodoLists` (cria array vazio se
+  ausente e grava no IDB); guard `moment(listId,'YYYYMMDD',true).isValid()` pula materialização de
+  recorrência para listIds não-data (:75-80 no diff); padrão idêntico ao desktop;
+  (4) botão "+" em `mobileApp.vue` v-if correto, `createList()` usa formato de id idêntico ao
+  `sideBar.vue:136`, flag `actionsCListCreatedUpdate` presente, abre campo de nome em `nextTick`;
+  (5) `lists` computed lê `cTodoListIds` do store sem reordenação local — mesma fonte do desktop.
+  Altura 52px via `mobile-row-52` → `--wtd-mobile-row-h: 52px` (`mobile.scss:8`).
+  ESLint: exit 0, saída vazia. Observação: `mobileListsView.vue` ainda não commitado (untracked)
+  — recomendado commit antes de fechar a lane.
+
+---
+
+## WP08 — Aba Configurações
+
+```yaml
+lane: concluída
+estimativa: 90min
+files:
+  - src/components/mobile/mobileSettingsView.vue
+  - src/components/mobile/mobileApp.vue
+depende_de: [WP03]
+```
+
+### Objetivo
+Tela de configurações do celular com Aparência, Dados e Sobre, em seções empilhadas de
+52px.
+
+### Definição de Pronto
+- [x] Tema escuro e visão compacta com interruptor, gravando via `configRepository` e valendo na hora
+- [x] Troca de idioma vale na hora e sobrevive ao reload
+- [x] Exportar e importar backup funcionam pelo celular
+- [x] Sincronização reaproveita `src/components/config/syncSettings.vue`, sem cópia da lógica
+- [x] Rótulo que precede controle mantém os dois-pontos, como no resto do produto
+- [x] Nenhuma preferência nova de `config` foi criada
+
+### Log
+- 2026-09-04: criada
+- 2026-09-04: implementada. `mobileSettingsView.vue` novo, com Aparência (tema escuro, visão
+  compacta, idioma), Dados (exportar, importar), Sincronização e Sobre, em linhas de 52px.
+  Gravação pelo mesmo par do desktop: `commit("updateConfig")` + `configRepository.update`, com
+  `$i18n.locale` acompanhando a troca de idioma. `syncSettings.vue` e `views/importingModal.vue`
+  são importados como estão; `helpers/exportTool` faz o export e o import, sem cópia de lógica.
+  `mobileApp.vue` trocou o placeholder da aba pelo componente e perdeu o CSS dos placeholders,
+  que ficou sem uso.
+  Duas decisões registradas: (1) o `exportTool` fecha o modal "Exportando…" procurando o id
+  `exportingModal`, que só existia no ramo desktop do `App.vue`, então a tela do celular passou a
+  renderizar esse modal e o aviso `invalidFile`; (2) no import o celular não abre modal nenhum —
+  o `exportTool` nunca fecha o de importação (no sucesso o fluxo termina em `location.reload`), e
+  abrir um deixaria a tela travada quando o arquivo é inválido.
+  Nenhuma chave nova de i18n foi necessária: tudo saiu de `settings.*`, `about.*`, `sync.*` e
+  `mobile.*` já existentes, então `en.json` e `pt.json` não mudaram. Dois-pontos aplicados nos
+  rótulos que precedem controle de valor ("Idioma:", "Versão:"); os interruptores seguem sem
+  dois-pontos, como no `configModal` do desktop.
+  Validado a dedo em portal WebKit 390×845 sobre `yarn run serve` (portas 8083 a 8087): tema
+  escuro e visão compacta gravaram em `config` e valeram na hora; idioma Português trocou a
+  interface na hora e sobreviveu ao reload; exportar gerou o arquivo (o `href` do download foi
+  capturado com 1870 caracteres) e o modal fechou sozinho; importar esse mesmo backup restaurou o
+  `config` (idioma voltou de `en` para `pt`) e terminou em reload; arquivo inválido mostrou
+  "Arquivo inválido" sem travar a tela (nenhum `modal-backdrop` restante). Sincronização aparece
+  com os campos do desktop. Todas as linhas medindo 52px. Tema escuro conferido.
+  `eslint --ext .js,.vue src/` limpo.
+- 2026-09-04: aprovada pelo Review Agent (Yoda) — todos os 6 itens da DoD verificados no código real:
+  (1) tema escuro e visão compacta com switch em `mobileSettingsView.vue:6-30`, gravando via `updateConfig` + `configRepository.update` (:145-146), reativos em `App.vue:3,629-630` sem recarregar a página;
+  (2) troca de idioma em `mobileSettingsView.vue:32-44` atualiza `$i18n.locale` (:147) na hora e persiste em `configRepository`, sobrevivendo ao reload;
+  (3) exportar e importar funcionam via `exportTool` (:150-164) e decisão 3 de `decisoes.md` respeitada (`#exportingModal` presente em `:86`, sem modal no import evitando travamento de tela);
+  (4) sincronização reaproveita `sync-settings` de `src/components/config/syncSettings.vue` (:66-68, 97, 104) sem duplicação de lógica;
+  (5) dois-pontos mantidos nos rótulos de controle com valor ("Idioma:" em `:33`, "Versão:" em `:74`), consistente com `configModal.vue`;
+  (6) nenhuma chave nova em `configRepository.js` ou `config.store.js`.
+  Altura 52px mantida com `mobile-row-52` (:6, 19, 32, 49, 56, 73, 78).
+  ESLint: exit 0, saída limpa. Observação: `mobileSettingsView.vue` está untracked no git.
