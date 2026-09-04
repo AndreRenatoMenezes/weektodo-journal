@@ -5,45 +5,6 @@
 ---
 
 
-## WP10 — Traduzir para os 17 idiomas restantes
-
-```yaml
-lane: planejado
-estimativa: 45min
-files:
-  - src/assets/languages/ar.json
-  - src/assets/languages/de.json
-  - src/assets/languages/es.json
-  - src/assets/languages/fr.json
-  - src/assets/languages/he.json
-  - src/assets/languages/hi.json
-  - src/assets/languages/it.json
-  - src/assets/languages/ja.json
-  - src/assets/languages/ko.json
-  - src/assets/languages/pl.json
-  - src/assets/languages/ru.json
-  - src/assets/languages/tr.json
-  - src/assets/languages/uk.json
-  - src/assets/languages/vi.json
-  - src/assets/languages/zh-CN.json
-  - src/assets/languages/zh-TW.json
-depende_de: [WP07, WP08]
-```
-
-### Objetivo
-Propagar a seção `mobile` para todos os idiomas e retirar a chave `ui.mobileWarning`,
-que deixou de ter uso.
-
-### Definição de Pronto
-- [ ] A skill `checar-i18n` não acusa chave faltando em nenhum dos 19 arquivos
-- [ ] `ui.mobileWarning` removida dos 19 arquivos e sem referência no código
-- [ ] Nenhum texto novo aparece em inglês com o app em português
-
-### Log
-- 2026-09-04: criada
-
----
-
 ## WP11 — Acabamento e verificação da spec
 
 ```yaml

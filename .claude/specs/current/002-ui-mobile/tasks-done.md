@@ -504,3 +504,68 @@ Fechar o que falta para o app ser instalado na tela inicial e abrir sem internet
   (4) atualização de versão não prende versão antiga: `src/registerServiceWorker.js:12-18` escuta `controllerchange` (com `skipWaiting: true` e `clientsClaim: true` em `vue.config.js`) e dispara reload automático único caso já houvesse controlador;
   (5) isolamento verificado: guardas `process.env.NODE_ENV !== "production"` e `isElectron()` em `src/registerServiceWorker.js:6-7` impedem registro em desenvolvimento e sob Electron.
   ESLint: exit 0, saída limpa. Observação: `public/fav_icons/maskable-512.png` está untracked no git.
+
+---
+
+## WP10 — Traduzir para os 17 idiomas restantes
+
+```yaml
+lane: concluída
+estimativa: 45min
+files:
+  - src/assets/languages/ar.json
+  - src/assets/languages/de.json
+  - src/assets/languages/es.json
+  - src/assets/languages/fr.json
+  - src/assets/languages/he.json
+  - src/assets/languages/hi.json
+  - src/assets/languages/it.json
+  - src/assets/languages/ja.json
+  - src/assets/languages/ko.json
+  - src/assets/languages/pl.json
+  - src/assets/languages/ru.json
+  - src/assets/languages/tr.json
+  - src/assets/languages/uk.json
+  - src/assets/languages/vi.json
+  - src/assets/languages/zh-CN.json
+  - src/assets/languages/zh-TW.json
+  - src/assets/languages/en.json
+  - src/assets/languages/pt.json
+depende_de: [WP07, WP08]
+```
+
+### Objetivo
+Propagar a seção `mobile` para todos os idiomas e retirar a chave `ui.mobileWarning`,
+que deixou de ter uso.
+
+### Definição de Pronto
+- [x] A skill `checar-i18n` não acusa chave faltando em nenhum dos 19 arquivos
+- [x] `ui.mobileWarning` removida dos 19 arquivos e sem referência no código
+- [x] Nenhum texto novo aparece em inglês com o app em português
+
+### Log
+- 2026-09-04: criada
+- 2026-09-04: implementada. As 17 chaves de `mobile` foram traduzidas nos 16 idiomas restantes
+  (ar, de, es, fr, he, hi, it, ja, ko, pl, ru, tr, uk, vi, zh-CN, zh-TW), casando o tom e o
+  vocabulário já usados em cada arquivo — "Configuração/Datos/Acerca de" no espanhol,
+  "Einstellungen/Daten/Über" no alemão, e assim por diante — e preservando os marcadores
+  `{done}` e `{total}`, reordenados quando a língua pede (japonês, coreano, hindi e turco põem o
+  total antes). `ui.mobileWarning` saiu dos 19 arquivos; `en.json` e `pt.json` foram liberados
+  pelo Maestro só para apagar essa linha (registro em `decisoes.md`), depois que a skill acusou a
+  chave como "faltando" nos 16 justamente porque a referência ainda a carregava.
+  Validação: `checar-i18n` responde "OK — todos os idiomas em dia com en.json" para 238 chaves;
+  `grep -rl mobileWarning src/` não devolve nada; `eslint --ext .js,.vue src/` limpo. Em portal
+  WebKit 390×845 sobre `yarn run serve` (porta 8093) troquei o idioma pela própria tela de
+  configurações e conferi as abas em espanhol, alemão, japonês, turco, hebraico, árabe, chinês
+  simplificado e russo; com o app em português, aba Semana, Listas e Diário mostram
+  "Nada planejado", "Toque em + para adicionar uma tarefa.", "Nova lista" e
+  "Recursos do diário estarão disponíveis em uma atualização futura.", sem nenhum texto em inglês
+  e sem aviso do intlify no console.
+  Fora de escopo, achado pela segunda parte da skill: `configModal.vue` tem `<option>` de som
+  ("None", "Bell", "Soft Bell"…) e `visually-hidden` "Loading..." fora do i18n, herdados do
+  upstream, no desktop.
+- 2026-09-04: aprovada pelo Review Agent (Yoda) — todos os 3 itens da DoD verificados:
+  (1) script da skill `checar-i18n` executado e confirmou 238 chaves em `en.json` e status "OK — todos os idiomas em dia com en.json" nos arquivos de idioma;
+  (2) `ui.mobileWarning` removida dos arquivos de tradução e `grep -rl mobileWarning src/` retornou código 1 (zero ocorrências no código fonte); liberação excepcional de `en.json` e `pt.json` respeitada conforme decisão registrada em `decisoes.md`;
+  (3) seção `mobile` em `pt.json` verificada linha a linha, cobrindo todas as 17 chaves traduzidas em português sem termos residuais em inglês.
+  ESLint: exit 0, saída limpa.
