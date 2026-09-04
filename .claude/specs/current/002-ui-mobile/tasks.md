@@ -102,7 +102,7 @@ barra de abas) e a seção `mobile` de traduções em inglês e português.
 ## WP03 — Shell mobile: barra superior, abas e Diário
 
 ```yaml
-lane: planejado
+lane: aprovado
 estimativa: 75min
 files:
   - src/components/mobile/mobileApp.vue
@@ -116,14 +116,44 @@ Montar o shell que o `App.vue` renderiza no celular: barra superior com título 
 barra inferior com as quatro abas e a tela de espera do Diário.
 
 ### Definição de Pronto
-- [ ] Quatro abas — Semana, Listas, Diário, Configurações — com ícone e rótulo, ativa em `--wtd-text-strong` e inativa em `--wtd-text-subtle`
-- [ ] Troca de aba é estado local do shell, sem router e sem recarregar a página
-- [ ] Barra inferior reserva os 22px do indicador de home e nenhum alvo fica abaixo de 44px
-- [ ] Aba Diário abre a tela de espera com uma frase traduzida
-- [ ] Tema escuro correto nas duas barras
+- [x] Quatro abas — Semana, Listas, Diário, Configurações — com ícone e rótulo, ativa em `--wtd-text-strong` e inativa em `--wtd-text-subtle`
+- [x] Troca de aba é estado local do shell, sem router e sem recarregar a página
+- [x] Barra inferior reserva os 22px do indicador de home e nenhum alvo fica abaixo de 44px
+- [x] Aba Diário abre a tela de espera com uma frase traduzida
+- [x] Tema escuro correto nas duas barras
 
 ### Log
 - 2026-09-04: criada
+- 2026-09-04: implementada por Antigravity
+
+**O que mudou:**
+
+1. `src/components/mobile/mobileJournalView.vue` — criado. Template com ícone `bi-journal-text`, título `$t("mobile.journalComingSoon")` e descrição `$t("mobile.journalComingSoonDesc")`. Sem strings hard-coded. Estilo scoped com variáveis CSS do Design System (`--wtd-text-subtle`, `--wtd-text-strong`).
+
+2. `src/components/mobile/mobileApp.vue` — criado. Shell completo com:
+   - Barra superior (`<header class="mobile-top-bar">`) com título da aba ativa (computed `topBarTitle` via `$t`) e data de hoje (`moment().format("ddd, D MMM")`). Altura 52px, usa `--wtd-surface` / `--wtd-line`.
+   - Conteúdo principal (`<main class="mobile-main-content">`) com `v-if`/`v-else-if` entre as quatro abas. Aba Diário monta `<mobile-journal-view>`; as demais (Semana, Listas, Configurações) têm placeholder até as respectivas WPs.
+   - Barra inferior (`<nav class="mobile-tab-bar">`) com quatro `<button class="mobile-tab-item">`, gerados por `v-for` a partir do array `tabs`. A classe `.active` é aplicada quando `activeTab === tab.id`. A barra usa as classes do `mobile.scss` (`mobile-tab-bar`, `mobile-tab-item`), que já reservam `padding-bottom: 22px` (`--wtd-mobile-home-indicator-h`) e `min-height: 44px` (`--wtd-mobile-touch-target`).
+   - `activeTab` é `data()` local, sem store, sem router. Troca de aba é `@click="activeTab = tab.id"`.
+
+3. `src/App.vue` — o placeholder `<div v-if="isMobile" class="app-body"></div>` foi substituído por `<mobile-app v-if="isMobile"></mobile-app>`. Import adicionado em `<script>` e componente registrado em `components`.
+
+**Decisões de implementação:**
+- Aba ativa: classe `.active` via `:class="{ active: activeTab === tab.id }"`. O CSS de `.mobile-tab-item.active` define `color: var(--wtd-text-strong)` e o estado inativo usa `color: var(--wtd-text-subtle)` — já definido no `mobile.scss` da WP02.
+- Tema escuro: herdado pelo `dark-theme` no `#app-container` do `App.vue`. As variáveis CSS `--wtd-surface`, `--wtd-line`, `--wtd-text-strong`, `--wtd-text-subtle` e `--wtd-paper-bg` têm overrides no bloco `.dark-theme` do `mobile.scss`.
+- Nenhuma cor, raio, sombra ou tamanho de tipo fora das variáveis CSS.
+- Nenhuma string nova hard-coded (todos os textos via `$t`).
+- Nenhum router introduzido.
+- Ajuste pós-revisão: `todayLabel` em `mobileApp.vue` passa a sincronizar `moment().locale(momentLocale)` com `this.$i18n.locale`, garantindo que a data respeite o idioma ativo (ex: português).
+
+**Lint:** `node_modules/.bin/eslint --ext .js,.vue src/` → 0 erros, 0 warnings (saída vazia, exit code 0).
+
+**Validação manual (inspeção de código — servidor indisponível neste ambiente):**
+- DoD 1 (quatro abas com ícone/rótulo, ativa em strong, inativa em subtle): ✓ `v-for` gera quatro botões; `:class="{ active: ... }"` aplica `.active` que usa `--wtd-text-strong`; estado inativo usa `--wtd-text-subtle` via `.mobile-tab-item` no `mobile.scss`.
+- DoD 2 (troca de aba: estado local, sem router, sem reload): ✓ `activeTab` em `data()`, alterado por `@click` no botão, sem commit na store nem navegação.
+- DoD 3 (barra inferior reserva 22px, nenhum alvo abaixo de 44px): ✓ `.mobile-tab-bar` tem `padding-bottom: var(--wtd-mobile-home-indicator-h)` (22px) e `.mobile-tab-item` tem `min-height: var(--wtd-mobile-touch-target)` (44px) — ambos vindos do `mobile.scss`.
+- DoD 4 (aba Diário abre tela de espera com frase traduzida): ✓ `v-else-if="activeTab === 'journal'"` monta `<mobile-journal-view>`, que exibe `$t("mobile.journalComingSoon")` e `$t("mobile.journalComingSoonDesc")`.
+- DoD 5 (tema escuro correto nas duas barras): ✓ As variáveis CSS usadas (`--wtd-surface`, `--wtd-line`, `--wtd-text-strong`, `--wtd-text-subtle`, `--wtd-paper-bg`) têm overrides no bloco `.dark-theme` do `mobile.scss`.
 
 ---
 
@@ -169,7 +199,7 @@ refrescar notificação para um mixin, sem mudar comportamento do desktop.
 ## WP05 — Aba Semana: faixa de dias e o dia em folha pautada
 
 ```yaml
-lane: planejado
+lane: revisão-pendente (commitado a pedido do usuário antes do OK do Reviewer; retomar revisão na próxima sessão)
 estimativa: 90min
 files:
   - src/components/mobile/weekDayStrip.vue
@@ -186,15 +216,29 @@ Entregar o coração da feature: escolher o dia na faixa e ver **só** aquele di
 criar e concluir tarefa funcionando.
 
 ### Definição de Pronto
-- [ ] A faixa mostra os sete dias da semana corrente, marca o selecionado com o chip de hover e põe o ponto de 4px nos dias com tarefa
-- [ ] O dia selecionado ocupa a tela; nunca aparecem dois dias lado a lado, independentemente da preferência de colunas
-- [ ] Tocar no marcador colorido conclui a tarefa; tocar no texto abre a folha do detalhe (folha pode ser a casca vazia até a WP06)
-- [ ] O composer "Task title" cria tarefa no dia visível e a mudança sobrevive ao reload
-- [ ] Dia sem tarefa mostra o glifo em gradiente e a frase que nomeia o gesto
-- [ ] O botão flutuante foca o composer e é o único lugar com o gradiente preenchendo superfície
+- [x] A faixa mostra os sete dias da semana corrente, marca o selecionado com o chip de hover e põe o ponto de 4px nos dias com tarefa
+- [x] O dia selecionado ocupa a tela; nunca aparecem dois dias lado a lado, independentemente da preferência de colunas
+- [x] Tocar no marcador colorido conclui a tarefa; tocar no texto abre a folha do detalhe (folha pode ser a casca vazia até a WP06)
+- [x] O composer "Task title" cria tarefa no dia visível e a mudança sobrevive ao reload
+- [x] Dia sem tarefa mostra o glifo em gradiente e a frase que nomeia o gesto
+- [x] O botão flutuante foca o composer e é o único lugar com o gradiente preenchendo superfície
 
 ### Log
 - 2026-09-04: criada
+- 2026-09-04: implementada por Antigravity
+- 2026-09-04: corrigida após revisão (OpenCode):
+  1. Cor da tarefa no marcador (`mobileTaskRow.vue`): removido o `COLOR_MAP` estático incorreto; agora `toDo.color` é aplicado diretamente no `border` e no `background` (quando concluída, com ícone de check branco), suportando os 11 valores hex reais do `colorPicker` (`#77e785`, `#06b6d4`, `#5e6ef2`, `#8b5cf6`, `#ed56a1`, `#ed544b`, `#f97316`, `#f9d54a`, `#ba7956`, `#6b7280`, `#030712`) e `'none'`.
+  2. Ponto de 4px na faixa de dias (`weekDayStrip.vue`): implementado `preloadWeekDays()` chamado no `mounted` e no `watch.weekDates` com `immediate: true`, disparando `loadTodoLists` para cada um dos 7 dias da semana corrente. Isso garante que as listas sejam consultadas do IndexedDB para a semana inteira, refletindo confiavelmente os dias com tarefa após recarregamentos.
+  3. Locale do momento e data da barra/faixa (`mobileApp.vue`, `weekDayStrip.vue`, `App.vue`): `currentLocale` lê `this.$store.getters.config.language` (reativo), mapeia variantes (`zh_cn` -> `zh-cn`) e aplica `moment.locale(...)`. No `App.vue`, `beforeCreate` e `watch` inicializam e mantêm o `moment.locale` sincronizado com o idioma ativo do app.
+  4. Início da semana (`weekDayStrip.vue`): corrigida a referência para a chave real de configuração `config.weekStartOnMonday` (booleano). Quando `true` (padrão), a semana inicia na segunda-feira (`isoWeek`); quando `false`, inicia no domingo.
+
+**Validação em runtime (script Node exercitando store Vuex, moment e regras de negócio):**
+- Teste 1 (11 Cores Hex + None): PASSED — todas as 11 cores aplicam borda e background nos estados checked/unchecked corretamente.
+- Teste 2 (Ponto 4px nos 7 dias pré-carregados): PASSED — dias com tarefas em IndexedDB recebem `hasTask: true`, dias vazios `hasTask: false`.
+- Teste 3 (Troca de idioma para pt): PASSED — `todayLabel` formata `"Sex, 4 set"`, rótulos dos dias formatam `['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']` (ou Seg-Dom com Monday start).
+- Teste 4 (Alternância weekStartOnMonday): PASSED — semana inicia em segunda quando `true` e domingo quando `false`.
+
+**Lint:** `node_modules/.bin/eslint --ext .js,.vue src/` → 0 erros, 0 warnings (saída vazia, exit code 0).
 
 ---
 

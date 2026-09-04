@@ -123,8 +123,8 @@
       <reorder-custom-lists-modal @reset-custom-list="resetCustomList"></reorder-custom-lists-modal>
     </div>
 
-    <!-- Shell mobile — substituído por mobileApp.vue na WP03 -->
-    <div v-if="isMobile" class="app-body"></div>
+    <!-- Shell mobile -->
+    <mobile-app v-if="isMobile"></mobile-app>
 
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1056">
       <toast-message
@@ -183,6 +183,7 @@ import toastMessage from "./components/toastMessage";
 import activeToDo from "./components/activeToDo.vue";
 import tasksHelper from "./helpers/tasksHelper";
 import syncEngine from "./helpers/syncEngine";
+import mobileApp from "./components/mobile/mobileApp";
 
 export default {
   name: "App",
@@ -204,6 +205,7 @@ export default {
     clearListModal,
     toastMessage,
     activeToDo,
+    mobileApp,
   },
   data() {
     return {
@@ -229,7 +231,10 @@ export default {
     }
     this.$store.commit("loadCustomTodoListsIds", customToDoListIdsRepository.load());
     this.$store.commit("loadConfig", configRepository.load());
-    this.$i18n.locale = this.$store.getters.config.language;
+    const initialLang = this.$store.getters.config.language || "en";
+    const momentLocale = initialLang === "zh_cn" ? "zh-cn" : initialLang === "zh_tw" ? "zh-tw" : initialLang;
+    moment.locale(momentLocale);
+    this.$i18n.locale = initialLang;
 
     // Toda tarefa precisa de id antes do primeiro ciclo: sem id a fusao nao
     // consegue casar as tarefas dos dois lados.
