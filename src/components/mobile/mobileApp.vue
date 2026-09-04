@@ -55,11 +55,8 @@
       <!-- Aba Diário -->
       <mobile-journal-view v-else-if="activeTab === 'journal'"></mobile-journal-view>
 
-      <!-- Aba Configurações: placeholder até WP08 -->
-      <div v-else-if="activeTab === 'settings'" class="mobile-placeholder-tab">
-        <i class="bi-gear mobile-placeholder-icon"></i>
-        <p class="mobile-placeholder-text">{{ $t("mobile.settingsTab") }}</p>
-      </div>
+      <!-- Aba Configurações -->
+      <mobile-settings-view v-else-if="activeTab === 'settings'"></mobile-settings-view>
     </main>
 
     <!-- Barra de abas inferior -->
@@ -106,6 +103,7 @@ import mobileDayView from "./mobileDayView";
 import mobileFab from "./mobileFab";
 import mobileTaskSheet from "./mobileTaskSheet";
 import mobileListsView from "./mobileListsView";
+import mobileSettingsView from "./mobileSettingsView";
 import toastMessage from "../toastMessage";
 import todoActions from "../../helpers/todoActions";
 
@@ -119,6 +117,7 @@ export default {
     mobileFab,
     mobileTaskSheet,
     mobileListsView,
+    mobileSettingsView,
     toastMessage,
   },
   data() {
@@ -271,28 +270,6 @@ export default {
   flex-direction: column;
   background-color: var(--wtd-paper-bg);
   position: relative;
-}
-
-/* Placeholders de abas ainda não implementadas */
-.mobile-placeholder-tab {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 32px 24px;
-}
-
-.mobile-placeholder-icon {
-  font-size: 3rem;
-  color: var(--wtd-text-subtle);
-}
-
-.mobile-placeholder-text {
-  font-size: 1rem;
-  color: var(--wtd-text-subtle);
-  margin: 0;
 }
 
 /* Host do aviso de remoção */
