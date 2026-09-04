@@ -5,34 +5,6 @@
 ---
 
 
-## WP09 — Instalável e offline (PWA)
-
-```yaml
-lane: planejado
-estimativa: 75min
-files:
-  - public/manifest.json
-  - vue.config.js
-  - src/registerServiceWorker.js
-  - src/components/mobile/mobileApp.vue
-depende_de: [WP05]
-```
-
-### Objetivo
-Fechar o que falta para o app ser instalado na tela inicial e abrir sem internet.
-
-### Definição de Pronto
-- [ ] `manifest.json` com ícone `maskable`, `theme_color` coerente com o tema e `orientation` declarada
-- [ ] Em build de produção servido por HTTP, o navegador oferece instalar; o ícone instalado abre sem barra do navegador
-- [ ] Com a rede desligada, o app instalado abre e permite criar e concluir tarefa
-- [ ] Deploy de versão nova não deixa o app preso na versão velha (o aviso de atualização existente continua funcionando)
-- [ ] Nada disso é registrado sob Electron nem em desenvolvimento
-
-### Log
-- 2026-09-04: criada
-
----
-
 ## WP10 — Traduzir para os 17 idiomas restantes
 
 ```yaml

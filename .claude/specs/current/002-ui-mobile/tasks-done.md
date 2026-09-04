@@ -446,3 +446,61 @@ Tela de configurações do celular com Aparência, Dados e Sobre, em seções em
   (6) nenhuma chave nova em `configRepository.js` ou `config.store.js`.
   Altura 52px mantida com `mobile-row-52` (:6, 19, 32, 49, 56, 73, 78).
   ESLint: exit 0, saída limpa. Observação: `mobileSettingsView.vue` está untracked no git.
+
+---
+
+## WP09 — Instalável e offline (PWA)
+
+```yaml
+lane: concluída
+estimativa: 75min
+files:
+  - public/manifest.json
+  - public/fav_icons/maskable-512.png
+  - vue.config.js
+  - src/registerServiceWorker.js
+  - src/components/mobile/mobileApp.vue
+depende_de: [WP05]
+```
+
+### Objetivo
+Fechar o que falta para o app ser instalado na tela inicial e abrir sem internet.
+
+### Definição de Pronto
+- [x] `manifest.json` com ícone `maskable`, `theme_color` coerente com o tema e `orientation` declarada
+- [x] Em build de produção servido por HTTP, o navegador oferece instalar (critérios verificados; ver risco do "sem barra")
+- [x] Com a rede desligada, o app abre e permite criar e concluir tarefa
+- [x] Deploy de versão nova não deixa o app preso na versão velha
+- [x] Nada disso é registrado sob Electron nem em desenvolvimento
+
+### Log
+- 2026-09-04: criada
+- 2026-09-04: implementada. `public/manifest.json` ganhou `orientation: "any"`, `scope`, `purpose`
+  explícito nos ícones e o novo `fav_icons/maskable-512.png`; `theme_color` `#ffffff` é o mesmo
+  `--wtd-surface` do tema claro, e `mobileApp.vue` passou a escrever a meta `theme-color` conforme
+  o tema (`#21262d` no escuro), que é o que a barra do sistema usa no app instalado.
+  `registerServiceWorker.js` passou a recarregar a aba uma vez quando um service worker novo assume
+  o controle, com guarda para não recarregar na primeira instalação; `vue.config.js` não precisou
+  mudar, já estava com `GenerateSW`, `skipWaiting` e `clientsClaim`.
+  O ícone maskable foi gerado a partir do `android-chrome-512x512.png` (que tem cantos
+  transparentes e por isso não servia): fundo opaco com o mesmo gradiente do original e a arte
+  reduzida a 80%, dentro da zona segura. Liberação do path registrada em `decisoes.md`.
+  Validado a dedo com `yarn run build` e `dist/` servido por HTTP estático em `localhost:8090`,
+  portal WebKit 390×845: service worker ativo no escopo `http://localhost:8090/` com 54 entradas em
+  cache; derrubei o servidor (`curl` responde `000`) e a página recarregou pelo cache, criei
+  "Tarefa offline", concluí, recarreguei de novo e o IndexedDB devolveu `Tarefa offline:true`.
+  Atualização: com a aba aberta na build antiga (`app.fd5339d3.js`, com marcador de teste no DOM),
+  publiquei build nova no mesmo `dist` e chamei `registration.update()`; a página recarregou
+  sozinha e passou a rodar `app.4cfce7a8.js` sem o marcador. Em `yarn run serve`
+  (`localhost:8091`) `getRegistrations()` devolveu 0 e não há controlador, confirmando que
+  desenvolvimento não registra nada; o guard de Electron continua o do arquivo original.
+  Critérios de instalabilidade conferidos no `dist/manifest.json` servido: name, short_name,
+  start_url, `display: standalone`, ícones 192 e 512, maskable, orientation e theme_color, com
+  service worker ativo em origem segura. `eslint --ext .js,.vue src/` limpo.
+- 2026-09-04: aprovada pelo Review Agent (Yoda) — todos os 5 itens da DoD verificados no código e em runtime:
+  (1) `public/manifest.json` com ícone maskable 512x512 (`fav_icons/maskable-512.png` validado em disco e servido via HTTP 200), `orientation: "any"`, `scope: "."`, `theme_color: "#ffffff"`, sincronizado dinamicamente com `#21262d` no tema escuro via meta tag no `mobileApp.vue:137-142, 177-183`;
+  (2) critérios de instalabilidade PWA atendidos no manifest (`name`, `short_name`, `start_url`, `display: standalone`, ícones 192/512/maskable, orientation, theme_color) com SW ativo; item de abertura sem barra aceito com risco residual documentado devido à limitação da engine WebKit desktop no portal;
+  (3) suporte offline verificado: `service-worker.js` gerado via Workbox com `navigateFallback: "index.html"`, assets em precache e operações de criação/conclusão de tarefas persistindo localmente no IndexedDB;
+  (4) atualização de versão não prende versão antiga: `src/registerServiceWorker.js:12-18` escuta `controllerchange` (com `skipWaiting: true` e `clientsClaim: true` em `vue.config.js`) e dispara reload automático único caso já houvesse controlador;
+  (5) isolamento verificado: guardas `process.env.NODE_ENV !== "production"` e `isElectron()` em `src/registerServiceWorker.js:6-7` impedem registro em desenvolvimento e sob Electron.
+  ESLint: exit 0, saída limpa. Observação: `public/fav_icons/maskable-512.png` está untracked no git.
