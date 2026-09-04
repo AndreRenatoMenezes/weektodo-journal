@@ -2,8 +2,24 @@
   <div class="mobile-app-shell">
     <!-- Barra superior -->
     <header class="mobile-top-bar">
+      <button
+        v-if="openListId"
+        class="mobile-top-bar__back mobile-touch-target"
+        :aria-label="$t('mobile.back')"
+        @click="closeList"
+      >
+        <i class="bi-chevron-left"></i>
+      </button>
       <span class="mobile-top-bar__title">{{ topBarTitle }}</span>
-      <span class="mobile-top-bar__date">{{ todayLabel }}</span>
+      <button
+        v-if="activeTab === 'lists' && !openListId"
+        class="mobile-top-bar__action mobile-touch-target"
+        :aria-label="$t('mobile.newList')"
+        @click="createList"
+      >
+        <i class="bi-plus-lg"></i>
+      </button>
+      <span v-else class="mobile-top-bar__date">{{ todayLabel }}</span>
     </header>
 
     <!-- Conteúdo da aba ativa -->
@@ -19,11 +35,22 @@
         <mobile-fab @click="focusDayComposer"></mobile-fab>
       </template>
 
-      <!-- Aba Listas: placeholder até WP07 -->
-      <div v-else-if="activeTab === 'lists'" class="mobile-placeholder-tab">
-        <i class="bi-list-task mobile-placeholder-icon"></i>
-        <p class="mobile-placeholder-text">{{ $t("mobile.listsTab") }}</p>
-      </div>
+      <!-- Aba Listas: relação de listas ou uma lista aberta -->
+      <template v-else-if="activeTab === 'lists'">
+        <mobile-lists-view
+          v-if="!openListId"
+          ref="listsView"
+          @open-list="onOpenList"
+        ></mobile-lists-view>
+        <template v-else>
+          <mobile-day-view
+            ref="listView"
+            :listId="openListId"
+            @open-detail="onOpenDetail"
+          ></mobile-day-view>
+          <mobile-fab @click="focusListComposer"></mobile-fab>
+        </template>
+      </template>
 
       <!-- Aba Diário -->
       <mobile-journal-view v-else-if="activeTab === 'journal'"></mobile-journal-view>
@@ -78,6 +105,7 @@ import weekDayStrip from "./weekDayStrip";
 import mobileDayView from "./mobileDayView";
 import mobileFab from "./mobileFab";
 import mobileTaskSheet from "./mobileTaskSheet";
+import mobileListsView from "./mobileListsView";
 import toastMessage from "../toastMessage";
 import todoActions from "../../helpers/todoActions";
 
@@ -90,12 +118,14 @@ export default {
     mobileDayView,
     mobileFab,
     mobileTaskSheet,
+    mobileListsView,
     toastMessage,
   },
   data() {
     return {
       activeTab: "week",
       detailTask: null,
+      openListId: null,
       tabs: [
         { id: "week",     icon: "bi-calendar3",   labelKey: "mobile.weekTab"     },
         { id: "lists",    icon: "bi-list-task",    labelKey: "mobile.listsTab"    },
@@ -104,11 +134,20 @@ export default {
       ],
     };
   },
+  watch: {
+    activeTab(newTab) {
+      if (newTab !== "lists") this.openListId = null;
+    },
+  },
   computed: {
     mobileSelectedDate() {
       return this.$store.getters.mobileSelectedDate;
     },
     topBarTitle() {
+      if (this.openListId) {
+        const list = this.$store.getters.cTodoListIds.find((x) => x.listId === this.openListId);
+        return (list && list.listName) || this.$t("mobile.newList");
+      }
       const tabMap = {
         week:     "mobile.weekTab",
         lists:    "mobile.listsTab",
@@ -129,6 +168,22 @@ export default {
     focusDayComposer() {
       if (this.$refs.dayView && typeof this.$refs.dayView.focusComposer === "function") {
         this.$refs.dayView.focusComposer();
+      }
+    },
+    onOpenList(listId) {
+      this.openListId = listId;
+    },
+    closeList() {
+      this.openListId = null;
+    },
+    createList() {
+      if (this.$refs.listsView) {
+        this.$refs.listsView.createList();
+      }
+    },
+    focusListComposer() {
+      if (this.$refs.listView && typeof this.$refs.listView.focusComposer === "function") {
+        this.$refs.listView.focusComposer();
       }
     },
     onOpenDetail(payload) {
@@ -180,6 +235,27 @@ export default {
   font-size: 1rem;
   font-weight: 600;
   color: var(--wtd-text-strong);
+}
+
+.mobile-top-bar__back,
+.mobile-top-bar__action {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--wtd-text-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  margin: 0 -12px;
+}
+
+.mobile-top-bar__title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mobile-top-bar__date {

@@ -38,6 +38,7 @@
 import mobileTaskRow from "./mobileTaskRow";
 import todoActions from "../../helpers/todoActions";
 import repeatingEventHelper from "../../helpers/repeatingEvents";
+import moment from "moment";
 
 export default {
   name: "MobileDayView",
@@ -74,6 +75,11 @@ export default {
       }
       this.loading = true;
       this.$store.dispatch("loadTodoLists", listId).then(() => {
+        // Recorrência só existe no calendário; listas personalizadas não têm data
+        if (!moment(listId, "YYYYMMDD", true).isValid()) {
+          this.loading = false;
+          return;
+        }
         this.$store.dispatch("loadRepeatingEventGeneratedByDate", listId).then(() => {
           repeatingEventHelper.generateRepeatingEventsIntances(listId, this);
           this.loading = false;
