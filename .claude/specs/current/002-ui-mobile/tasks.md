@@ -2,33 +2,6 @@
 
 <!-- WPs vivas apenas. Ao aprovar, o Review Agent move o bloco inteiro para tasks-done.md. -->
 
-## WP06 — Folha do detalhe da tarefa
-
-```yaml
-lane: planejado
-estimativa: 90min
-files:
-  - src/components/mobile/mobileTaskSheet.vue
-  - src/components/mobile/mobileApp.vue
-depende_de: [WP05]
-```
-
-### Objetivo
-O detalhe da tarefa como folha que sobe do rodapé, reaproveitando os componentes de
-`src/views/toDoModal/`.
-
-### Definição de Pronto
-- [ ] Sobe do rodapé com fundo `--wtd-backdrop` + desfoque, cantos superiores em `--wtd-radius-modal` e alça de 38×4
-- [ ] Título, notas, subtarefas (44px, lixeira sempre visível), cor, hora/lembrete e repetição gravam e sobrevivem ao reload
-- [ ] `colorPicker`, `descriptionTextArea`, `timePicker` e `repeatingEvent` são reaproveitados, não reescritos
-- [ ] A cor escolhida aparece na linha da tarefa ao fechar a folha
-- [ ] Apagar a tarefa mostra o aviso com "(Undo)" e o desfazer devolve a tarefa
-- [ ] Fecha pelo X, pelo toque no fundo e arrastando para baixo
-
-### Log
-- 2026-09-04: criada
-
----
 
 ## WP07 — Aba Listas
 

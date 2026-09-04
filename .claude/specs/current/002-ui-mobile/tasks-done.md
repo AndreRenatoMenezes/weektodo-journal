@@ -269,3 +269,55 @@ criar e concluir tarefa funcionando.
   4. `mobileApp.vue:52-66, 124-131, 194-237`: casca da folha de detalhe montada (`mobile-detail-backdrop` e `mobile-detail-sheet`), abrindo ao tocar no texto e fechando pelo botão e backdrop.
   Todos os 6 itens da Definição de Pronto cumpridos. ESLint: 0 erros, 0 warnings.
 
+---
+
+## WP06 — Folha do detalhe da tarefa
+
+```yaml
+lane: aprovado
+estimativa: 90min
+files:
+  - src/components/mobile/mobileTaskSheet.vue
+  - src/components/mobile/mobileApp.vue
+depende_de: [WP05]
+```
+
+### Objetivo
+O detalhe da tarefa como folha que sobe do rodapé, reaproveitando os componentes de
+`src/views/toDoModal/`.
+
+### Definição de Pronto
+- [x] Sobe do rodapé com fundo `--wtd-backdrop` + desfoque, cantos superiores em `--wtd-radius-modal` e alça de 38×4
+- [x] Título, notas, subtarefas (44px, lixeira sempre visível), cor, hora/lembrete e repetição gravam e sobrevivem ao reload
+- [x] `colorPicker`, `descriptionTextArea`, `timePicker` e `repeatingEvent` são reaproveitados, não reescritos
+- [x] A cor escolhida aparece na linha da tarefa ao fechar a folha
+- [x] Apagar a tarefa mostra o aviso com "(Undo)" e o desfazer devolve a tarefa
+- [x] Fecha pelo X, pelo toque no fundo e arrastando para baixo
+
+### Log
+- 2026-09-04: criada
+- 2026-09-04: implementada. `mobileTaskSheet.vue` novo (folha, cabeçalho com concluir/título/X,
+  barra de ações reaproveitando `timePicker`/`repeatingEvent`/`colorPicker`, notas via
+  `descriptionTextArea`, subtarefas de 44px com lixeira fixa, arrasto para baixo fechando acima de
+  90px). `mobileApp.vue` troca a casca da WP05 pela folha e passa a hospedar o aviso
+  "Task Removed !!! (Undo)" (`toastMessage`), que precisa sobreviver ao fechamento da folha.
+  Gravação sempre pelo par store + `toDoListRepository` via mixin `helpers/todoActions`.
+  Os componentes do desktop carregam o valor inicial pelo `watch` da prop, então a folha só liga
+  cor/hora/notas/repetição depois de montada (`bindChildValues`), com `color` partindo de `null`.
+  Validado a dedo em portal WebKit 390×845 sobre `yarn run serve` (porta 8081): criar tarefa,
+  editar título, notas com markdown, subtarefa, cor, hora 08:30, lembrete, repetição semanal;
+  `todo_lists` no IndexedDB após reload trouxe
+  `desc/subTaskList/color/time/alarm/repeatingEvent` corretos. Apagar mostrou o aviso e o
+  "(Undo)" devolveu a tarefa (confirmado também após reload). Fecha por X, toque no fundo e
+  arrasto de 160px; arrasto de 40px mantém aberta. Tema escuro conferido.
+  `eslint --ext .js,.vue src/` limpo.
+- 2026-09-04: aprovada em revisão por Yoda (Review Agent):
+  Verificação completa em código e em runtime no Maestri Portal (390×845, yarn run serve):
+  1. Visual: backdrop (--wtd-backdrop rgba(0,0,0,0.4), blur(3px)), cantos (--wtd-radius-modal 14.4px), alça 38×4px (--wtd-line) e tema escuro conferidos (mobileTaskSheet.vue:316-367).
+  2. Persistência: título, notas, subtarefas (44px, lixeira sempre visível com min-width/height 44px), cor, hora (14:30), lembrete e repetição salvos e confirmados após reload completo no IndexedDB (mobileTaskSheet.vue:81-121, 220-226).
+  3. Reuso: colorPicker, descriptionTextArea, timePicker e repeatingEvent reaproveitados de src/views/toDoModal/ sem duplicação (mobileTaskSheet.vue:128-132, 142).
+  4. Cor na linha: borda e marcador atualizados imediatamente para a cor selecionada (rgb(6, 182, 212)) ao fechar a folha (mobileTaskRow.vue:38-52).
+  5. Apagar e desfazer: aviso com "(Undo)" exibido pelo mobileApp.vue:61-69 e o toque em desfazer restaura a tarefa com todas as propriedades preservadas (mobileApp.vue:146-159).
+  6. Fechamento: validado fechamento pelo botão X, pelo toque no backdrop e por arrasto vertical > 90px (arrasto < 90px mantém aberta) (mobileTaskSheet.vue:205-214, 294-310).
+  7. ESLint: 0 erros, 0 warnings.
+
