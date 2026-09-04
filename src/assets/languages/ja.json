@@ -148,7 +148,6 @@
     "ok": "Ok",
     "remove": "削除",
     "splashSub": "ミニマリストな週間タスク管理アプリ",
-    "mobileWarning": "WeekToDo はデスクトップアプリです、その解像度で表示する準備はまだできていません。 :(",
     "today": "今日",
     "calendar": "カレンダー",
     "newCustomList": "新しいカスタムリスト",
@@ -240,5 +239,24 @@
     "statusCredentialError": "認証情報が無効です",
     "credentialErrorHelp": "ユーザーまたはパスワードがサーバーに拒否されました。内容を確認して再接続してください。",
     "offlineHelp": "サーバーに接続できません。アプリはそのまま使え、次回の試行で同期します。"
+  },
+  "mobile": {
+    "weekTab": "週",
+    "listsTab": "リスト",
+    "journalTab": "ジャーナル",
+    "settingsTab": "設定",
+    "taskTitlePlaceholder": "タスク名",
+    "emptyStateTitle": "予定はありません",
+    "emptyStateSubtitle": "+ をタップしてタスクを追加します。",
+    "journalTitle": "ジャーナル",
+    "journalComingSoon": "近日公開",
+    "journalComingSoonDesc": "ジャーナル機能は今後のアップデートで追加されます。",
+    "appearance": "外観",
+    "data": "データ",
+    "about": "私たちについて",
+    "back": "戻る",
+    "allLists": "すべてのリスト",
+    "newList": "新しいリスト",
+    "tasksDone": "{total} 件中 {done} 件完了"
   }
 }

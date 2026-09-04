@@ -148,7 +148,6 @@
     "ok": "확인",
     "remove": "삭제",
     "splashSub": "미니멀리스트 주간 플래너",
-    "mobileWarning": "WeekToDo는 데스크탑 애플리케이션이며 현재로서는 이 해상도로 표시할 준비가 되지 않았습니다. \n:(",
     "today": "오늘",
     "calendar": "달력",
     "newCustomList": "새 사용자 지정 목록",
@@ -240,5 +239,24 @@
     "statusCredentialError": "잘못된 자격 증명",
     "credentialErrorHelp": "서버가 사용자 또는 비밀번호를 거부했습니다. 정보를 확인하고 다시 연결하세요.",
     "offlineHelp": "서버에 연결할 수 없습니다. 앱은 계속 작동하며 다음 시도에 동기화합니다."
+  },
+  "mobile": {
+    "weekTab": "주",
+    "listsTab": "목록",
+    "journalTab": "저널",
+    "settingsTab": "설정",
+    "taskTitlePlaceholder": "작업 제목",
+    "emptyStateTitle": "예정된 일이 없습니다",
+    "emptyStateSubtitle": "+ 를 눌러 작업을 추가하세요.",
+    "journalTitle": "저널",
+    "journalComingSoon": "곧 제공됩니다",
+    "journalComingSoonDesc": "저널 기능은 향후 업데이트에서 제공됩니다.",
+    "appearance": "모양",
+    "data": "데이터",
+    "about": "정보",
+    "back": "뒤로",
+    "allLists": "모든 목록",
+    "newList": "새 목록",
+    "tasksDone": "{total}개 중 {done}개 완료"
   }
 }

@@ -148,7 +148,6 @@
     "ok": "D'accord",
     "remove": "Supprimer",
     "splashSub": "Agenda hebdomadaire minimaliste",
-    "mobileWarning": "WeekToDo est une application de bureau et pour l'instant elle n'est pas prête à être affichée dans cette résolution. :(",
     "today": "Aujourd'hui",
     "calendar": "Calendrier",
     "newCustomList": "Nouvelle liste personnalisée",
@@ -240,5 +239,24 @@
     "statusCredentialError": "Identifiants invalides",
     "credentialErrorHelp": "Utilisateur ou mot de passe refusé par le serveur. Vérifiez les données et reconnectez-vous.",
     "offlineHelp": "Serveur injoignable. L'application continue de fonctionner et se synchronisera au prochain essai."
+  },
+  "mobile": {
+    "weekTab": "Semaine",
+    "listsTab": "Listes",
+    "journalTab": "Journal",
+    "settingsTab": "Réglages",
+    "taskTitlePlaceholder": "Titre de la tâche",
+    "emptyStateTitle": "Rien de prévu",
+    "emptyStateSubtitle": "Appuyez sur + pour ajouter une tâche.",
+    "journalTitle": "Journal",
+    "journalComingSoon": "Bientôt disponible",
+    "journalComingSoonDesc": "Les fonctionnalités du journal arriveront dans une prochaine mise à jour.",
+    "appearance": "Apparence",
+    "data": "Données",
+    "about": "À propos",
+    "back": "Retour",
+    "allLists": "Toutes les listes",
+    "newList": "Nouvelle liste",
+    "tasksDone": "{done} sur {total} terminées"
   }
 }

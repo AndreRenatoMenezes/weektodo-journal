@@ -148,7 +148,6 @@
     "ok": "OK",
     "remove": "Löschen",
     "splashSub": "Minimalistischer Wochenplaner",
-    "mobileWarning": "WeekToDo ist eine Desktop-Anwendung und kann derzeit nicht in dieser Auflösung angezeigt werden. :(",
     "today": "Heute",
     "calendar": "Kalender",
     "newCustomList": "Neue benutzerdefinierte Liste",
@@ -240,5 +239,24 @@
     "statusCredentialError": "Ungültige Zugangsdaten",
     "credentialErrorHelp": "Benutzer oder Passwort vom Server abgelehnt. Prüfe die Daten und verbinde dich erneut.",
     "offlineHelp": "Server nicht erreichbar. Die App läuft weiter und synchronisiert beim nächsten Versuch."
+  },
+  "mobile": {
+    "weekTab": "Woche",
+    "listsTab": "Listen",
+    "journalTab": "Journal",
+    "settingsTab": "Einstellungen",
+    "taskTitlePlaceholder": "Aufgabentitel",
+    "emptyStateTitle": "Nichts geplant",
+    "emptyStateSubtitle": "Tippe auf +, um eine Aufgabe hinzuzufügen.",
+    "journalTitle": "Journal",
+    "journalComingSoon": "Demnächst",
+    "journalComingSoonDesc": "Journal-Funktionen kommen in einem zukünftigen Update.",
+    "appearance": "Darstellung",
+    "data": "Daten",
+    "about": "Über",
+    "back": "Zurück",
+    "allLists": "Alle Listen",
+    "newList": "Neue Liste",
+    "tasksDone": "{done} von {total} erledigt"
   }
 }

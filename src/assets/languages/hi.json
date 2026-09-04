@@ -148,7 +148,6 @@
     "ok": "ठीक है",
     "remove": "हटाएं",
     "splashSub": "न्यूनतम साप्ताहिक प्लैनर",
-    "mobileWarning": "WeekToDo एक डेस्कटॉप एप्लिकेशन है और अब इसे इस रिज़ॉल्यूशन में प्रदर्शित करने के लिए तैयार नहीं है. :(",
     "today": "आज",
     "calendar": "कैलेंडर",
     "newCustomList": "नई कस्टम सूची",
@@ -240,5 +239,24 @@
     "statusCredentialError": "अमान्य क्रेडेंशियल",
     "credentialErrorHelp": "सर्वर ने उपयोगकर्ता या पासवर्ड अस्वीकार किया। जानकारी जाँचें और फिर से कनेक्ट करें।",
     "offlineHelp": "सर्वर तक नहीं पहुँच सके। ऐप चलता रहेगा और अगली बार सिंक करेगा।"
+  },
+  "mobile": {
+    "weekTab": "सप्ताह",
+    "listsTab": "सूचियाँ",
+    "journalTab": "जर्नल",
+    "settingsTab": "सेटिंग्स",
+    "taskTitlePlaceholder": "कार्य का शीर्षक",
+    "emptyStateTitle": "कुछ भी नियोजित नहीं",
+    "emptyStateSubtitle": "कार्य जोड़ने के लिए + दबाएँ।",
+    "journalTitle": "जर्नल",
+    "journalComingSoon": "जल्द आ रहा है",
+    "journalComingSoonDesc": "जर्नल सुविधाएँ आगामी अपडेट में आएँगी।",
+    "appearance": "रूप",
+    "data": "डेटा",
+    "about": "के बारे में",
+    "back": "वापस",
+    "allLists": "सभी सूचियाँ",
+    "newList": "नई सूची",
+    "tasksDone": "{total} में से {done} पूर्ण"
   }
 }

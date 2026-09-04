@@ -148,7 +148,6 @@
     "ok": "Tamam",
     "remove": "Kaldır",
     "splashSub": "Minimalist Haftalık Planlayıcı",
-    "mobileWarning": "WeekToDo bir Masaüstü uygulamasıdır ve şimdilik bu çözünürlükte görüntülenmeye hazır değil. :(",
     "today": "Bugün",
     "calendar": "Takvim",
     "newCustomList": "Yeni Özel Liste",
@@ -240,5 +239,24 @@
     "statusCredentialError": "Geçersiz kimlik bilgileri",
     "credentialErrorHelp": "Kullanıcı veya parola sunucu tarafından reddedildi. Bilgileri kontrol edip yeniden bağlanın.",
     "offlineHelp": "Sunucuya ulaşılamıyor. Uygulama çalışmaya devam eder ve bir sonraki denemede eşitler."
+  },
+  "mobile": {
+    "weekTab": "Hafta",
+    "listsTab": "Listeler",
+    "journalTab": "Günlük",
+    "settingsTab": "Ayarlar",
+    "taskTitlePlaceholder": "Görev başlığı",
+    "emptyStateTitle": "Planlanmış bir şey yok",
+    "emptyStateSubtitle": "Görev eklemek için + simgesine dokunun.",
+    "journalTitle": "Günlük",
+    "journalComingSoon": "Çok yakında",
+    "journalComingSoonDesc": "Günlük özellikleri ileriki bir güncellemede gelecek.",
+    "appearance": "Görünüm",
+    "data": "Veri",
+    "about": "Hakkında",
+    "back": "Geri",
+    "allLists": "Tüm listeler",
+    "newList": "Yeni liste",
+    "tasksDone": "{total} görevden {done} tanesi tamamlandı"
   }
 }

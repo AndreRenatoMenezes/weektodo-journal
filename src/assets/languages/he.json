@@ -148,7 +148,6 @@
     "ok": "אישור",
     "remove": "מחק",
     "splashSub": "תכנן שבועי מינימליסטי",
-    "mobileWarning": "WeekToDo הוא אפליקציה למחשב נייח וכרגע אינה מוכנה להיצג ברזולוציה זו. :(",
     "today": "היום",
     "calendar": "לוח שנה",
     "newCustomList": "רשימה מותאמת אישית חדשה",
@@ -240,5 +239,24 @@
     "statusCredentialError": "פרטי גישה שגויים",
     "credentialErrorHelp": "השרת דחה את שם המשתמש או הסיסמה. בדקו את הפרטים והתחברו שוב.",
     "offlineHelp": "השרת אינו זמין. היישום ממשיך לעבוד ויסתנכרן בניסיון הבא."
+  },
+  "mobile": {
+    "weekTab": "שבוע",
+    "listsTab": "רשימות",
+    "journalTab": "יומן",
+    "settingsTab": "הגדרות",
+    "taskTitlePlaceholder": "כותרת המשימה",
+    "emptyStateTitle": "אין שום דבר מתוכנן",
+    "emptyStateSubtitle": "הקישו + כדי להוסיף משימה.",
+    "journalTitle": "יומן",
+    "journalComingSoon": "בקרוב",
+    "journalComingSoonDesc": "תכונות היומן יגיעו בעדכון עתידי.",
+    "appearance": "מראה",
+    "data": "נתונים",
+    "about": "אודות",
+    "back": "חזרה",
+    "allLists": "כל הרשימות",
+    "newList": "רשימה חדשה",
+    "tasksDone": "{done} מתוך {total} הושלמו"
   }
 }

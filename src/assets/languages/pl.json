@@ -169,7 +169,6 @@
     "compatible": "Przepraszamy, WeekToDo nie jest kompatybilny z twoją przeglądarką internetową. \nSpróbuj go zaktualizować lub użyj innego.",
     "completeAll": "Ukończ wszystko",
     "download": "(Ściągnij)",
-    "mobileWarning": "WeekToDo to aplikacja desktopowa i na razie nie jest gotowa do wyświetlania w tej rozdzielczości. \n:(",
     "newCustomList": "Nowa lista niestandardowa",
     "newVersionAvailable": "Nowa wersja dostępna",
     "postpone": "Odłożyć",
@@ -240,5 +239,24 @@
     "statusCredentialError": "Nieprawidłowe dane logowania",
     "credentialErrorHelp": "Serwer odrzucił użytkownika lub hasło. Sprawdź dane i połącz się ponownie.",
     "offlineHelp": "Serwer nieosiągalny. Aplikacja działa dalej i zsynchronizuje się przy następnej próbie."
+  },
+  "mobile": {
+    "weekTab": "Tydzień",
+    "listsTab": "Listy",
+    "journalTab": "Dziennik",
+    "settingsTab": "Ustawienia",
+    "taskTitlePlaceholder": "Tytuł zadania",
+    "emptyStateTitle": "Nic nie zaplanowano",
+    "emptyStateSubtitle": "Dotknij +, aby dodać zadanie.",
+    "journalTitle": "Dziennik",
+    "journalComingSoon": "Wkrótce",
+    "journalComingSoonDesc": "Funkcje dziennika pojawią się w przyszłej aktualizacji.",
+    "appearance": "Wygląd",
+    "data": "Dane",
+    "about": "O aplikacji",
+    "back": "Wstecz",
+    "allLists": "Wszystkie listy",
+    "newList": "Nowa lista",
+    "tasksDone": "Ukończono {done} z {total}"
   }
 }

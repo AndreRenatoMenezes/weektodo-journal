@@ -148,7 +148,6 @@
     "ok": "Đồng ý",
     "remove": "Xóa",
     "splashSub": "Kế Hoạch Hàng Tuần Tối Giản",
-    "mobileWarning": "WeekToDo là ứng dụng Desktop và hiện tại nó chưa sẵn sàng hiển thị ở độ phân giải này. :(",
     "today": "Hôm nay",
     "calendar": "Lịch",
     "newCustomList": "Danh Sách Tùy Chỉnh Mới",
@@ -240,5 +239,24 @@
     "statusCredentialError": "Thông tin đăng nhập không hợp lệ",
     "credentialErrorHelp": "Máy chủ từ chối người dùng hoặc mật khẩu. Kiểm tra lại và kết nối lần nữa.",
     "offlineHelp": "Không liên lạc được máy chủ. Ứng dụng vẫn chạy và sẽ đồng bộ ở lần thử tiếp theo."
+  },
+  "mobile": {
+    "weekTab": "Tuần",
+    "listsTab": "Danh sách",
+    "journalTab": "Nhật ký",
+    "settingsTab": "Cài đặt",
+    "taskTitlePlaceholder": "Tiêu đề công việc",
+    "emptyStateTitle": "Chưa có kế hoạch nào",
+    "emptyStateSubtitle": "Chạm + để thêm công việc.",
+    "journalTitle": "Nhật ký",
+    "journalComingSoon": "Sắp ra mắt",
+    "journalComingSoonDesc": "Các tính năng nhật ký sẽ có trong bản cập nhật sắp tới.",
+    "appearance": "Giao diện",
+    "data": "Dữ liệu",
+    "about": "Về chúng tôi",
+    "back": "Quay lại",
+    "allLists": "Tất cả danh sách",
+    "newList": "Danh sách mới",
+    "tasksDone": "Hoàn thành {done}/{total}"
   }
 }
