@@ -1,7 +1,7 @@
 <template>
   <input class="hidden-input-for-focus" type="text" />
   <div v-show="compatible" id="app-container" class="app-container" :class="{ 'dark-theme': darkTheme }">
-    <div class="hidden-mobile app-body" :style="{ zoom: `${zoom}%` }">
+    <div v-if="!isMobile" class="app-body" :style="{ zoom: `${zoom}%` }">
       <splash-screen ref="splash"></splash-screen>
       <side-bar @change-date="setSelectedDate"></side-bar>
 
@@ -122,10 +122,9 @@
 
       <reorder-custom-lists-modal @reset-custom-list="resetCustomList"></reorder-custom-lists-modal>
     </div>
-    <div class="mobile d-flex flex-column justify-content-center align-items-center">
-      <i class="bi-exclamation-diamond mb-4" style="font-size: 100px"></i>
-      <h3 style="text-align: center">{{ $t("ui.mobileWarning") }}</h3>
-    </div>
+
+    <!-- Shell mobile — substituído por mobileApp.vue na WP03 -->
+    <div v-if="isMobile" class="app-body"></div>
 
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1056">
       <toast-message
@@ -150,6 +149,7 @@
     <h3 style="text-align: center">{{ $t("ui.compatible") }}</h3>
   </div>
 </template>
+
 
 <script>
 import toDoList from "./components/toDoList";
@@ -214,6 +214,8 @@ export default {
       initialLoadCompleted: false,
       initialListToLoad: 0,
       initialListLoaded: 0,
+      // Referência ao MediaQueryList para remoção no unmounted
+      mobileMediaQuery: null,
     };
   },
   beforeCreate() {
@@ -255,7 +257,15 @@ export default {
     );
   },
   mounted() {
-    this.$refs.weekListContainer.scrollLeft = this.todoListWidth();
+    // Decisão de layout: matchMedia alimenta o módulo Vuex layout.store
+    const mq = window.matchMedia("(max-width: 600px)");
+    this.mobileMediaQuery = mq;
+    this.$store.commit("setIsMobile", mq.matches);
+    mq.addEventListener("change", this._onMobileMediaChange);
+
+    if (!this.isMobile) {
+      this.$refs.weekListContainer.scrollLeft = this.todoListWidth();
+    }
     this.calendarHeight = this.$store.getters.config.calendarHeight;
     window.addEventListener("resize", this.weekResetScroll);
     document.onreadystatechange = () => {
@@ -281,7 +291,16 @@ export default {
 
     this.resetAppOnDayChange();
   },
+  unmounted() {
+    if (this.mobileMediaQuery) {
+      this.mobileMediaQuery.removeEventListener("change", this._onMobileMediaChange);
+    }
+    window.removeEventListener("resize", this.weekResetScroll);
+  },
   methods: {
+    _onMobileMediaChange: function (e) {
+      this.$store.commit("setIsMobile", e.matches);
+    },
     weekMoveLeft: function () {
       this.selected_date = moment(this.selected_date).subtract(1, "d").format("YYYYMMDD");
       this.$refs.weekListContainer.scrollLeft = this.todoListWidth() * 2;
@@ -309,6 +328,7 @@ export default {
       }
     },
     weekResetScroll: function () {
+      if (!this.$refs.weekListContainer) return;
       this.$refs.weekListContainer.scrollLeft = this.todoListWidth();
     },
     customMoveRight: function () {
@@ -566,6 +586,9 @@ export default {
     },
   },
   computed: {
+    isMobile: function () {
+      return this.$store.getters.isMobile;
+    },
     dates_array: function () {
       if (!this.selected_date) return [];
       var dates_array = [moment(this.selected_date).subtract(1, "d").format("YYYYMMDD"), this.selected_date];
