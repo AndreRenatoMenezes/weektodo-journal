@@ -76,6 +76,23 @@
 }
 
 /* Touch targets */
+/* O marcador da tarefa é um circulo de 26px por desenho; a area de toque
+   precisa dos 44px, entao ela cresce por um pseudo-elemento transparente,
+   sem mexer no visual do circulo. */
+.mobile-task-row__marker {
+  position: relative;
+}
+
+.mobile-task-row__marker::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--wtd-mobile-touch-target);
+  height: var(--wtd-mobile-touch-target);
+}
+
 .mobile-touch-target {
   min-height: var(--wtd-mobile-touch-target);
   min-width: var(--wtd-mobile-touch-target);
@@ -186,4 +203,24 @@
     background-color: var(--wtd-line);
     margin: 0 auto 16px auto;
   }
+}
+
+/* Alvos de toque da tela de configuracoes: o rotulo aciona o interruptor, e os
+   controles vindos do desktop (sincronizacao, link do site) sobem para 44px. */
+.mobile-settings__label {
+  display: flex;
+  align-items: center;
+  min-height: var(--wtd-mobile-touch-target);
+}
+
+.mobile-settings__sync .form-control,
+.mobile-settings__sync .btn,
+.mobile-settings__sync .form-select {
+  min-height: var(--wtd-mobile-touch-target);
+}
+
+.mobile-settings-view a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--wtd-mobile-touch-target);
 }

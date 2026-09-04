@@ -801,18 +801,6 @@ body {
   background-color: #2a2e36;
 }
 
-.mobile {
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-  position: absolute;
-  padding: 20%;
-}
-
-.dark-theme .mobile {
-  background-color: #13171d;
-}
-
 .compatible {
   width: 100%;
   height: 100%;

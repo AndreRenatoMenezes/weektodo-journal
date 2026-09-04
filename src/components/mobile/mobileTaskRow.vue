@@ -6,7 +6,7 @@
       :class="{ 'mobile-task-row__marker--colored': hasColor }"
       :style="markerStyle"
       @click.stop="toggleDone"
-      :aria-label="$t('todo.done')"
+      :aria-label="$t('todoDetails.done')"
     >
       <i v-if="toDo.checked" class="bi-check2"></i>
     </button>
