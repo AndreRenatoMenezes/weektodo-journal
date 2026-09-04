@@ -1,0 +1,3 @@
+# Bloqueios
+
+(vazio no momento)
