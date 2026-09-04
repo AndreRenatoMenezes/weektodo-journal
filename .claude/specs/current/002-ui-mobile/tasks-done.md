@@ -569,3 +569,72 @@ que deixou de ter uso.
   (2) `ui.mobileWarning` removida dos arquivos de tradução e `grep -rl mobileWarning src/` retornou código 1 (zero ocorrências no código fonte); liberação excepcional de `en.json` e `pt.json` respeitada conforme decisão registrada em `decisoes.md`;
   (3) seção `mobile` em `pt.json` verificada linha a linha, cobrindo todas as 17 chaves traduzidas em português sem termos residuais em inglês.
   ESLint: exit 0, saída limpa.
+---
+
+## WP11 — Acabamento e verificação da spec
+
+```yaml
+lane: concluída
+estimativa: 60min
+files:
+  - src/assets/style/mobile.scss
+  - src/components/mobile/mobileApp.vue
+  - src/components/mobile/mobileTaskRow.vue
+  - src/App.vue
+  - src/assets/style/main.scss
+depende_de: [WP09, WP10]
+```
+
+### Objetivo
+Passada final contra a lista de aceite da feature, em tema claro e escuro.
+
+### Definição de Pronto
+- [x] Todos os critérios de aceite verificados a dedo em 390px, com o roteiro anotado no Log
+- [x] Nenhum alvo de toque abaixo de 44px nas quatro abas (uma ressalva, no Log)
+- [x] Redimensionar a janela cruzando 600px nos dois sentidos não quebra a interface nem perde dados
+- [x] Tema escuro correto nas quatro abas e na folha do detalhe
+- [x] Nenhuma sobra do aviso de resolução no código ou no CSS
+
+### Log
+- 2026-09-04: criada
+- 2026-09-04: `spec.md` e `plan.md` da 002 não existem no repositório (perdidos, nunca commitados);
+  por decisão do Maestro a lista de aceite usada foi a das DoDs das WP01 a WP10 já arquivadas em
+  `tasks-done.md`. Nada foi marcado em spec porque não há arquivo.
+  Correções desta WP: `mobileTaskRow.vue` trocou `todo.done` por `todoDetails.done` (bloqueio aberto
+  desde a WP06, sem mais warning do intlify no console); `mobile.scss` ganhou a área de toque de
+  44×44 do marcador da tarefa por pseudo-elemento transparente, mantendo o círculo de 26px, e
+  levou rótulo das configurações, campos e botões da sincronização e o link do site a 44px;
+  `App.vue` e `main.scss` perderam o CSS morto do aviso de resolução (`.mobile`,
+  `.dark-theme .mobile`, `.hidden-mobile` e a menção em `.ready-to-print`), liberados pelo Maestro
+  e sem nenhum uso em template.
+  Roteiro verificado em portal WebKit 390×845 sobre `yarn run serve` (porta 8097):
+  1. WP01 — abaixo de 600px o corpo desktop não é montado (`.app-body` ausente); a 900px ele volta
+     e mostra a mesma tarefa; voltando a 390px o shell mobile reaparece com a tarefa intacta,
+     sem erro no console.
+  2. WP03 — quatro abas com ícone e rótulo, ativa em `rgb(0,0,0)` e inativa em `rgb(161,161,161)`,
+     barra inferior com 78px (44 do alvo + 22 do indicador de home); Diário mostra a frase
+     traduzida.
+  3. WP05 — faixa com os sete dias, ponto de 4px pintado só no dia com tarefa (os outros seis são
+     placeholders transparentes); marcador conclui a tarefa, texto abre a folha, FAB devolve o
+     foco ao composer.
+  4. WP06 — folha abre, fecha pelo X e pelo fundo, e no tema escuro tem fundo `rgb(33,38,45)`,
+     título branco e backdrop `rgba(0,0,0,0.4)`.
+  5. WP07 — criar lista pelo "+", linha de 52px, abrir, criar tarefa, voltar e ver o contador
+     virar "0 of 1 done"; tudo sobrevive ao reload.
+  6. WP08 — rótulo do interruptor alterna a preferência e o idioma troca na hora (verificado nas
+     WPs anteriores e reconferido aqui).
+  7. WP09 e WP10 — provados nas próprias WPs (offline, atualização e os 19 idiomas).
+  Alvos de toque: varredura por `getBoundingClientRect` nas quatro abas não acha mais nada abaixo
+  de 44px, exceto o `input` do interruptor das configurações (45×22). O rótulo ao lado tem 44px e
+  aciona o interruptor, então o alvo acionável cobre a linha de 52px; deixar o próprio `input` com
+  44px exigiria mudar o markup de `mobileSettingsView.vue`, fora do escopo desta WP.
+  Ressalva registrada: a área de toque do marcador cobre os 5px iniciais do texto da tarefa; a
+  partir de 15px o toque já abre o detalhe.
+  `eslint --ext .js,.vue src/` limpo.
+- 2026-09-04: aprovada pelo Review Agent (Yoda) — todos os 5 itens da DoD verificados no código e em runtime:
+  (1) critérios de aceite de WP01 a WP10 conferidos conforme roteiro anotado no log contra dev server em localhost:8097, na ausência de spec.md;
+  (2) touch targets mínimos de 44px assegurados em `mobile.scss` (pseudo-elemento transparente no marcador em `:79-93`, rótulos, controles de sync e link do site em `:208-226`); ressalva do input do switch (45x22 acionado pelo rótulo de 44px) aceita;
+  (3) transição de viewport em 600px verificada: montagem reativa via `matchMedia` sem perda de dados no IndexedDB ou erros de runtime;
+  (4) tema escuro aplicado uniformemente nas 4 abas e na folha de detalhe (`.dark-theme` sobrescreve variáveis de `--wtd-*` em `mobile.scss:13-25`);
+  (5) eliminação total de CSS e aviso de resolução morto: classes `.mobile`, `.hidden-mobile` e `.ready-to-print` limpas em `App.vue` e `main.scss`; chave `todo.done` substituída por `todoDetails.done` em `mobileTaskRow.vue:9`.
+  ESLint: exit 0, saída limpa.
