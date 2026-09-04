@@ -39,15 +39,15 @@
 
 <script>
 import toDoListRepository from "../repositories/toDoListRepository";
-import { Modal, Toast } from "bootstrap";
+import { Modal } from "bootstrap";
 import moment from "moment";
-import notifications from "../helpers/notifications";
 import linkifyStr from 'linkify-string';
 import ClickHandler from "@manuelernestog/click-handler";
-import tasksHelper from "../helpers/tasksHelper";
+import todoActions from "../helpers/todoActions";
 
 export default {
   components: {},
+  mixins: [todoActions],
   props: {
     activeTodo: { required: true, type: Object }
   },
@@ -63,13 +63,7 @@ export default {
   },
   methods: {
     removeTodo: function () {
-      this.$store.commit("setUndoElement", { type: 'task', todo: this.activeTodo.toDo, index: this.activeTodo.index });
-      this.$store.commit("removeTodo", { toDoListId: this.activeTodo.toDoListId, index: this.activeTodo.index, });
-      notifications.refreshDayNotifications(this, this.activeTodo.toDoListId);
-      toDoListRepository.update(this.activeTodo.toDoListId, this.$store.getters.todoLists[this.activeTodo.toDoListId]);
-      let toast = new Toast(document.getElementById("taskRemoved"));
-      toast.show(); // The undo remove acction it's called in todoModal.vue:undoRemoveTask
-      this.hideToDoItem();
+      this.actionRemoveTodo(this.activeTodo.toDoListId, this.activeTodo.index, this.activeTodo.toDo);
     },
     showToDoDetails: function () {
       this.$store.commit("actionsSelectedTodoIdUpdate", {
@@ -89,17 +83,7 @@ export default {
       this.clickhandler.handle(() => { this.checkToDo(id, index) }, this.activeTodo.edit, `${this.activeTodo.toDoListId}${this.activeTodo.index}`);
     },
     checkToDo: function (toDoListId, index) {
-      if (this.$store.getters.todoLists[toDoListId][index].checked && this.$store.getters.config.moveCompletedTaskToBottom) {
-        this.$refs.currentTodo.style.display = `none`;
-        this.$store.commit("moveTodoToEnd", { toDoListId: toDoListId, index: index, });
-      }
-      if (this.$store.getters.config.autoReorderTasks) {
-        this.$refs.currentTodo.style.display = `none`;
-        toDoListRepository.update(toDoListId, tasksHelper.reorderTasksList(this.$store.getters.todoLists[toDoListId]));
-      } else {
-        toDoListRepository.update(toDoListId, this.$store.getters.todoLists[toDoListId]);
-      }
-      notifications.refreshDayNotifications(this, this.activeTodo.toDoListId);
+      this.actionToggleTodo(toDoListId, index, true);
     },
     startDrag: function (event, item, index) {
       event.dataTransfer.dropEffect = "move";

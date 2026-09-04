@@ -130,7 +130,7 @@ barra inferior com as quatro abas e a tela de espera do Diário.
 ## WP04 — Extrair as ações de tarefa para um mixin compartilhado
 
 ```yaml
-lane: revisão
+lane: aprovado
 estimativa: 60min
 files:
   - src/helpers/todoActions.js
