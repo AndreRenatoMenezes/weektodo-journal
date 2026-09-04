@@ -148,7 +148,6 @@
     "ok": "Ok",
     "remove": "Elimina",
     "splashSub": "Pianificatore settimanale minimalista",
-    "mobileWarning": "WeekToDo è un'applicazione Desktop e per adesso non è in grado di essere visualizzato a questa risoluzione. :(",
     "today": "Oggi",
     "calendar": "Calendario",
     "newCustomList": "Nuova Lista Personalizzata",
@@ -240,5 +239,24 @@
     "statusCredentialError": "Credenziali non valide",
     "credentialErrorHelp": "Utente o password rifiutati dal server. Controlla i dati e riconnettiti.",
     "offlineHelp": "Server irraggiungibile. L'app continua a funzionare e sincronizzerà al prossimo tentativo."
+  },
+  "mobile": {
+    "weekTab": "Settimana",
+    "listsTab": "Elenchi",
+    "journalTab": "Diario",
+    "settingsTab": "Impostazioni",
+    "taskTitlePlaceholder": "Titolo dell'attività",
+    "emptyStateTitle": "Niente in programma",
+    "emptyStateSubtitle": "Tocca + per aggiungere un'attività.",
+    "journalTitle": "Diario",
+    "journalComingSoon": "Prossimamente",
+    "journalComingSoonDesc": "Le funzioni del diario arriveranno in un aggiornamento futuro.",
+    "appearance": "Aspetto",
+    "data": "Dati",
+    "about": "A proposito di",
+    "back": "Indietro",
+    "allLists": "Tutti gli elenchi",
+    "newList": "Nuovo elenco",
+    "tasksDone": "{done} di {total} completate"
   }
 }

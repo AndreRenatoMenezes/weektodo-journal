@@ -1,7 +1,7 @@
 <template>
   <input class="hidden-input-for-focus" type="text" />
   <div v-show="compatible" id="app-container" class="app-container" :class="{ 'dark-theme': darkTheme }">
-    <div class="hidden-mobile app-body" :style="{ zoom: `${zoom}%` }">
+    <div v-if="!isMobile" class="app-body" :style="{ zoom: `${zoom}%` }">
       <splash-screen ref="splash"></splash-screen>
       <side-bar @change-date="setSelectedDate"></side-bar>
 
@@ -122,10 +122,9 @@
 
       <reorder-custom-lists-modal @reset-custom-list="resetCustomList"></reorder-custom-lists-modal>
     </div>
-    <div class="mobile d-flex flex-column justify-content-center align-items-center">
-      <i class="bi-exclamation-diamond mb-4" style="font-size: 100px"></i>
-      <h3 style="text-align: center">{{ $t("ui.mobileWarning") }}</h3>
-    </div>
+
+    <!-- Shell mobile -->
+    <mobile-app v-if="isMobile"></mobile-app>
 
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1056">
       <toast-message
@@ -150,6 +149,7 @@
     <h3 style="text-align: center">{{ $t("ui.compatible") }}</h3>
   </div>
 </template>
+
 
 <script>
 import toDoList from "./components/toDoList";
@@ -183,6 +183,7 @@ import toastMessage from "./components/toastMessage";
 import activeToDo from "./components/activeToDo.vue";
 import tasksHelper from "./helpers/tasksHelper";
 import syncEngine from "./helpers/syncEngine";
+import mobileApp from "./components/mobile/mobileApp";
 
 export default {
   name: "App",
@@ -204,6 +205,7 @@ export default {
     clearListModal,
     toastMessage,
     activeToDo,
+    mobileApp,
   },
   data() {
     return {
@@ -214,6 +216,8 @@ export default {
       initialLoadCompleted: false,
       initialListToLoad: 0,
       initialListLoaded: 0,
+      // Referência ao MediaQueryList para remoção no unmounted
+      mobileMediaQuery: null,
     };
   },
   beforeCreate() {
@@ -227,7 +231,10 @@ export default {
     }
     this.$store.commit("loadCustomTodoListsIds", customToDoListIdsRepository.load());
     this.$store.commit("loadConfig", configRepository.load());
-    this.$i18n.locale = this.$store.getters.config.language;
+    const initialLang = this.$store.getters.config.language || "en";
+    const momentLocale = initialLang === "zh_cn" ? "zh-cn" : initialLang === "zh_tw" ? "zh-tw" : initialLang;
+    moment.locale(momentLocale);
+    this.$i18n.locale = initialLang;
 
     // Toda tarefa precisa de id antes do primeiro ciclo: sem id a fusao nao
     // consegue casar as tarefas dos dois lados.
@@ -255,7 +262,15 @@ export default {
     );
   },
   mounted() {
-    this.$refs.weekListContainer.scrollLeft = this.todoListWidth();
+    // Decisão de layout: matchMedia alimenta o módulo Vuex layout.store
+    const mq = window.matchMedia("(max-width: 600px)");
+    this.mobileMediaQuery = mq;
+    this.$store.commit("setIsMobile", mq.matches);
+    mq.addEventListener("change", this._onMobileMediaChange);
+
+    if (!this.isMobile) {
+      this.$refs.weekListContainer.scrollLeft = this.todoListWidth();
+    }
     this.calendarHeight = this.$store.getters.config.calendarHeight;
     window.addEventListener("resize", this.weekResetScroll);
     document.onreadystatechange = () => {
@@ -281,7 +296,16 @@ export default {
 
     this.resetAppOnDayChange();
   },
+  unmounted() {
+    if (this.mobileMediaQuery) {
+      this.mobileMediaQuery.removeEventListener("change", this._onMobileMediaChange);
+    }
+    window.removeEventListener("resize", this.weekResetScroll);
+  },
   methods: {
+    _onMobileMediaChange: function (e) {
+      this.$store.commit("setIsMobile", e.matches);
+    },
     weekMoveLeft: function () {
       this.selected_date = moment(this.selected_date).subtract(1, "d").format("YYYYMMDD");
       this.$refs.weekListContainer.scrollLeft = this.todoListWidth() * 2;
@@ -309,6 +333,7 @@ export default {
       }
     },
     weekResetScroll: function () {
+      if (!this.$refs.weekListContainer) return;
       this.$refs.weekListContainer.scrollLeft = this.todoListWidth();
     },
     customMoveRight: function () {
@@ -566,6 +591,9 @@ export default {
     },
   },
   computed: {
+    isMobile: function () {
+      return this.$store.getters.isMobile;
+    },
     dates_array: function () {
       if (!this.selected_date) return [];
       var dates_array = [moment(this.selected_date).subtract(1, "d").format("YYYYMMDD"), this.selected_date];
@@ -771,18 +799,6 @@ body {
 
 .dark-theme .slider-btn:active {
   background-color: #2a2e36;
-}
-
-.mobile {
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-  position: absolute;
-  padding: 20%;
-}
-
-.dark-theme .mobile {
-  background-color: #13171d;
 }
 
 .compatible {

@@ -148,7 +148,6 @@
     "ok": "确定",
     "remove": "删除",
     "splashSub": "极简主义每周计划",
-    "mobileWarning": "WeekToDo 是一个桌面应用程序，目前尚未准备好以该分辨率显示。:(",
     "today": "今天",
     "calendar": "日历",
     "newCustomList": "新建自定义列表",
@@ -240,5 +239,24 @@
     "statusCredentialError": "凭据无效",
     "credentialErrorHelp": "服务器拒绝了用户名或密码。请核对后重新连接。",
     "offlineHelp": "无法连接服务器。应用照常使用，下次尝试时会同步。"
+  },
+  "mobile": {
+    "weekTab": "周",
+    "listsTab": "列表",
+    "journalTab": "日志",
+    "settingsTab": "设置",
+    "taskTitlePlaceholder": "任务标题",
+    "emptyStateTitle": "暂无计划",
+    "emptyStateSubtitle": "点按 + 添加任务。",
+    "journalTitle": "日志",
+    "journalComingSoon": "敬请期待",
+    "journalComingSoonDesc": "日志功能将在后续更新中推出。",
+    "appearance": "外观",
+    "data": "数据",
+    "about": "关于",
+    "back": "返回",
+    "allLists": "所有列表",
+    "newList": "新建列表",
+    "tasksDone": "已完成 {done}/{total}"
   }
 }

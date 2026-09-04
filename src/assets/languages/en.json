@@ -148,7 +148,6 @@
     "ok": "Ok",
     "remove": "Delete",
     "splashSub": "Minimalist Weekly Planner",
-    "mobileWarning": "WeekToDo is a Desktop application and for now it is not ready to be displayed in this resolution. :(",
     "today": "Today",
     "calendar": "Calendar",
     "print": "PDF / Print",
@@ -240,5 +239,24 @@
     "statusCredentialError": "Invalid credentials",
     "credentialErrorHelp": "User or password rejected by the server. Check the data and connect again.",
     "offlineHelp": "Server unreachable. The app keeps working and will sync on the next attempt."
+  },
+  "mobile": {
+    "weekTab": "Week",
+    "listsTab": "Lists",
+    "journalTab": "Journal",
+    "settingsTab": "Settings",
+    "taskTitlePlaceholder": "Task title",
+    "emptyStateTitle": "Nothing planned",
+    "emptyStateSubtitle": "Tap + to add a task.",
+    "journalTitle": "Journal",
+    "journalComingSoon": "Coming Soon",
+    "journalComingSoonDesc": "Journaling features are coming in a future update.",
+    "appearance": "Appearance",
+    "data": "Data",
+    "about": "About",
+    "back": "Back",
+    "allLists": "All Lists",
+    "newList": "New List",
+    "tasksDone": "{done} of {total} done"
   }
 }

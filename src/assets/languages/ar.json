@@ -148,7 +148,6 @@
     "ok": "موافق",
     "remove": "حذف",
     "splashSub": "مخطط أسبوعي بسيط",
-    "mobileWarning": "WeekToDo هو تطبيق سطح المكتب وليس جاهزًا حاليًا للعرض بهذا القرار. :(",
     "today": "اليوم",
     "calendar": "التقويم",
     "newCustomList": "قائمة مخصصة جديدة",
@@ -240,5 +239,24 @@
     "statusCredentialError": "بيانات اعتماد غير صالحة",
     "credentialErrorHelp": "رفض الخادم اسم المستخدم أو كلمة المرور. تحقق من البيانات وأعد الاتصال.",
     "offlineHelp": "تعذر الوصول إلى الخادم. يواصل التطبيق العمل وسيزامن في المحاولة التالية."
+  },
+  "mobile": {
+    "weekTab": "الأسبوع",
+    "listsTab": "القوائم",
+    "journalTab": "اليوميات",
+    "settingsTab": "الإعدادات",
+    "taskTitlePlaceholder": "عنوان المهمة",
+    "emptyStateTitle": "لا يوجد شيء مخطط",
+    "emptyStateSubtitle": "اضغط + لإضافة مهمة.",
+    "journalTitle": "اليوميات",
+    "journalComingSoon": "قريبًا",
+    "journalComingSoonDesc": "ميزات اليوميات ستصل في تحديث قادم.",
+    "appearance": "المظهر",
+    "data": "البيانات",
+    "about": "حول",
+    "back": "رجوع",
+    "allLists": "كل القوائم",
+    "newList": "قائمة جديدة",
+    "tasksDone": "{done} من {total} مكتملة"
   }
 }

@@ -148,7 +148,6 @@
     "ok": "行",
     "remove": "刪除",
     "splashSub": "極簡主義每週計劃",
-    "mobileWarning": "WeekToDo是一個桌面應用程式，目前尚未準備好以該解析度顯示。:(",
     "today": "今天",
     "calendar": "日曆",
     "newCustomList": "新的自定義列表",
@@ -240,5 +239,24 @@
     "statusCredentialError": "憑證無效",
     "credentialErrorHelp": "伺服器拒絕了使用者或密碼。請核對後重新連線。",
     "offlineHelp": "無法連線伺服器。應用程式照常運作，下次嘗試時會同步。"
+  },
+  "mobile": {
+    "weekTab": "週",
+    "listsTab": "清單",
+    "journalTab": "日誌",
+    "settingsTab": "設置",
+    "taskTitlePlaceholder": "任務標題",
+    "emptyStateTitle": "尚無計劃",
+    "emptyStateSubtitle": "點按 + 新增任務。",
+    "journalTitle": "日誌",
+    "journalComingSoon": "敬請期待",
+    "journalComingSoonDesc": "日誌功能將在後續更新中推出。",
+    "appearance": "外觀",
+    "data": "數據",
+    "about": "關於",
+    "back": "返回",
+    "allLists": "所有清單",
+    "newList": "新增清單",
+    "tasksDone": "已完成 {done}/{total}"
   }
 }

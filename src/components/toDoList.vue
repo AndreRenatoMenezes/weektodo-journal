@@ -32,18 +32,18 @@
 <script>
 import toDoItem from "./toDoItem";
 import moment from "moment";
-import toDoListRepository from "../repositories/toDoListRepository";
 import listHeader from "./listHeader";
-import notifications from "../helpers/notifications";
 import repeatingEventHelper from "../helpers/repeatingEvents.js";
 import tasksHelper from "../helpers/tasksHelper";
-import { newTaskId, ensureTaskId } from "../migrations/dataMigrations";
+import { ensureTaskId } from "../migrations/dataMigrations";
+import todoActions from "../helpers/todoActions";
 
 export default {
   components: {
     listHeader,
     toDoItem,
   },
+  mixins: [todoActions],
   props: {
     id: { required: false, type: String },
     customTodoList: { required: false, default: false, type: Boolean },
@@ -82,22 +82,7 @@ export default {
   methods: {
     addToDo: function () {
       if (this.newToDo.text != "") {
-        var newTodo = {
-          id: newTaskId(),
-          text: this.newToDo.text,
-          checked: false,
-          listId: this.id,
-          desc: "",
-          subTaskList: [],
-          color: "none",
-          priority: 0,
-          tags: [],
-          time: null,
-          alarm: false,
-          repeatingEvent: null,
-        };
-        this.$store.commit("addTodo", newTodo);
-        this.updateTodoList(this.id, this.$store.getters.todoLists[this.id]);
+        this.actionCreateTodo(this.id, this.newToDo.text);
         this.newToDo.text = "";
       }
     },
@@ -145,8 +130,7 @@ export default {
       this.fakeItemsDragHover = false;
     },
     updateTodoList: function (todoListId, TodoList) {
-      notifications.refreshDayNotifications(this, todoListId);
-      toDoListRepository.update(todoListId, TodoList);
+      this.actionPersistTodoList(todoListId, TodoList);
     },
     setTodoListHeight: function () {
       if (this.showCustomList) {

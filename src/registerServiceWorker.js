@@ -7,6 +7,16 @@ export function registerServiceWorker() {
   if (process.env.NODE_ENV !== "production") return;
   if (!("serviceWorker" in navigator)) return;
 
+  // Se ja havia um service worker no comando, a troca de controlador significa
+  // versao nova instalada: recarregar uma vez evita a aba ficar na versao velha.
+  const hadController = Boolean(navigator.serviceWorker.controller);
+  let reloading = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (!hadController || reloading) return;
+    reloading = true;
+    window.location.reload();
+  });
+
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register(`${process.env.BASE_URL}service-worker.js`)
