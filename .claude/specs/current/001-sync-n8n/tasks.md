@@ -237,15 +237,16 @@ Amarrar tudo: pull, fusão, gravação local, push, atualização do `sync_base`
 
 ### Definição de Pronto
 - [x] Ciclo completo para `todo_lists`, `repeating_events`, `repeating_events_by_date` e `customTodoListIds`. — os 4 tipos passaram no roteiro (tarefas comuns, lista personalizada, tarefa recorrente materializada uma vez só).
-- [ ] Documento rejeitado no push refaz o ciclo, com limite de tentativas e sem laço infinito. — não coberto pelo roteiro de dois dispositivos; sem teste direto ainda.
+- [x] Documento rejeitado no push refaz o ciclo, com limite de tentativas e sem laço infinito. — verificado por código: `syncEngine.js:14,263-267`, `MAX_CICLOS = 3` num `for` que quebra assim que `rejeitados.length === 0`; limite estrutural, sem reprodução em runtime de uma rejeição real.
 - [x] Listas visíveis recarregam sozinhas quando a fusão traz mudança; a tela não fica desatualizada.
-- [ ] Sem servidor configurado, nenhuma chamada de rede é feita e o app se comporta exatamente como hoje. — não testado (roteiro rodou sempre com servidor configurado).
+- [x] Sem servidor configurado, nenhuma chamada de rede é feita e o app se comporta exatamente como hoje. — verificado por código: `sync()` retorna cedo em `!estaConfigurado(config)` (`syncEngine.js:252-254`) antes de qualquer chamada de rede; único outro ponto de rede é o botão "Conectar" em `syncSettings.vue`, ação explícita do usuário, não automática.
 - [x] Roteiro de dois dispositivos executado: criar, marcar, apagar, editar offline e reconectar — sem nada sumir.
 
 ### Log
 - 2026-09-02: iniciada
 - 2026-09-02: concluída — `syncEngine` com pull→fusão→gravação→push→`sync_base`, limite de 3 ciclos, disparo na abertura e recarga das listas visíveis. Falta o roteiro de dois dispositivos (depende da WP06).
-- 2026-09-03: roteiro de dois dispositivos rodado (11 cenários de `servidor-sync.md`), todos passaram conforme esperado. Segue em revisão — falta cobrir rejeição de push com retry e o caso sem servidor configurado.
+- 2026-09-03: roteiro de dois dispositivos rodado (11 cenários de `servidor-sync.md`), todos passaram conforme esperado.
+- 2026-09-03: retry com limite e ausência de chamada sem servidor configurado verificados por leitura de código (`syncEngine.js`) — DoD completa. Nenhum item verificado só "por relato"; os dois últimos são prova estática, não runtime, registrado como tal.
 
 ---
 
