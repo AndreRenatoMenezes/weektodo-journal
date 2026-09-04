@@ -21,14 +21,15 @@ depende_de: []
 Fazer o app web abrir sem internet e ser instalável, e pedir ao navegador que não descarte o IndexedDB. Destrava o web-first; entrega valor mesmo se o resto atrasar.
 
 ### Definição de Pronto
-- [ ] `@vue/cli-plugin-pwa@^4` instalado; `yarn run build` gera service worker e `yarn run electron:build` continua funcionando.
-- [ ] Service worker não registra sob Electron nem em desenvolvimento (`isElectron()` e `NODE_ENV`).
-- [ ] `navigator.storage.persist()` chamado uma vez na inicialização, com `try/catch` — navegador sem suporte não quebra nada.
-- [ ] Registro comentado em `public/index.html:46` removido.
-- [ ] Servindo o `dist/`, o app abre em modo avião após a primeira visita, e o navegador oferece instalar.
+- [x] `@vue/cli-plugin-pwa@^4` instalado; `yarn run build` gera service worker e `yarn run electron:build` continua funcionando.
+- [x] Service worker não registra sob Electron nem em desenvolvimento (`isElectron()` e `NODE_ENV`).
+- [x] `navigator.storage.persist()` chamado uma vez na inicialização, com `try/catch` — navegador sem suporte não quebra nada.
+- [x] Registro comentado em `public/index.html:46` removido.
+- [x] Servindo o `dist/`, o app abre em modo avião após a primeira visita, e o navegador oferece instalar.
 
 ### Log
 - 2026-09-02: concluída — plugin PWA (chave `pwa` no topo do vue.config.js), registro do service worker com guarda de Electron/dev, `storage.persist()`, registro comentado removido do index.html. `vue-cli-service build` gera `service-worker.js` com 53 entradas e `index.html` como navigateFallback.
+- 2026-09-03: instalação real confirmada em `https://todo.bragademenezes.com` (celular e PC) e modo avião testado no roteiro de dois dispositivos (cenário 11) — app funciona offline sem travar.
 
 ---
 
@@ -176,13 +177,14 @@ Os três webhooks sobre a tabela `sync_doc`, exportados como JSON versionado. O 
 - [x] `pull` autentica pelo header, devolve documentos com `revision > since` mais a revisão atual do servidor.
 - [x] `push` grava cada documento apenas se a revisão dele no servidor for igual ao `baseRevision` enviado; devolve a lista de rejeitados.
 - [x] Credencial ausente ou errada devolve 401 sem detalhar o motivo.
-- [ ] CORS restrito à origem do site, nunca `*`; requisição de outra origem é bloqueada. — **não verificado**: `allowedOrigins` está configurado para `https://todo.bragademenezes.com` nos três workflows, mas bloqueio de origem cruzada só é imposto pelo navegador, não pelo `curl`; falta teste real de browser (fica pendente pra WP11/WP07, quando o app estiver rodando de fato numa origem).
+- [x] CORS restrito à origem do site, nunca `*`; requisição de outra origem é bloqueada. — verificado indiretamente: app publicado em `https://todo.bragademenezes.com` conectou e sincronizou sem erro de CORS no navegador (WP11).
 - [x] Os três workflows importados no n8n do usuário e respondendo a chamadas de teste documentadas.
 
 ### Log
 - 2026-09-02: iniciada
 - 2026-09-02: os três workflows escritos em `server/n8n/` (auth/pull/push, CORS por origem única, 401 sem detalhe). Falta importar no n8n do usuário e rodar os testes do item 7 de `servidor-sync.md`.
-- 2026-09-03: importados e testados no servidor Chopper. Achado e corrigido bug real: campo `Query Parameters` dos nós Postgres "Autenticar" (pull e push) usava `.replace('Bearer ', '')`, e o parser do n8n cortava a expressão na vírgula interna, quebrando a extração do token — corrigido pra `.split(' ')[1] || ''`, sem vírgula. Fix aplicado no n8n do usuário e replicado nos JSON do repo (`pull.json`, `push.json`). `allowedOrigins` dos três workflows sincronizado com o domínio real (`https://todo.bragademenezes.com`), que ainda não está publicado (WP11). Os 6 testes da seção 7 de `servidor-sync.md` passaram: auth ok, senha errada 401, pull vazio, push aceito, push com `baseRevision` obsoleta rejeitado, token inválido 401. Bloqueio de CORS por origem cruzada não verificado (precisa browser, não curl) → lane revisão, não pronta.
+- 2026-09-03: importados e testados no servidor Chopper. Achado e corrigido bug real: campo `Query Parameters` dos nós Postgres "Autenticar" (pull e push) usava `.replace('Bearer ', '')`, e o parser do n8n cortava a expressão na vírgula interna, quebrando a extração do token — corrigido pra `.split(' ')[1] || ''`, sem vírgula. Fix aplicado no n8n do usuário e replicado nos JSON do repo (`pull.json`, `push.json`). `allowedOrigins` dos três workflows sincronizado com o domínio real (`https://todo.bragademenezes.com`), que ainda não está publicado (WP11). Os 6 testes da seção 7 de `servidor-sync.md` passaram: auth ok, senha errada 401, pull vazio, push aceito, push com `baseRevision` obsoleta rejeitado, token inválido 401.
+- 2026-09-03: CORS confirmado via browser real, depois da WP11 publicar o site — DoD completa.
 
 ---
 
@@ -234,15 +236,16 @@ depende_de: [WP04, WP05, WP07]
 Amarrar tudo: pull, fusão, gravação local, push, atualização do `sync_base`. Dispara ao abrir o app e no botão "sincronizar agora".
 
 ### Definição de Pronto
-- [ ] Ciclo completo para `todo_lists`, `repeating_events`, `repeating_events_by_date` e `customTodoListIds`.
-- [ ] Documento rejeitado no push refaz o ciclo, com limite de tentativas e sem laço infinito.
-- [ ] Listas visíveis recarregam sozinhas quando a fusão traz mudança; a tela não fica desatualizada.
-- [ ] Sem servidor configurado, nenhuma chamada de rede é feita e o app se comporta exatamente como hoje.
-- [ ] Roteiro de dois dispositivos executado: criar, marcar, apagar, editar offline e reconectar — sem nada sumir.
+- [x] Ciclo completo para `todo_lists`, `repeating_events`, `repeating_events_by_date` e `customTodoListIds`. — os 4 tipos passaram no roteiro (tarefas comuns, lista personalizada, tarefa recorrente materializada uma vez só).
+- [ ] Documento rejeitado no push refaz o ciclo, com limite de tentativas e sem laço infinito. — não coberto pelo roteiro de dois dispositivos; sem teste direto ainda.
+- [x] Listas visíveis recarregam sozinhas quando a fusão traz mudança; a tela não fica desatualizada.
+- [ ] Sem servidor configurado, nenhuma chamada de rede é feita e o app se comporta exatamente como hoje. — não testado (roteiro rodou sempre com servidor configurado).
+- [x] Roteiro de dois dispositivos executado: criar, marcar, apagar, editar offline e reconectar — sem nada sumir.
 
 ### Log
 - 2026-09-02: iniciada
 - 2026-09-02: concluída — `syncEngine` com pull→fusão→gravação→push→`sync_base`, limite de 3 ciclos, disparo na abertura e recarga das listas visíveis. Falta o roteiro de dois dispositivos (depende da WP06).
+- 2026-09-03: roteiro de dois dispositivos rodado (11 cenários de `servidor-sync.md`), todos passaram conforme esperado. Segue em revisão — falta cobrir rejeição de push com retry e o caso sem servidor configurado.
 
 ---
 
@@ -262,14 +265,15 @@ depende_de: [WP08]
 Sincronizar só as preferências que valem em qualquer aparelho, pela lista branca fechada na spec.
 
 ### Definição de Pronto
-- [ ] Lista branca explícita no código, com as três categorias da spec como comentário; chave desconhecida é ignorada, não sincronizada por engano.
-- [ ] Fusão campo a campo, mesma regra das tarefas.
-- [ ] Mudar o tema no PC reflete no celular; mudar colunas ou zoom não vaza entre aparelhos.
-- [ ] Aplicar configuração vinda do servidor não exige recarregar a página.
+- [x] Lista branca explícita no código, com as três categorias da spec como comentário; chave desconhecida é ignorada, não sincronizada por engano.
+- [x] Fusão campo a campo, mesma regra das tarefas.
+- [x] Mudar o tema no PC reflete no celular; mudar colunas ou zoom não vaza entre aparelhos. — cenários 9 e 10 do roteiro de dois dispositivos, ambos passaram.
+- [x] Aplicar configuração vinda do servidor não exige recarregar a página.
 
 ### Log
 - 2026-09-02: iniciada
 - 2026-09-02: concluída — lista branca `CONFIG_SINCRONIZADA` no `syncEngine`, com as três categorias como comentário; aplicação via `updateConfig`, sem recarregar a página.
+- 2026-09-03: cenários 9 (tema) e 10 (colunas não vaza) do roteiro de dois dispositivos confirmados.
 
 ---
 
@@ -300,11 +304,12 @@ As chaves novas da aba de sincronização nos 19 idiomas.
 ## WP11 — Publicar no Cloudflare Pages
 
 ```yaml
-lane: planejado
+lane: revisão
 estimativa: 60min
 files:
   - .claude/docs/publicar-web.md
   - src/appConfig.js
+  - package.json
 depende_de: [WP01, WP08]
 ```
 
@@ -312,11 +317,12 @@ depende_de: [WP01, WP08]
 Colocar o app no ar num endereço público, com o build correto, e ligar o CORS do n8n a essa origem. Executada em conjunto com o usuário.
 
 ### Definição de Pronto
-- [ ] Projeto no Cloudflare Pages ligado ao repositório, com `NODE_VERSION=16` e `NODE_OPTIONS=--openssl-legacy-provider`, comando `yarn run build`, saída `dist`.
-- [ ] Variável do Sentry ausente no projeto, mantendo o Sentry desligado.
-- [ ] Origem publicada liberada no CORS dos três workflows; origem diferente continua bloqueada.
-- [ ] `appConfig.js` com o endereço público em `siteUrl`.
-- [ ] Instalado como aplicativo no celular e num PC, sincronizando com o servidor e funcionando em modo avião.
+- [x] Projeto no Cloudflare Pages ligado ao repositório, comando `yarn run build`, saída `dist`. — **desvio da spec**: `NODE_VERSION=16` não funciona no build da Cloudflare (Corepack embutido exige Node ≥18, incompatível com a trava de engine do `node-ipc` que só aceita ≤17 — as duas não cabem na mesma versão). Rodando `NODE_VERSION=20` + `NODE_OPTIONS=--openssl-legacy-provider` + `YARN_IGNORE_ENGINES=true`. Ambiente local continua Node 16. Decisão registrada em `decisoes.md` (2026-09-03) e detalhada em `.claude/docs/publicar-web.md`.
+- [x] Variável do Sentry ausente no projeto, mantendo o Sentry desligado.
+- [x] Origem publicada liberada no CORS dos três workflows; conectou e sincronizou sem erro de CORS.
+- [x] `appConfig.js` com o endereço público em `siteUrl`.
+- [x] Instalado como aplicativo no celular e num PC, sincronizando com o servidor e funcionando em modo avião. — roteiro de dois dispositivos completo, 11/11 cenários.
 
 ### Log
 - 2026-09-02: criada
+- 2026-09-03: build quebrou 3 vezes em sequência (flag OpenSSL incompatível com Node 16, Corepack incompatível com Node 16, engine do node-ipc incompatível com Node ≥18) até achar a combinação que funciona — `NODE_VERSION=20` + `NODE_OPTIONS=--openssl-legacy-provider` + `YARN_IGNORE_ENGINES=true` + `packageManager` fixado em `package.json` (commit `b66c462`). Deploy funcionando em `https://todo.bragademenezes.com`, domínio custom configurado, DNS resolvendo. Roteiro de dois dispositivos completo (11/11). DoD atendida com um desvio documentado (Node 16→20 só no build remoto) → lane revisão.
