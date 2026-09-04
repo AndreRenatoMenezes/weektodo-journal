@@ -48,6 +48,22 @@
         <span>{{ $t(tab.labelKey) }}</span>
       </button>
     </nav>
+
+    <!-- Casca da folha de detalhe: WP06 substitui o corpo pelo detalhe completo -->
+    <div v-if="detailTask" class="mobile-detail-backdrop" @click="closeDetail">
+      <div class="mobile-detail-sheet" @click.stop>
+        <header class="mobile-detail-sheet__header">
+          <span class="mobile-detail-sheet__title">{{ detailTask.toDo.text }}</span>
+          <button
+            class="mobile-detail-sheet__close"
+            :aria-label="$t('todoDetails.close')"
+            @click="closeDetail"
+          >
+            <i class="bi-x-lg"></i>
+          </button>
+        </header>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -69,6 +85,7 @@ export default {
   data() {
     return {
       activeTab: "week",
+      detailTask: null,
       tabs: [
         { id: "week",     icon: "bi-calendar3",   labelKey: "mobile.weekTab"     },
         { id: "lists",    icon: "bi-list-task",    labelKey: "mobile.listsTab"    },
@@ -87,18 +104,6 @@ export default {
         lists:    "mobile.listsTab",
         journal:  "mobile.journalTab",
         settings: "mobile.settingsTab",
-        methods: {
-          focusDayComposer() {
-            if (this.$refs.dayView && typeof this.$refs.dayView.focusComposer === "function") {
-              this.$refs.dayView.focusComposer();
-            }
-          },
-          onOpenDetail(payload) {
-            // WP06 implementará a folha do detalhe. Por ora emite evento para extensão futura.
-            // eslint-disable-next-line no-unused-vars
-            const { toDo, index, toDoListId } = payload;
-          },
-        },
       };
       return this.$t(tabMap[this.activeTab]);
     },
@@ -108,6 +113,21 @@ export default {
     },
     todayLabel() {
       return moment().locale(this.currentLocale).format("ddd, D MMM");
+    },
+  },
+  methods: {
+    focusDayComposer() {
+      if (this.$refs.dayView && typeof this.$refs.dayView.focusComposer === "function") {
+        this.$refs.dayView.focusComposer();
+      }
+    },
+    onOpenDetail(payload) {
+      // WP06 implementará a folha do detalhe completa. Por ora, guarda a tarefa
+      // selecionada e abre a casca da folha, para o toque no texto ter resposta.
+      this.detailTask = payload;
+    },
+    closeDetail() {
+      this.detailTask = null;
     },
   },
 };
@@ -169,5 +189,49 @@ export default {
   font-size: 1rem;
   color: var(--wtd-text-subtle);
   margin: 0;
+}
+
+/* Casca da folha de detalhe (WP06 completa o corpo) */
+.mobile-detail-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: flex-end;
+  z-index: 1050;
+}
+
+.mobile-detail-sheet {
+  width: 100%;
+  background-color: var(--wtd-surface);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.mobile-detail-sheet__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+}
+
+.mobile-detail-sheet__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--wtd-text-strong);
+}
+
+.mobile-detail-sheet__close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--wtd-text-subtle);
+  min-width: 44px;
+  min-height: 44px;
 }
 </style>

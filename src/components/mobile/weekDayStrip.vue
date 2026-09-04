@@ -45,10 +45,13 @@ export default {
         : true;
     },
     weekDates() {
-      const startOfWeek = moment().startOf("isoWeek");
-      if (!this.weekStartOnMonday) {
-        startOfWeek.subtract(1, "day");
-      }
+      // `startOf("isoWeek")` sempre cai na segunda-feira. Para semana iniciando
+      // no domingo, recua pelo dia da semana atual (0=dom .. 6=sáb) — subtrair
+      // um dia da segunda quebraria aos domingos, gerando a semana anterior.
+      const today = moment().startOf("day");
+      const startOfWeek = this.weekStartOnMonday
+        ? today.clone().startOf("isoWeek")
+        : today.clone().subtract(today.day(), "days");
       return Array.from({ length: 7 }, (_, i) => {
         return startOfWeek.clone().add(i, "days");
       });
@@ -157,7 +160,9 @@ export default {
 }
 
 .week-day-btn__dot--active {
-  background-color: var(--wtd-paper-bg);
+  /* O ponto fica abaixo do círculo, sobre --wtd-surface: usar o tom forte,
+     senão some no tema claro (surface e paper-bg são ambos #ffffff). */
+  background-color: var(--wtd-text-strong);
 }
 
 .week-day-btn__dot-placeholder {
