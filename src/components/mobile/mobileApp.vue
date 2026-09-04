@@ -10,10 +10,13 @@
     <main class="mobile-main-content">
       <!-- Aba Semana -->
       <template v-if="activeTab === 'week'">
-        <div class="mobile-placeholder-tab">
-          <i class="bi-calendar3 mobile-placeholder-icon"></i>
-          <p class="mobile-placeholder-text">{{ $t("mobile.weekTab") }}</p>
-        </div>
+        <week-day-strip></week-day-strip>
+        <mobile-day-view
+          ref="dayView"
+          :listId="mobileSelectedDate"
+          @open-detail="onOpenDetail"
+        ></mobile-day-view>
+        <mobile-fab @click="focusDayComposer"></mobile-fab>
       </template>
 
       <!-- Aba Listas: placeholder até WP07 -->
@@ -51,11 +54,17 @@
 <script>
 import moment from "moment";
 import mobileJournalView from "./mobileJournalView";
+import weekDayStrip from "./weekDayStrip";
+import mobileDayView from "./mobileDayView";
+import mobileFab from "./mobileFab";
 
 export default {
   name: "MobileApp",
   components: {
     mobileJournalView,
+    weekDayStrip,
+    mobileDayView,
+    mobileFab,
   },
   data() {
     return {
@@ -69,12 +78,27 @@ export default {
     };
   },
   computed: {
+    mobileSelectedDate() {
+      return this.$store.getters.mobileSelectedDate;
+    },
     topBarTitle() {
       const tabMap = {
         week:     "mobile.weekTab",
         lists:    "mobile.listsTab",
         journal:  "mobile.journalTab",
         settings: "mobile.settingsTab",
+        methods: {
+          focusDayComposer() {
+            if (this.$refs.dayView && typeof this.$refs.dayView.focusComposer === "function") {
+              this.$refs.dayView.focusComposer();
+            }
+          },
+          onOpenDetail(payload) {
+            // WP06 implementará a folha do detalhe. Por ora emite evento para extensão futura.
+            // eslint-disable-next-line no-unused-vars
+            const { toDo, index, toDoListId } = payload;
+          },
+        },
       };
       return this.$t(tabMap[this.activeTab]);
     },
