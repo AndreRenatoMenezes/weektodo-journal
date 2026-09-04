@@ -49,38 +49,48 @@
       </button>
     </nav>
 
-    <!-- Casca da folha de detalhe: WP06 substitui o corpo pelo detalhe completo -->
-    <div v-if="detailTask" class="mobile-detail-backdrop" @click="closeDetail">
-      <div class="mobile-detail-sheet" @click.stop>
-        <header class="mobile-detail-sheet__header">
-          <span class="mobile-detail-sheet__title">{{ detailTask.toDo.text }}</span>
-          <button
-            class="mobile-detail-sheet__close"
-            :aria-label="$t('todoDetails.close')"
-            @click="closeDetail"
-          >
-            <i class="bi-x-lg"></i>
-          </button>
-        </header>
-      </div>
+    <!-- Folha do detalhe da tarefa -->
+    <mobile-task-sheet
+      v-if="detailTask"
+      :selectedTodo="detailTask"
+      @close="closeDetail"
+      @removed="onTaskRemoved"
+    ></mobile-task-sheet>
+
+    <!-- Aviso de tarefa removida com desfazer (vive fora da folha, que fecha ao apagar) -->
+    <div class="mobile-toast-host">
+      <toast-message
+        ref="taskRemovedToast"
+        id="mobileTaskRemoved"
+        :text="$t('todoDetails.taskRemoved')"
+        :sub-text="'(' + $t('ui.undo') + ')'"
+        @subTextClick="undoRemoveTask"
+      ></toast-message>
     </div>
   </div>
 </template>
 
 <script>
 import moment from "moment";
+import { Toast } from "bootstrap";
 import mobileJournalView from "./mobileJournalView";
 import weekDayStrip from "./weekDayStrip";
 import mobileDayView from "./mobileDayView";
 import mobileFab from "./mobileFab";
+import mobileTaskSheet from "./mobileTaskSheet";
+import toastMessage from "../toastMessage";
+import todoActions from "../../helpers/todoActions";
 
 export default {
   name: "MobileApp",
+  mixins: [todoActions],
   components: {
     mobileJournalView,
     weekDayStrip,
     mobileDayView,
     mobileFab,
+    mobileTaskSheet,
+    toastMessage,
   },
   data() {
     return {
@@ -122,12 +132,30 @@ export default {
       }
     },
     onOpenDetail(payload) {
-      // WP06 implementará a folha do detalhe completa. Por ora, guarda a tarefa
-      // selecionada e abre a casca da folha, para o toque no texto ter resposta.
       this.detailTask = payload;
     },
     closeDetail() {
       this.detailTask = null;
+    },
+    onTaskRemoved() {
+      this.closeDetail();
+      if (this.$refs.taskRemovedToast) {
+        this.$refs.taskRemovedToast.show();
+      }
+    },
+    undoRemoveTask() {
+      const undo = this.$store.getters.undoElement;
+      if (!undo || !undo.todo) return;
+      this.$store.commit("insertTodo", {
+        toDoListId: undo.todo.listId,
+        index: undo.index,
+        toDo: undo.todo,
+      });
+      this.actionPersistTodoList(undo.todo.listId);
+      const toastEl = document.getElementById("mobileTaskRemoved");
+      if (toastEl) {
+        Toast.getInstance(toastEl) ? Toast.getInstance(toastEl).hide() : new Toast(toastEl).hide();
+      }
     },
   },
 };
@@ -191,47 +219,18 @@ export default {
   margin: 0;
 }
 
-/* Casca da folha de detalhe (WP06 completa o corpo) */
-.mobile-detail-backdrop {
+/* Host do aviso de remoção */
+.mobile-toast-host {
   position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: flex-end;
-  z-index: 1050;
+  left: 16px;
+  right: 16px;
+  bottom: 76px;
+  z-index: 1060;
+  pointer-events: none;
 }
 
-.mobile-detail-sheet {
+.mobile-toast-host :deep(.toast) {
+  pointer-events: auto;
   width: 100%;
-  background-color: var(--wtd-surface);
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  padding: 12px 16px;
-  box-sizing: border-box;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.mobile-detail-sheet__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 44px;
-}
-
-.mobile-detail-sheet__title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--wtd-text-strong);
-}
-
-.mobile-detail-sheet__close {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: var(--wtd-text-subtle);
-  min-width: 44px;
-  min-height: 44px;
 }
 </style>
