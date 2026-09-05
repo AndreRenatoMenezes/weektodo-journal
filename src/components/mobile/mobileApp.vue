@@ -19,7 +19,7 @@
       >
         <i class="bi-plus-lg"></i>
       </button>
-      <span v-else class="mobile-top-bar__date">{{ todayLabel }}</span>
+      <span v-else class="mobile-top-bar__date">{{ headerDateLabel }}</span>
     </header>
 
     <!-- Conteúdo da aba ativa -->
@@ -168,8 +168,13 @@ export default {
       const lang = (this.$store.getters.config && this.$store.getters.config.language) || this.$i18n.locale || "en";
       return lang === "zh_cn" ? "zh-cn" : lang === "zh_tw" ? "zh-tw" : lang;
     },
-    todayLabel() {
-      return moment().locale(this.currentLocale).format("ddd, D MMM");
+    headerDateLabel() {
+      // Na aba Semana o rótulo segue o dia escolhido na faixa — sem isso ele fica
+      // preso em hoje e a troca de dia parece não ter acontecido. Nas outras abas
+      // não há dia selecionado, então mostra a data de hoje.
+      const selected = moment(this.mobileSelectedDate, "YYYYMMDD", true);
+      const date = this.activeTab === "week" && selected.isValid() ? selected : moment();
+      return date.locale(this.currentLocale).format("ddd, D MMM");
     },
   },
   methods: {

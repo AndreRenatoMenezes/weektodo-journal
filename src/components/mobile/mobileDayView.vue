@@ -1,26 +1,18 @@
 <template>
   <div class="mobile-day-view mobile-ruled-paper" ref="dayView">
-    <!-- Estado vazio: sem tarefas -->
-    <div v-if="!loading && tasks.length === 0" class="mobile-day-empty">
-      <i class="bi-plus-circle mobile-day-empty__glyph"></i>
-      <p class="mobile-day-empty__title">{{ $t("mobile.emptyStateTitle") }}</p>
-      <p class="mobile-day-empty__subtitle">{{ $t("mobile.emptyStateSubtitle") }}</p>
-    </div>
-
     <!-- Lista de tarefas -->
-    <template v-else>
-      <mobile-task-row
-        v-for="(toDo, index) in tasks"
-        :key="toDo.id || index"
-        :toDo="toDo"
-        :index="index"
-        :toDoListId="listId"
-        @open-detail="$emit('open-detail', $event)"
-      ></mobile-task-row>
-    </template>
+    <mobile-task-row
+      v-for="(toDo, index) in tasks"
+      :key="toDo.id || index"
+      :toDo="toDo"
+      :index="index"
+      :toDoListId="listId"
+      @open-detail="$emit('open-detail', $event)"
+    ></mobile-task-row>
 
-    <!-- Composer: input de nova tarefa (sempre visível no final da lista) -->
-    <div class="mobile-day-composer" :class="{ 'mobile-day-composer--empty': tasks.length === 0 }">
+    <!-- Composer: input de nova tarefa, sempre logo depois das tarefas. Com o dia
+         vazio ele fica na primeira linha da folha, e não no fim da página. -->
+    <div class="mobile-day-composer">
       <input
         ref="composerInput"
         class="mobile-day-composer__input"
@@ -30,6 +22,13 @@
         @keyup.enter="createTask"
         @blur="createTask"
       />
+    </div>
+
+    <!-- Estado vazio: ocupa o espaço restante abaixo do composer -->
+    <div v-if="!loading && tasks.length === 0" class="mobile-day-empty">
+      <i class="bi-plus-circle mobile-day-empty__glyph"></i>
+      <p class="mobile-day-empty__title">{{ $t("mobile.emptyStateTitle") }}</p>
+      <p class="mobile-day-empty__subtitle">{{ $t("mobile.emptyStateSubtitle") }}</p>
     </div>
   </div>
 </template>
@@ -93,11 +92,12 @@ export default {
       this.newTaskText = "";
     },
     focusComposer() {
-      this.$nextTick(() => {
-        if (this.$refs.composerInput) {
-          this.$refs.composerInput.focus();
-        }
-      });
+      const input = this.$refs.composerInput;
+      if (!input) return;
+      // Foco síncrono, dentro do gesto de toque: adiar o focus() para o próximo
+      // tick faz o navegador móvel descartar o gesto e não abrir o teclado.
+      input.focus({ preventScroll: true });
+      input.scrollIntoView({ block: "nearest" });
     },
   },
 };
@@ -153,11 +153,6 @@ export default {
   padding: 0 12px;
   box-sizing: border-box;
   flex-shrink: 0;
-}
-
-.mobile-day-composer--empty {
-  /* Quando a lista está vazia, o composer fica logo após o estado vazio */
-  margin-top: 16px;
 }
 
 .mobile-day-composer__input {
