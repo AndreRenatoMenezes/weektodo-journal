@@ -17,10 +17,21 @@
       :class="{ 'mobile-task-row__text--done': toDo.checked }"
       @click.stop="openDetail"
     >{{ toDo.text }}</span>
+
+    <!-- Hora marcada: fica na linha para não exigir abrir o detalhe -->
+    <span
+      v-if="timeLabel"
+      class="mobile-task-row__time"
+      :class="{ 'mobile-task-row__time--done': toDo.checked }"
+      @click.stop="openDetail"
+    >
+      <i v-if="toDo.alarm" class="bi-bell-fill mobile-task-row__time-icon"></i>{{ timeLabel }}
+    </span>
   </div>
 </template>
 
 <script>
+import moment from "moment";
 import todoActions from "../../helpers/todoActions";
 
 export default {
@@ -32,6 +43,10 @@ export default {
     toDoListId:{ type: String, required: true },
   },
   computed: {
+    timeLabel() {
+      if (!this.toDo.time) return "";
+      return moment(this.toDo.time, "HH:mm").format("LT");
+    },
     hasColor() {
       return Boolean(this.toDo.color && this.toDo.color !== "none");
     },
@@ -99,6 +114,27 @@ export default {
   min-height: 44px;
   display: flex;
   align-items: center;
+}
+
+.mobile-task-row__time {
+  flex-shrink: 0;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--wtd-text-muted);
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.mobile-task-row__time-icon {
+  font-size: 0.75rem;
+}
+
+.mobile-task-row__time--done {
+  text-decoration: line-through;
+  color: var(--wtd-text-subtle);
 }
 
 .mobile-task-row__text--done {
