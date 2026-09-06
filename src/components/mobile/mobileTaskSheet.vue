@@ -125,6 +125,7 @@
 
 <script>
 import moment from "moment";
+import { Dropdown } from "bootstrap";
 import colorPicker from "../../views/toDoModal/colorPicker";
 import timePicker from "../../views/toDoModal/timePicker";
 import repeatingEvent from "../../views/toDoModal/repeatingEvent";
@@ -243,6 +244,14 @@ export default {
       this.todo.color = color;
       this.bound.color = color;
       this.updateTodo();
+      // O dropdown do desktop fica aberto até um clique fora; no celular ele
+      // cobre a folha, então fecha assim que a cor é escolhida.
+      this.hideDropdown("#btnTaskColorPicker");
+    },
+    hideDropdown(toggleSelector) {
+      const toggle = this.$el.querySelector(toggleSelector);
+      if (!toggle) return;
+      Dropdown.getOrCreateInstance(toggle).hide();
     },
     changeTime(time) {
       this.todo.time = time;
@@ -252,8 +261,22 @@ export default {
     },
     changeAlarm() {
       if (!this.todo.time) return;
-      this.todo.alarm = !this.todo.alarm;
+      const enabling = !this.todo.alarm;
+      this.todo.alarm = enabling;
+      // Persistir reagenda as notificações do dia (helpers/notifications.js).
       this.updateTodo();
+      if (enabling) this.requestNotificationPermission();
+    },
+    /**
+     * O pedido feito no boot (App.vue) é ignorado pelos navegadores móveis por
+     * não vir de um gesto do usuário: sem permissão o alarme agenda mas nunca
+     * aparece. Aqui o pedido acontece dentro do toque no sino.
+     */
+    requestNotificationPermission() {
+      if (typeof Notification === "undefined") return;
+      if (Notification.permission !== "default") return;
+      const request = Notification.requestPermission();
+      if (request && typeof request.catch === "function") request.catch(() => {});
     },
     changeDescription(desc) {
       this.todo.desc = desc;
@@ -327,6 +350,7 @@ export default {
 .mobile-sheet {
   width: 100%;
   max-height: 90vh;
+  max-height: 90dvh;
   overflow-y: auto;
   box-sizing: border-box;
   padding: 0 16px 24px;

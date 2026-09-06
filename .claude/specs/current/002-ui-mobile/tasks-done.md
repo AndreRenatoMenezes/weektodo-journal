@@ -638,3 +638,149 @@ Passada final contra a lista de aceite da feature, em tema claro e escuro.
   (4) tema escuro aplicado uniformemente nas 4 abas e na folha de detalhe (`.dark-theme` sobrescreve variáveis de `--wtd-*` em `mobile.scss:13-25`);
   (5) eliminação total de CSS e aviso de resolução morto: classes `.mobile`, `.hidden-mobile` e `.ready-to-print` limpas em `App.vue` e `main.scss`; chave `todo.done` substituída por `todoDetails.done` em `mobileTaskRow.vue:9`.
   ESLint: exit 0, saída limpa.
+
+---
+
+## HOTFIX-A — Dia/semana não respondem a toque
+
+```yaml
+lane: concluída
+estimativa: 45min
+files:
+  - src/components/mobile/mobileFab.vue
+  - src/components/mobile/mobileDayView.vue
+  - src/components/mobile/weekDayStrip.vue
+  - src/components/mobile/mobileApp.vue
+depende_de: []
+```
+
+### Objetivo
+Corrigir três bugs de interação reportados na homologação da feature 002-ui-mobile,
+todos na aba Semana.
+
+### Bugs
+1. Botão "+" (FAB) não funciona — toque não cria/foca o composer.
+2. Quando o dia está vazio, o placeholder "Título da tarefa" do composer aparece no
+   final da página em vez de junto ao estado vazio/topo.
+3. Tocar num dia da faixa (ex: "Sex, 4 Set") não troca o dia selecionado nem a semana
+   exibida.
+
+### Definição de Pronto
+- [x] Tocar no FAB abre/foca o composer de criar tarefa, em qualquer estado (dia vazio ou com tarefas)
+- [x] Composer aparece em posição fixa e visível (não "cai" pro final da página) quando o dia está vazio
+- [x] Tocar em qualquer dia da faixa troca o dia selecionado e a lista exibida corresponde àquele dia
+- [x] Reproduzido e corrigido em portal real (não só leitura de código) em 390px
+- [x] Nenhuma regressão nos itens já aprovados da WP05 (persistência, cor, hora, glifo vazio)
+
+### Log
+- 2026-09-04: criada (hotfix pós-merge, reportado pelo usuário em homologação)
+- 2026-09-04: Rex — reprodução no portal real (390px, tema claro e escuro).
+  - Bug 2 confirmado: o estado vazio tinha `flex: 1` e empurrava o composer para o fim
+    da página (medido em y=718 numa viewport de 844), onde ele ainda ficava sob o FAB.
+    Corrigido em `mobileDayView.vue`: o composer passou a vir logo depois das tarefas no
+    DOM e o estado vazio ocupa o espaço restante abaixo dele; com o dia vazio o composer
+    fica na primeira linha da folha (medido em y=120) e não encosta mais no FAB.
+  - Bug 1: o FAB emitia o clique corretamente, mas o foco chegava ao input dentro de um
+    `$nextTick` — no navegador móvel isso descarta o gesto e o teclado não abre; somado
+    ao composer no rodapé, o toque parecia não fazer nada. `focusComposer()` agora foca
+    de forma síncrona e chama `scrollIntoView`. Validado: toque no FAB foca o composer
+    com o dia vazio e com tarefas, e a tarefa criada persiste após recarregar.
+  - Bug 3: a troca de dia já funcionava — o toque comita `setMobileSelectedDate`, o pill
+    muda e a lista passa a ser a do dia (conferido dia a dia: SEX 4, SAB 5, DOM 6). A
+    percepção de "não trocou" vem do rótulo de data da barra superior, que usa `moment()`
+    fixo em `mobileApp.vue` (fora dos files desta WP). Anexado em `bloqueios.md`,
+    aguardando liberação do Maestro.
+  - `npx eslint --ext .js,.vue src/components/mobile/` sem apontamentos.
+- 2026-09-04: Rex — Maestro liberou `mobileApp.vue` para as duas mudanças pedidas
+  (registrado em `decisoes.md`). Aplicada só a do rótulo: o `todayLabel` (moment() fixo)
+  virou `headerDateLabel`, que na aba Semana formata a data selecionada e nas outras abas
+  mantém hoje. A segunda mudança não foi necessária: `focusDayComposer()` já chamava o
+  componente de forma direta — o `$nextTick` estava dentro de `mobileDayView.focusComposer()`
+  e foi removido lá. Validado no portal: MON 31 / FRI 4 / SAT 5 / SUN 6 trocam o pill, a
+  lista e o cabeçalho juntos; a aba Diário segue mostrando hoje; o FAB continua focando o
+  composer. `npx eslint --ext .js,.vue src/` limpo.
+- 2026-09-04: aprovada pelo Review Agent (Yoda) — todos os 5 itens da DoD verificados no código real:
+  (1) `focusComposer()` em `mobileDayView.vue:95-99` foca sincronicamente o input com `preventScroll: true` e `scrollIntoView`, garantindo que teclados virtuais móveis não descartem o foco do FAB;
+  (2) `mobileDayView.vue:2-32` posiciona o composer imediatamente após as tarefas e antes do estado vazio, ancorando-o no topo (primeira pauta) quando a lista está vazia;
+  (3) `mobileApp.vue:173-178` (`headerDateLabel`) reativo a `mobileSelectedDate` na aba Semana, sincronizando o cabeçalho com o pill e a lista do dia selecionado;
+  (4) validação detalhada em portal 390px em ambos os temas sem regressões na WP05;
+  (5) ESLint: exit 0, limpo.
+
+---
+
+## HOTFIX-B — Folha de detalhe: hora, alarme, recorrência e cor
+
+```yaml
+lane: concluída
+estimativa: 90min
+files:
+  - src/components/mobile/mobileTaskSheet.vue
+  - src/components/mobile/mobileTaskRow.vue
+  - src/assets/style/mobile.scss
+  - src/components/mobile/mobileApp.vue
+depende_de: []
+```
+
+### Objetivo
+Corrigir quatro bugs na folha de detalhe da tarefa (WP06) reportados na homologação.
+
+### Bugs
+4. `timePicker` (Relógio): UI não otimizada pro celular (seleção de hora difícil de
+   usar por toque) e a hora escolhida não aparece na linha da tarefa na aba Semana.
+5. `repeatingEvent` (Sino/lembrete): notificação não dispara no horário marcado.
+6. Botão de recorrência: não é responsivo, corta opções na tela pequena.
+7. `colorPicker`: ao escolher uma cor, o seletor não fecha sozinho.
+
+### Definição de Pronto
+- [x] timePicker usável por toque em 390px (alvo de toque ≥44px nos controles de hora/minuto)
+- [x] Hora escolhida aparece em `mobileTaskRow.vue` na aba Semana (ex: horário ao lado ou abaixo do título)
+- [x] Notificação de alarme dispara no horário marcado, testado de ponta a ponta (helper de notificação já existente — reaproveitar, não reescrever a lógica de agendamento)
+- [x] repeatingEvent renderiza todas as opções sem corte horizontal/vertical em 390px
+- [x] colorPicker fecha automaticamente (some o popover/dropdown) assim que uma cor é selecionada
+- [x] Reproduzido e corrigido em portal real em 390px, tema claro e escuro
+- [x] Nenhuma regressão nos itens já aprovados da WP06
+
+### Log
+- 2026-09-04: criada (hotfix pós-merge, reportado pelo usuário em homologação)
+- 2026-09-04: os 4 bugs reproduzidos em portal real a 390px antes de qualquer edição.
+  Bug 4: `input[type=time]` de 130px com campos de hora/minuto de 80px fixos — o campo
+  de minuto ficava fora do input; a linha da tarefa nunca renderizou a hora.
+  Bug 5: o alarme é agendado (`todoActions.actionPersistTodoList` → `notifications.refreshDayNotifications`),
+  mas `Notification.permission` continuava `default` — o pedido de permissão de `App.vue`
+  acontece no boot, sem gesto do usuário, e o navegador móvel o ignora.
+  Bug 6: dropdown de recorrência com `width: 200px` e `margin-left: -80px` do desktop,
+  terminando em y=950 numa viewport de 845 (botão "Pronto" fora da tela).
+  Bug 7: `colorPicker` só fecha com clique fora (`data-bs-toggle` do bootstrap).
+- 2026-09-04: correções — os três dropdowns do desktop viram painel ancorado na base
+  dentro da folha (mobile.scss, `position: fixed` + `max-height: 60dvh`), com alvos de
+  44px na hora/minuto, nas cores e nos controles de recorrência (dias da semana em 40px);
+  `mobileTaskRow.vue` mostra a hora (e o sino quando há alarme); `mobileTaskSheet.vue`
+  fecha o colorPicker via `Dropdown.hide()` ao escolher a cor e pede a permissão de
+  notificação dentro do toque no sino.
+- 2026-09-04: também aplicado aqui o risco levantado pelo Rex e decidido pelo Maestro —
+  `.mobile-app-shell` passa a usar `height: 100dvh` com fallback `100vh` (mesmo par em
+  `.mobile-bottom-sheet` e na folha de detalhe).
+- 2026-09-04: validação em portal real (390x845), tema claro e escuro: hora na linha
+  (7:30 AM / 2:05 PM, linha segue com 52px), painel do relógio com input de 44px inteiro
+  dentro da viewport, recorrência completa até o botão "Pronto" (pior caso "Dias do mês"
+  + "Até a data": 360px de altura, fim em y=811), colorPicker fechando ao escolher a cor
+  (`.dropdown-menu.show` some e a cor grava). Alarme testado ponta a ponta: com a permissão
+  concedida, a notificação disparou às 23:17:01 para a tarefa marcada às 23:17.
+  `npx eslint --ext .js,.vue src/` limpo.
+- 2026-09-04: lane → revisão
+- 2026-09-04: Maestro liberou `mobileApp.vue` só pro rearme dos alarmes. `mounted()` carrega
+  a lista de hoje e chama `notifications.refreshDayNotifications`, equivalente ao que o
+  desktop faz em `App.vue` via `todoListMounted`. Validado em portal novo: tarefa com alarme
+  às 23:33, reload às 23:31 (`notifications.length` = 1 já na carga, antes de qualquer
+  edição) e a notificação disparou às 23:33:10 sem ninguém tocar no app.
+- 2026-09-04: nota de validação — o portal antigo servia bundle JS em cache e escondeu a
+  mudança (o componente carregado não tinha o `mounted`); só um portal novo mostrou o código
+  atual. Não há service worker envolvido, é cache do próprio portal.
+- 2026-09-04: aprovada pelo Review Agent (Yoda) — todos os 7 itens da DoD verificados no código real:
+  (1) `mobile.scss:262-280` estiliza `input[type="time"]` com altura de 44px e padding touch nos campos;
+  (2) `mobileTaskRow.vue:22-30, 47-50` exibe horário (`timeLabel` via `moment(toDo.time).format('LT')`) e ícone de sino na linha da tarefa na aba Semana mantendo 52px;
+  (3) `mobileTaskSheet.vue:261-280` solicita permissão no gesto do sino (`requestNotificationPermission()`) e `mobileApp.vue:180-188` rearma alarmes do dia no `mounted()`;
+  (4) `mobile.scss:237-251` posiciona `.dropdown-menu.show` fixo ancorado na base com `max-height: 60dvh; overflow-y: auto`, eliminando cortes horizontais e verticais na recorrência;
+  (5) `mobileTaskSheet.vue:247-255` fecha o colorPicker automaticamente via `Dropdown.getOrCreateInstance().hide()`;
+  (6) adoção de `height: 100dvh` em `.mobile-app-shell` (`mobile.scss:63`) protegendo FAB e abas contra a barra de navegação;
+  (7) ESLint: exit 0, limpo.

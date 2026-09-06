@@ -19,7 +19,7 @@
       >
         <i class="bi-plus-lg"></i>
       </button>
-      <span v-else class="mobile-top-bar__date">{{ todayLabel }}</span>
+      <span v-else class="mobile-top-bar__date">{{ headerDateLabel }}</span>
     </header>
 
     <!-- Conteúdo da aba ativa -->
@@ -106,6 +106,7 @@ import mobileListsView from "./mobileListsView";
 import mobileSettingsView from "./mobileSettingsView";
 import toastMessage from "../toastMessage";
 import todoActions from "../../helpers/todoActions";
+import notifications from "../../helpers/notifications";
 
 export default {
   name: "MobileApp",
@@ -168,9 +169,23 @@ export default {
       const lang = (this.$store.getters.config && this.$store.getters.config.language) || this.$i18n.locale || "en";
       return lang === "zh_cn" ? "zh-cn" : lang === "zh_tw" ? "zh-tw" : lang;
     },
-    todayLabel() {
-      return moment().locale(this.currentLocale).format("ddd, D MMM");
+    headerDateLabel() {
+      // Na aba Semana o rótulo segue o dia escolhido na faixa — sem isso ele fica
+      // preso em hoje e a troca de dia parece não ter acontecido. Nas outras abas
+      // não há dia selecionado, então mostra a data de hoje.
+      const selected = moment(this.mobileSelectedDate, "YYYYMMDD", true);
+      const date = this.activeTab === "week" && selected.isValid() ? selected : moment();
+      return date.locale(this.currentLocale).format("ddd, D MMM");
     },
+  },
+  mounted() {
+    // No desktop os alarmes do dia são rearmados quando as listas terminam de
+    // montar (App.vue / todoListMounted), ramo que não roda no mobile: sem isto
+    // um reload deixa as tarefas com alarme pendente sem nenhum timer agendado.
+    const today = moment().format("YYYYMMDD");
+    this.$store.dispatch("loadTodoLists", today).then(() => {
+      notifications.refreshDayNotifications(this, today);
+    });
   },
   methods: {
     /**
